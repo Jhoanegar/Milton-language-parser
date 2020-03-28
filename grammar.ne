@@ -18,12 +18,15 @@ const lexer = moo.compile({
     NUMBER:  /0|[1-9][0-9]*/,
     STRING:  /"(?:\\["\\]|[^\n"\\])*"/,
     LPAREN:  {match: /\(\s?/, value: trim},
-    LPAREN:  {match: /\)\s?/, value: trim},
-    LBRACE:  '{',
-    RBRACE:  '}',
-    KEYWORD: [/'terminal'/, 'when'],
-    NOT: [/not\s?/],
-    AND: [/and\s?/],
+    RPAREN:  {match: /\)\s?/, value: trim},
+    LBRACE:  {match: /\{\s?/, value: trim},
+    RBRACE:  {match: /\}[ \t]?/, value: trim},
+    TERMINAL: {match: /terminal\s?/, value: trim},
+    COLON: {match: /\:\s?/, value: trim},
+    KEYWORD: {match: [/notext\s?/, /goto\s?/, /setlocal\s?/], value:trim},
+    WHEN: {match: /when\s?/, value: trim},
+    NOT: [/not[\s\t]?/],
+    AND: [/and[\s\t]?/],
     OR: [/or\s?/],
     NL:      { match: /\n/, lineBreaks: true },
     VARIABLE_NAME: { match: /[A-Z][a-z_A-Z0-9]+\s?/, value: trim},
@@ -32,7 +35,15 @@ const lexer = moo.compile({
 %}
 @lexer lexer
 
-main            -> exp
+main            -> (stmt | exp):*
+stmt            -> %TERMINAL %WHEN exp termblock
+#Terminal block
+
+termblock       -> %LBRACE termstmt %RBRACE %NL:+
+termstmt        -> action (action):*
+action          -> %KEYWORD
+                | %KEYWORD %COLON %VARIABLE_NAME
+
 # Logical operators with precedence
 exp             -> term (%OR term):*
 term            -> factor (%AND factor):*
@@ -40,14 +51,3 @@ factor          -> %VARIABLE_NAME
 factor          -> %NOT factor
 factor          -> %LPAREN exp %RPAREN
 ####################################
-# main                -> statement
-# statement           -> null
-#                         | %KEYWORD %_ expression
-#                         | %KEYWORD %_ statement %_:* expression
-# expression           -> %VARIABLENAME {% data => variables[data] ? variables[data] : variables[data] = false %}
-#                         | %NOT %_ expression
-#                         | expression %_ %LOGICAL_BINARY %_ expression
-#                         | %LBRACE %_:* statement %_:* %RBRACE
-# |                           | %LPAREN %_:* expression %_:* %RPAREN
-                        
-     
