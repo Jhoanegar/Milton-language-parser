@@ -33,11 +33,13 @@ const lexer = moo.compile({
 @lexer lexer
 
 main            -> exp
+# Logical operators with precedence
 exp             -> term (%OR term):*
 term            -> factor (%AND factor):*
 factor          -> %VARIABLE_NAME
 factor          -> %NOT factor
 factor          -> %LPAREN exp %RPAREN
+####################################
 # main                -> statement
 # statement           -> null
 #                         | %KEYWORD %_ expression
