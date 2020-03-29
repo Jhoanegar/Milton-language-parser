@@ -11,10 +11,16 @@ const string = token => {
     let match = token.match(regex)
     return {string: match[2], name: match[1]};
 }
+const optString = token => {
+    var regex = /"([\s\S]+)=([a-z _A-Z0-9]+)"/;
+    let match = token.match(regex);
+    return {string: match[2], name: match[1]}
+}
 const lexer = moo.compile({
     _:      /[ \t]+/,
     NUMBER:  /0|[1-9][0-9]*/,
-    STRING:  {match: /\[\[[\w:\.]*=(?:[\s\S](?!\]\]))+\s\]\]/, value: string},
+    OPT_STRING:  {match: /"[\w:\.]+=[a-z _A-Z0-9]+"/, value: optString},
+    PROMPT_STRING:  {match: /\[\[[\w:\.]*=(?:[\s\S](?!\]\]))+\s\]\]/, value: string},
     LPAREN:  {match: /\(\s?/, value: trim},
     RPAREN:  {match: /\)\s?/, value: trim},
     LBRACE:  {match: /\{\s?/, value: trim},
@@ -22,12 +28,16 @@ const lexer = moo.compile({
     TERMINAL: {match: /terminal\s?/, value: trim},
     COLON: {match: /\:\s?/, value: trim},
     KEYWORD: {match: [/notext\s?/, /goto\s?/, /setlocal\s?/, /prompt\s?/], value:trim},
+    OPTIONS: {match: [/options\s?/], value: trim},
     WHEN: {match: /when\s?/, value: trim},
     NOT: [/not[\s\t]?/],
     AND: [/and[\s\t]?/],
+    SHORT: [/short[\s\t]?/],
+    NEXT: [/next[\s\t]?/],
+    SET: [/set[\s\t]?/],
     OR: [/or\s?/],
     NL:      { match: /\n/, lineBreaks: true },
-    VARIABLE_NAME: { match: /[A-Z][a-z_A-Z0-9]+\s?/, value: trim},
+    IDENT: { match: /[a-z_A-Z0-9]+\s?/, value: trim},
     INSTRUCTION: ['notext']
 });
 var grammar = {
@@ -47,14 +57,38 @@ var grammar = {
     {"name": "termstmt$ebnf$1", "symbols": ["termstmt$ebnf$1", "termstmt$ebnf$1$subexpression$1"], "postprocess": function arrpush(d) {return d[0].concat([d[1]]);}},
     {"name": "termstmt", "symbols": ["action", "termstmt$ebnf$1"]},
     {"name": "action", "symbols": [(lexer.has("KEYWORD") ? {type: "KEYWORD"} : KEYWORD)]},
-    {"name": "action", "symbols": [(lexer.has("KEYWORD") ? {type: "KEYWORD"} : KEYWORD), (lexer.has("COLON") ? {type: "COLON"} : COLON), (lexer.has("VARIABLE_NAME") ? {type: "VARIABLE_NAME"} : VARIABLE_NAME)]},
+    {"name": "action", "symbols": [(lexer.has("KEYWORD") ? {type: "KEYWORD"} : KEYWORD), (lexer.has("COLON") ? {type: "COLON"} : COLON), (lexer.has("IDENT") ? {type: "IDENT"} : IDENT)]},
     {"name": "action$ebnf$1$subexpression$1", "symbols": [(lexer.has("NL") ? {type: "NL"} : NL)]},
     {"name": "action$ebnf$1$subexpression$1", "symbols": [(lexer.has("_") ? {type: "_"} : _)]},
     {"name": "action$ebnf$1", "symbols": ["action$ebnf$1$subexpression$1"]},
     {"name": "action$ebnf$1$subexpression$2", "symbols": [(lexer.has("NL") ? {type: "NL"} : NL)]},
     {"name": "action$ebnf$1$subexpression$2", "symbols": [(lexer.has("_") ? {type: "_"} : _)]},
     {"name": "action$ebnf$1", "symbols": ["action$ebnf$1", "action$ebnf$1$subexpression$2"], "postprocess": function arrpush(d) {return d[0].concat([d[1]]);}},
-    {"name": "action", "symbols": [(lexer.has("KEYWORD") ? {type: "KEYWORD"} : KEYWORD), (lexer.has("COLON") ? {type: "COLON"} : COLON), (lexer.has("STRING") ? {type: "STRING"} : STRING), "action$ebnf$1"]},
+    {"name": "action", "symbols": [(lexer.has("KEYWORD") ? {type: "KEYWORD"} : KEYWORD), (lexer.has("COLON") ? {type: "COLON"} : COLON), (lexer.has("PROMPT_STRING") ? {type: "PROMPT_STRING"} : PROMPT_STRING), "action$ebnf$1"]},
+    {"name": "action$ebnf$2", "symbols": ["options_stmt"]},
+    {"name": "action$ebnf$2", "symbols": ["action$ebnf$2", "options_stmt"], "postprocess": function arrpush(d) {return d[0].concat([d[1]]);}},
+    {"name": "action$ebnf$3", "symbols": []},
+    {"name": "action$ebnf$3$subexpression$1", "symbols": [(lexer.has("NL") ? {type: "NL"} : NL)]},
+    {"name": "action$ebnf$3$subexpression$1", "symbols": [(lexer.has("_") ? {type: "_"} : _)]},
+    {"name": "action$ebnf$3", "symbols": ["action$ebnf$3", "action$ebnf$3$subexpression$1"], "postprocess": function arrpush(d) {return d[0].concat([d[1]]);}},
+    {"name": "action", "symbols": [(lexer.has("OPTIONS") ? {type: "OPTIONS"} : OPTIONS), (lexer.has("COLON") ? {type: "COLON"} : COLON), (lexer.has("LBRACE") ? {type: "LBRACE"} : LBRACE), "action$ebnf$2", (lexer.has("RBRACE") ? {type: "RBRACE"} : RBRACE), "action$ebnf$3"]},
+    {"name": "options_stmt$ebnf$1", "symbols": []},
+    {"name": "options_stmt$ebnf$1$subexpression$1", "symbols": ["short_opt", (lexer.has("_") ? {type: "_"} : _)]},
+    {"name": "options_stmt$ebnf$1", "symbols": ["options_stmt$ebnf$1", "options_stmt$ebnf$1$subexpression$1"], "postprocess": function arrpush(d) {return d[0].concat([d[1]]);}},
+    {"name": "options_stmt$ebnf$2", "symbols": []},
+    {"name": "options_stmt$ebnf$2", "symbols": ["options_stmt$ebnf$2", (lexer.has("_") ? {type: "_"} : _)], "postprocess": function arrpush(d) {return d[0].concat([d[1]]);}},
+    {"name": "options_stmt$ebnf$3", "symbols": []},
+    {"name": "options_stmt$ebnf$3$subexpression$1$ebnf$1", "symbols": []},
+    {"name": "options_stmt$ebnf$3$subexpression$1$ebnf$1$subexpression$1", "symbols": [(lexer.has("NL") ? {type: "NL"} : NL)]},
+    {"name": "options_stmt$ebnf$3$subexpression$1$ebnf$1$subexpression$1", "symbols": [(lexer.has("_") ? {type: "_"} : _)]},
+    {"name": "options_stmt$ebnf$3$subexpression$1$ebnf$1", "symbols": ["options_stmt$ebnf$3$subexpression$1$ebnf$1", "options_stmt$ebnf$3$subexpression$1$ebnf$1$subexpression$1"], "postprocess": function arrpush(d) {return d[0].concat([d[1]]);}},
+    {"name": "options_stmt$ebnf$3$subexpression$1", "symbols": ["set_opt", "options_stmt$ebnf$3$subexpression$1$ebnf$1"]},
+    {"name": "options_stmt$ebnf$3", "symbols": ["options_stmt$ebnf$3", "options_stmt$ebnf$3$subexpression$1"], "postprocess": function arrpush(d) {return d[0].concat([d[1]]);}},
+    {"name": "options_stmt", "symbols": ["def_opt", (lexer.has("_") ? {type: "_"} : _), "options_stmt$ebnf$1", "next_opt", "options_stmt$ebnf$2", "options_stmt$ebnf$3"]},
+    {"name": "def_opt", "symbols": [(lexer.has("OPT_STRING") ? {type: "OPT_STRING"} : OPT_STRING)]},
+    {"name": "short_opt", "symbols": [(lexer.has("SHORT") ? {type: "SHORT"} : SHORT), (lexer.has("COLON") ? {type: "COLON"} : COLON), (lexer.has("OPT_STRING") ? {type: "OPT_STRING"} : OPT_STRING)]},
+    {"name": "next_opt", "symbols": [(lexer.has("NEXT") ? {type: "NEXT"} : NEXT), (lexer.has("COLON") ? {type: "COLON"} : COLON), (lexer.has("IDENT") ? {type: "IDENT"} : IDENT)]},
+    {"name": "set_opt", "symbols": [(lexer.has("SET") ? {type: "SET"} : SET), (lexer.has("COLON") ? {type: "COLON"} : COLON), (lexer.has("IDENT") ? {type: "IDENT"} : IDENT)]},
     {"name": "exp$ebnf$1", "symbols": []},
     {"name": "exp$ebnf$1$subexpression$1", "symbols": [(lexer.has("OR") ? {type: "OR"} : OR), "term"]},
     {"name": "exp$ebnf$1", "symbols": ["exp$ebnf$1", "exp$ebnf$1$subexpression$1"], "postprocess": function arrpush(d) {return d[0].concat([d[1]]);}},
@@ -63,7 +97,7 @@ var grammar = {
     {"name": "term$ebnf$1$subexpression$1", "symbols": [(lexer.has("AND") ? {type: "AND"} : AND), "factor"]},
     {"name": "term$ebnf$1", "symbols": ["term$ebnf$1", "term$ebnf$1$subexpression$1"], "postprocess": function arrpush(d) {return d[0].concat([d[1]]);}},
     {"name": "term", "symbols": ["factor", "term$ebnf$1"]},
-    {"name": "factor", "symbols": [(lexer.has("VARIABLE_NAME") ? {type: "VARIABLE_NAME"} : VARIABLE_NAME)]},
+    {"name": "factor", "symbols": [(lexer.has("IDENT") ? {type: "IDENT"} : IDENT)]},
     {"name": "factor", "symbols": [(lexer.has("NOT") ? {type: "NOT"} : NOT), "factor"]},
     {"name": "factor", "symbols": [(lexer.has("LPAREN") ? {type: "LPAREN"} : LPAREN), "exp", (lexer.has("RPAREN") ? {type: "RPAREN"} : RPAREN)]}
 ]
