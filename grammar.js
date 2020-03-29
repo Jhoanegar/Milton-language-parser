@@ -6,17 +6,22 @@ function id(x) { return x[0]; }
 let variables = {};
 const moo = require("moo");
 const trim = token => {token.trim()};
+const string = token => {
+    var regex = /\[\[([\w:\.])*=([\s\S](?!\]\]))+\s\]\]/ // Same regexp but with a capture group
+    let match = token.match(regex)
+    return {string: match[2], name: match[1]};
+}
 const lexer = moo.compile({
     _:      /[ \t]+/,
     NUMBER:  /0|[1-9][0-9]*/,
-    STRING:  /"(?:\\["\\]|[^\n"\\])*"/,
+    STRING:  {match: /\[\[[\w:\.]*=(?:[\s\S](?!\]\]))+\s\]\]/, value: string},
     LPAREN:  {match: /\(\s?/, value: trim},
     RPAREN:  {match: /\)\s?/, value: trim},
     LBRACE:  {match: /\{\s?/, value: trim},
     RBRACE:  {match: /\}[ \t]?/, value: trim},
     TERMINAL: {match: /terminal\s?/, value: trim},
     COLON: {match: /\:\s?/, value: trim},
-    KEYWORD: {match: [/notext\s?/, /goto\s?/, /setlocal\s?/], value:trim},
+    KEYWORD: {match: [/notext\s?/, /goto\s?/, /setlocal\s?/, /prompt\s?/], value:trim},
     WHEN: {match: /when\s?/, value: trim},
     NOT: [/not[\s\t]?/],
     AND: [/and[\s\t]?/],
@@ -43,6 +48,13 @@ var grammar = {
     {"name": "termstmt", "symbols": ["action", "termstmt$ebnf$1"]},
     {"name": "action", "symbols": [(lexer.has("KEYWORD") ? {type: "KEYWORD"} : KEYWORD)]},
     {"name": "action", "symbols": [(lexer.has("KEYWORD") ? {type: "KEYWORD"} : KEYWORD), (lexer.has("COLON") ? {type: "COLON"} : COLON), (lexer.has("VARIABLE_NAME") ? {type: "VARIABLE_NAME"} : VARIABLE_NAME)]},
+    {"name": "action$ebnf$1$subexpression$1", "symbols": [(lexer.has("NL") ? {type: "NL"} : NL)]},
+    {"name": "action$ebnf$1$subexpression$1", "symbols": [(lexer.has("_") ? {type: "_"} : _)]},
+    {"name": "action$ebnf$1", "symbols": ["action$ebnf$1$subexpression$1"]},
+    {"name": "action$ebnf$1$subexpression$2", "symbols": [(lexer.has("NL") ? {type: "NL"} : NL)]},
+    {"name": "action$ebnf$1$subexpression$2", "symbols": [(lexer.has("_") ? {type: "_"} : _)]},
+    {"name": "action$ebnf$1", "symbols": ["action$ebnf$1", "action$ebnf$1$subexpression$2"], "postprocess": function arrpush(d) {return d[0].concat([d[1]]);}},
+    {"name": "action", "symbols": [(lexer.has("KEYWORD") ? {type: "KEYWORD"} : KEYWORD), (lexer.has("COLON") ? {type: "COLON"} : COLON), (lexer.has("STRING") ? {type: "STRING"} : STRING), "action$ebnf$1"]},
     {"name": "exp$ebnf$1", "symbols": []},
     {"name": "exp$ebnf$1$subexpression$1", "symbols": [(lexer.has("OR") ? {type: "OR"} : OR), "term"]},
     {"name": "exp$ebnf$1", "symbols": ["exp$ebnf$1", "exp$ebnf$1$subexpression$1"], "postprocess": function arrpush(d) {return d[0].concat([d[1]]);}},
