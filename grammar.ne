@@ -19,14 +19,19 @@ const string = token => {
     return {string: match[2], name: match[1]};
 }
 const optString = token => {
-    var regex = /"([\s\S]+)=([a-z _A-Z0-9]+)"/;
+    var regex = /"([\s\S]*)=([a-z '_A-Z0-9]*)"/;
     let match = token.match(regex);
-    return {string: match[2], name: match[1]}
+    if (match && match[1] && match[2]) {
+        return {string: match[2], name: match[1]}
+    } else {
+        return {string: ' ', name: ' '}
+    }
 }
 const lexer = moo.compile({
     _:      /[ \t]+/,
     NUMBER:  /0|[1-9][0-9]*/,
-    OPT_STRING:  {match: /"[\w:\.]+=[a-z _A-Z0-9]+"/, value: optString},
+    EMPTY_STRING: /" " /,
+    OPT_STRING:  {match: /"[\w:\.]+=[a-z '_A-Z0-9]+"/, value: optString},
     PROMPT_STRING:  {match: /\[\[[\w:\.]*=(?:[\s\S](?!\]\]))+\s\]\]/, value: string},
     LPAREN:  {match: /\(\s?/, value: trim},
     RPAREN:  {match: /\)\s?/, value: trim},
@@ -59,14 +64,19 @@ termstmt        -> action (action):*
 action          -> %KEYWORD
                 | %KEYWORD %COLON %IDENT
                 | %KEYWORD %COLON %PROMPT_STRING (%NL | %_):+
+                | set_opt (%NL | %_):*
                 | %OPTIONS %COLON %LBRACE options_stmt:+ %RBRACE (%NL | %_):*
 
 #Options statement
-options_stmt    -> def_opt %_ (short_opt %_):* next_opt %_:* ( set_opt (%NL | %_):*):*
-def_opt         -> %OPT_STRING
-short_opt       -> %SHORT %COLON %OPT_STRING
-next_opt        -> %NEXT %COLON %IDENT
-set_opt        -> %SET %COLON %IDENT
+options_stmt    -> def_opt options_conf:*
+                | %EMPTY_STRING  options_conf:*
+options_conf    -> short_opt
+                | next_opt
+                | set_opt
+def_opt         -> %OPT_STRING  %_:*
+short_opt       -> %SHORT %COLON %OPT_STRING %_:*
+next_opt        -> %NEXT %COLON %IDENT %_:*
+set_opt        -> %SET %COLON %IDENT %_:*
 # Logical operators with precedence
 exp             -> term (%OR term):*
 term            -> factor (%AND factor):*

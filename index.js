@@ -5,7 +5,7 @@ const grammar = require("./grammar.js");
 
 // Create a Parser object from our grammar.
 const parser = new nearley.Parser(nearley.Grammar.fromCompiled(grammar));
-const input = `#Init
+let input = `#Init
 terminal when (Booting and not MiltonAllowed and not MiltonNotAllowed and
   (InTerminal_Ending_Gates or InTerminal_Ending_Crypt or InTerminal_Ending_Tower or
    InTerminal_Nexus_Floor1 or InTerminal_Nexus_Floor2 or InTerminal_Nexus_Floor3 or InTerminal_Nexus_Floor4) ) { notext
@@ -224,13 +224,10 @@ set: Milton1_1_DONE
 	" " short:"TTRS:TermDlg.Common.Exit=exit" next: CLI_Resume  # once the cert is completed, this terminal will continue functioning for normal file viewing
 	}
 }
-
-
-
 `
-.replace(/include "(.*)"/g, includeFile)
-.replace(/\n[\t ]+/g, ' ')
-.replace(/\u0023.*\n/g, '')
+.replace(/include "(.*)"/g, includeFile);
+input = input.replace(/\u0023.*\n/g, '');
+input = input.replace(/\n[\t ]+/g, ' ');
 
 function includeFile(match, file) {
   if (!match) {
