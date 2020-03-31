@@ -1,5 +1,5 @@
 ﻿# replace CLI's startup text so we can append our notice about devices
-terminal when((InTerminal_Nexus_Floor1 or InTerminal_Nexus_Floor2 or InTerminal_Nexus_Floor3 or InTerminal_Nexus_Floor4 or InTerminal_Nexus_Floor5)
+terminal when ((InTerminal_Nexus_Floor1 or InTerminal_Nexus_Floor2 or InTerminal_Nexus_Floor3 or InTerminal_Nexus_Floor4 or InTerminal_Nexus_Floor5)
     and CLI_BootSuffix) {
   text: [[TTRS:TermDlg.ElevatorFloors.Ln0004.0.text.DetectingAuxiliaryHardware=
 
