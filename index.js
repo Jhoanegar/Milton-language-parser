@@ -6,9 +6,15 @@ const grammar = require("./grammar.js");
 // Create a Parser object from our grammar.
 const parser = new nearley.Parser(nearley.Grammar.fromCompiled(grammar));
 let input = 
-`#include "Content/Talos/Databases/ComputerTerminalDialogs/QueryMLA.dlg"
-include "Content/Talos/Databases/ComputerTerminalDialogs/MLA_CommPortal.dlg"
-
+`terminal when (FakePasswordPrompt) {
+  options:{
+      "******" short: "TTRS:TermDlg.MLA_CommPortal.Ln0089.0.option.Qwerty=qwerty" next: falsepassword
+      "***" short: "TTRS:TermDlg.MLA_CommPortal.Ln0090.0.option.God=god" next: falsepassword
+      "*******" short: "TTRS:TermDlg.MLA_CommPortal.Ln0091.0.option.Letmein=letmein" next: falsepassword
+      "********" short: "TTRS:TermDlg.MLA_CommPortal.Ln0092.0.option.Trustno1=trustno1" next: falsepassword
+      "*****" short: "TTRS:TermDlg.Common.Admin=admin" next: falsepassword
+    }
+  }
 `
 input = input.replace(/#.*\r?\n/g, '');
 input = input.replace(/include "(.*)"/g, includeFile);
