@@ -17,13 +17,13 @@ const trim = token => {
     return token.trim()
 };
 const string = token => {
-    var regex = /\[\[([\w:\.])*=?([\s\S](?!\]\]))+\s\]\]/ // Same regexp but with a capture group
+    var regex = /\[\[([\w:\.])*=?([\s\S](?!\]\]))+[\s\S]\]\]/ // Same regexp but with a capture group
     let match = token.match(regex)
     console.log(match)
     return {string: match[2], name: match[1]};
 }
 const optString = token => {
-    var regex = /"([\s\S]*)=?([a-z%\[\]\?,#:\+=\- '\*_A-Z0-9]+)"/;
+    var regex = /"([\s\S]*)=?([a-z%\[\]\?,#:\+=\-\/ '\*_A-Z0-9]+)"/;
     let match = token.match(regex);
     console.log(match)
     if (match && match[1] && match[2]) {
@@ -36,15 +36,15 @@ const lexer = moo.compile({
     _:      /[ \t]+/,
     NUMBER:  /0|[1-9][0-9]*/,
     //EMPTY_STRING: /" " /,
-    OPT_STRING:  {match: /"[\w:\.]*=?[a-z%\[\]\?\.,#:\+=\- \*'_A-Z0-9]*"/, value: optString},
-    PROMPT_STRING:  {match: /\[\[[\w:\.]*=(?:[\s\S](?!\]\]))+\s\]\]\s*/, value: string},
+    OPT_STRING:  {match: /"[\w:\.]*=?[a-z%\[\]\?\.,#:\+=\-\/ \*'_A-Z0-9]*"/, value: optString},
+    PROMPT_STRING:  {match: /\[\[[\w:\.]*=(?:[\s\S](?!\]\]))+[\S\s]\]\]\s*/, value: string},
     LPAREN:  {match: /\(\s?/, value: trim},
     RPAREN:  {match: /\)\s?/, value: trim},
     LBRACE:  {match: /\{\s*/, value: trim},
     RBRACE:  {match: /\}\s*/, value: trim},
     TERMINAL: {match: /terminal\s?/, value: trim},
     PLAYER: {match: /player\s?/, value: trim},
-    COLON: {match: /\:\s?/, value: trim},
+    COLON: {match: /\:\s*/, value: trim},
     KEYWORD: {match: [/short\s?/, /next\s?/, /clear\s?/, /notext\s?/, /goto\s?/, /setlocal\s?/, /prompt\s?/, /text\s?/, /set\s?/,], value:trim},
     OPTIONS: {match: [/options\s?/], value: trim},
     WHEN: {match: /when\s?/, value: trim},

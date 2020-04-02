@@ -12,7 +12,6 @@ Here's what I've been wondering while you were off carrying out commandments.
 
 ]]
 }
-#Player admits they have reached a dead end
 terminal when (DoubtingDefinition){
 text:[[TTRS:TermDlg.Milton2_4.Ln0026.0.text.ButThenWereBackTo=But then we're back to where we started! Do you want to propose an alternative account?
 
@@ -23,14 +22,12 @@ options:{
 "TTRS:TermDlg.Common.No=No." next: GiveUp2_4 set: GiveUp
 }}
 
-#Player elects to retry, but has already done so once
 terminal when (AltAccount2_4 and AltAccount){
 text:[[TTRS:TermDlg.Milton2_4.Ln0037.0.text.ImAfraidYourMeanderingWay=I'm afraid your meandering way of thinking has already gotten the better of my attention span.
 
 ]]
 }
 
-#Player reaches the end of a path and elects to retry
 terminal when (AltAccount2_4 and not AltAccount){
 text: [[TTRS:TermDlg.Milton2_4.Ln0044.0.text.FineButIWontAllow=Fine, but I won't allow you to lead us round in circles on this for the rest of eternity - I WILL take your next answer, so do take a moment to think about it this time.
 
@@ -42,7 +39,6 @@ options:{
 }}
 
 
-#Physicalist playthrough follows
 terminal when ((Milton2_4_Start or AltBegin) and Physicalist){
 text:[[TTRS:TermDlg.Milton2_4.Ln0056.0.text.YouSayThatConsciousnessIs=You say that consciousness is just neurons. I suppose pain, for example, must just be a particular neuron firing in a particular way. 
 
@@ -135,9 +131,6 @@ options:{
 }
 }
 
-#####################################################################
-#Dualist/Religious playthrough follows
-
 terminal when ((Milton2_4_Start or AltBegin) and (Religious or Dualist)){
 text:[[TTRS:TermDlg.Milton2_4.Ln0151.0.text.YouveSuggestedThatConsciousnessIs=You've suggested that consciousness is not part of the same world as ordinary physical things. That means you can't weigh it, you can't throw it around or cut it into pieces... it's completely beyond the laws of physics. Right?
 
@@ -208,8 +201,6 @@ text:[[TTRS:TermDlg.Milton2_4.Ln0215.0.text.BeItOnYourHead=Be it on your head. S
 ]]
 }
 
-##########################################################
-#Some complex physical system
 terminal when (Functionalist and (Milton2_4_Start or AltBegin)){
 text:[[TTRS:TermDlg.Milton2_4.Ln0223.0.text.YouSayThatConsciousnessIs=You say that consciousness is some kind of functional system. Arrange bits of matter in the right order and out springs sentience. 
 
@@ -432,7 +423,6 @@ options:{
 "TTRS:TermDlg.Milton2_4.Ln0426.1.option.ImNotSureWhatTo=I'm not sure what to think." short: "TTRS:TermDlg.Milton2_4.Ln0426.0.option.ImNotSure=I'm not sure." next: End2_4 set: ChangedConsciousnessAccountFlag2_4
 }}
 
-#All paths meet here
 terminal when ((AltAccount2_4 and AltAccount) or GiveUp2_4 or TotallyConfusedFunctionalist2_4 or (Tides2_4 or TooFar2_4) or MoreStubbornDualist or DualistAboutTurn2_4 or End2_4 or MoreExtremeTechnophobe2_4 or Really2_4){
 text:[[TTRS:TermDlg.Milton2_4.Ln0431.0.text.IJustDontUnderstandHow=How consciousness can be so intimately familiar to you, and yet so obscure, I just don't understand.
 %w15%h7

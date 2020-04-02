@@ -14,6 +14,9 @@ include "Content/Talos/Databases/ComputerTerminalDialogs/Milton1_1.dlg"
 include "Content/Talos/Databases/ComputerTerminalDialogs/Milton1_2.dlg"
 include "Content/Talos/Databases/ComputerTerminalDialogs/Milton2_1.dlg"
 include "Content/Talos/Databases/ComputerTerminalDialogs/Milton2_2.dlg"
+include "Content/Talos/Databases/ComputerTerminalDialogs/Milton2_3.dlg"
+include "Content/Talos/Databases/ComputerTerminalDialogs/Milton2_4.dlg"
+include "Content/Talos/Databases/ComputerTerminalDialogs/Milton2_5.dlg"
 
 `
 input = input.replace(/^#.*\r?\n/g, '');

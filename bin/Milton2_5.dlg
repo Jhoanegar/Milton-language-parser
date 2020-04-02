@@ -1,9 +1,4 @@
-﻿#Variables:
-#ChangedConsciousnessAccountFlag2_4
-#Milton1_2NoMorals
-#Milton1_2Liberal has liberal morals
-#Milton1_2Utilitarian has utilitarian morals
-#cert problem no exit
+﻿
 terminal when (Milton2_5 and not Milton2_5_DONE and Booting and MiltonAllowed){ notext
 setlocal: CLI_Blocked
 goto: Milton2_5_Start
