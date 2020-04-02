@@ -12,11 +12,13 @@ const trim = token => {
 const string = token => {
     var regex = /\[\[([\w:\.])*=?([\s\S](?!\]\]))+\s\]\]/ // Same regexp but with a capture group
     let match = token.match(regex)
+    console.log(match)
     return {string: match[2], name: match[1]};
 }
 const optString = token => {
-    var regex = /"([\s\S]*)=*([a-z\?,: '\*_A-Z0-9]+)"/;
+    var regex = /"([\s\S]*)=*([a-z%\[\]\?,: '\*_A-Z0-9]+)"/;
     let match = token.match(regex);
+    console.log(match)
     if (match && match[1] && match[2]) {
         return {string: match[2], name: match[1]}
     } else {
@@ -27,7 +29,7 @@ const lexer = moo.compile({
     _:      /[ \t]+/,
     NUMBER:  /0|[1-9][0-9]*/,
     //EMPTY_STRING: /" " /,
-    OPT_STRING:  {match: /"[\w:\.]*=?[a-z\?\.,: \*'_A-Z0-9]*"/, value: optString},
+    OPT_STRING:  {match: /"[\w:\.]*=?[a-z%\[\]\?\.,: \*'_A-Z0-9]*"/, value: optString},
     PROMPT_STRING:  {match: /\[\[[\w:\.]*=(?:[\s\S](?!\]\]))+\s\]\]/, value: string},
     LPAREN:  {match: /\(\s?/, value: trim},
     RPAREN:  {match: /\)\s?/, value: trim},
@@ -63,23 +65,27 @@ var grammar = {
     {"name": "termstmt$ebnf$1$subexpression$1", "symbols": ["action"]},
     {"name": "termstmt$ebnf$1", "symbols": ["termstmt$ebnf$1", "termstmt$ebnf$1$subexpression$1"], "postprocess": function arrpush(d) {return d[0].concat([d[1]]);}},
     {"name": "termstmt", "symbols": ["action", "termstmt$ebnf$1"]},
-    {"name": "action", "symbols": [(lexer.has("KEYWORD") ? {type: "KEYWORD"} : KEYWORD)]},
-    {"name": "action", "symbols": [(lexer.has("KEYWORD") ? {type: "KEYWORD"} : KEYWORD), (lexer.has("COLON") ? {type: "COLON"} : COLON), (lexer.has("IDENT") ? {type: "IDENT"} : IDENT)]},
     {"name": "action$ebnf$1", "symbols": []},
     {"name": "action$ebnf$1$subexpression$1", "symbols": [(lexer.has("NL") ? {type: "NL"} : NL)]},
     {"name": "action$ebnf$1$subexpression$1", "symbols": [(lexer.has("_") ? {type: "_"} : _)]},
     {"name": "action$ebnf$1", "symbols": ["action$ebnf$1", "action$ebnf$1$subexpression$1"], "postprocess": function arrpush(d) {return d[0].concat([d[1]]);}},
-    {"name": "action", "symbols": [(lexer.has("KEYWORD") ? {type: "KEYWORD"} : KEYWORD), (lexer.has("COLON") ? {type: "COLON"} : COLON), (lexer.has("PROMPT_STRING") ? {type: "PROMPT_STRING"} : PROMPT_STRING), "action$ebnf$1"]},
+    {"name": "action", "symbols": [(lexer.has("KEYWORD") ? {type: "KEYWORD"} : KEYWORD), "action$ebnf$1"]},
+    {"name": "action", "symbols": [(lexer.has("KEYWORD") ? {type: "KEYWORD"} : KEYWORD), (lexer.has("COLON") ? {type: "COLON"} : COLON), (lexer.has("IDENT") ? {type: "IDENT"} : IDENT)]},
     {"name": "action$ebnf$2", "symbols": []},
     {"name": "action$ebnf$2$subexpression$1", "symbols": [(lexer.has("NL") ? {type: "NL"} : NL)]},
     {"name": "action$ebnf$2$subexpression$1", "symbols": [(lexer.has("_") ? {type: "_"} : _)]},
     {"name": "action$ebnf$2", "symbols": ["action$ebnf$2", "action$ebnf$2$subexpression$1"], "postprocess": function arrpush(d) {return d[0].concat([d[1]]);}},
-    {"name": "action", "symbols": [(lexer.has("KEYWORD") ? {type: "KEYWORD"} : KEYWORD), (lexer.has("COLON") ? {type: "COLON"} : COLON), (lexer.has("OPT_STRING") ? {type: "OPT_STRING"} : OPT_STRING), "action$ebnf$2"]},
+    {"name": "action", "symbols": [(lexer.has("KEYWORD") ? {type: "KEYWORD"} : KEYWORD), (lexer.has("COLON") ? {type: "COLON"} : COLON), (lexer.has("PROMPT_STRING") ? {type: "PROMPT_STRING"} : PROMPT_STRING), "action$ebnf$2"]},
     {"name": "action$ebnf$3", "symbols": []},
     {"name": "action$ebnf$3$subexpression$1", "symbols": [(lexer.has("NL") ? {type: "NL"} : NL)]},
     {"name": "action$ebnf$3$subexpression$1", "symbols": [(lexer.has("_") ? {type: "_"} : _)]},
     {"name": "action$ebnf$3", "symbols": ["action$ebnf$3", "action$ebnf$3$subexpression$1"], "postprocess": function arrpush(d) {return d[0].concat([d[1]]);}},
-    {"name": "action", "symbols": [(lexer.has("OPTIONS") ? {type: "OPTIONS"} : OPTIONS), (lexer.has("COLON") ? {type: "COLON"} : COLON), "option_stmt", "action$ebnf$3"]},
+    {"name": "action", "symbols": [(lexer.has("KEYWORD") ? {type: "KEYWORD"} : KEYWORD), (lexer.has("COLON") ? {type: "COLON"} : COLON), (lexer.has("OPT_STRING") ? {type: "OPT_STRING"} : OPT_STRING), "action$ebnf$3"]},
+    {"name": "action$ebnf$4", "symbols": []},
+    {"name": "action$ebnf$4$subexpression$1", "symbols": [(lexer.has("NL") ? {type: "NL"} : NL)]},
+    {"name": "action$ebnf$4$subexpression$1", "symbols": [(lexer.has("_") ? {type: "_"} : _)]},
+    {"name": "action$ebnf$4", "symbols": ["action$ebnf$4", "action$ebnf$4$subexpression$1"], "postprocess": function arrpush(d) {return d[0].concat([d[1]]);}},
+    {"name": "action", "symbols": [(lexer.has("OPTIONS") ? {type: "OPTIONS"} : OPTIONS), (lexer.has("COLON") ? {type: "COLON"} : COLON), "option_stmt", "action$ebnf$4"]},
     {"name": "option_stmt", "symbols": [(lexer.has("LBRACE") ? {type: "LBRACE"} : LBRACE), "option_param"]},
     {"name": "option_param", "symbols": [(lexer.has("OPT_STRING") ? {type: "OPT_STRING"} : OPT_STRING), "option_param"]},
     {"name": "option_param", "symbols": [(lexer.has("KEYWORD") ? {type: "KEYWORD"} : KEYWORD), (lexer.has("COLON") ? {type: "COLON"} : COLON), (lexer.has("IDENT") ? {type: "IDENT"} : IDENT), "option_param"]},
