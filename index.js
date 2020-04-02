@@ -10,6 +10,11 @@ let input =
 include "Content/Talos/Databases/ComputerTerminalDialogs/MLA_CommPortal.dlg"
 include "Content/Talos/Databases/ComputerTerminalDialogs/MiltonTower1.dlg"
 include "Content/Talos/Databases/ComputerTerminalDialogs/MiltonTower2.dlg"
+include "Content/Talos/Databases/ComputerTerminalDialogs/Milton1_1.dlg"
+include "Content/Talos/Databases/ComputerTerminalDialogs/Milton1_2.dlg"
+#include "Content/Talos/Databases/ComputerTerminalDialogs/Milton2_1.dlg"
+#include "Content/Talos/Databases/ComputerTerminalDialogs/Milton2_2.dlg"
+#include "Content/Talos/Databases/ComputerTerminalDialogs/Milton2_3.dlg"
 `
 input = input.replace(/#.*\r?\n/g, '');
 input = input.replace(/include "(.*)"/g, includeFile);

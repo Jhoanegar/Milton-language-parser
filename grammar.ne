@@ -37,7 +37,7 @@ const lexer = moo.compile({
     NUMBER:  /0|[1-9][0-9]*/,
     //EMPTY_STRING: /" " /,
     OPT_STRING:  {match: /"[\w:\.]*=?[a-z%\[\]\?\.,: \*'_A-Z0-9]*"/, value: optString},
-    PROMPT_STRING:  {match: /\[\[[\w:\.]*=(?:[\s\S](?!\]\]))+\s\]\]/, value: string},
+    PROMPT_STRING:  {match: /\[\[[\w:\.]*=(?:[\s\S](?!\]\]))+\s\]\]\s*/, value: string},
     LPAREN:  {match: /\(\s?/, value: trim},
     RPAREN:  {match: /\)\s?/, value: trim},
     LBRACE:  {match: /\{\s*/, value: trim},
