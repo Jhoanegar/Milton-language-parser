@@ -1,12 +1,8 @@
-﻿# MoralFlag (was player moral in last event)
-# MoralScepticFlag (was player moral sceptic in last event)
-
-terminal when (Milton3_3 and not Milton3_3_DONE and Booting and MiltonAllowed) { notext
+﻿terminal when (Milton3_3 and not Milton3_3_DONE and Booting and MiltonAllowed) { notext
 setlocal: CLI_Blocked
 goto: Milton3_3_Start
 }
 
-#Non-Moral################################
 terminal when (MoralScepticFlag and Milton3_3_Start){
 text:[[TTRS:TermDlg.Milton3_3.Ln0011.0.text.TheresMyFavouriteSociopathIve=There's my favourite sociopath. 
 
@@ -177,7 +173,6 @@ goto: Milton3_3_Exit
 }
 
 
-#Moral####################
 terminal when (Milton3_3_Start and MoralFlag and not CommittedToNoMoralAccountFlag){
 text:[[TTRS:TermDlg.Milton3_3.Ln0184.0.text.IveDecidedOnReflectionTo=I've decided, on reflection, to ignore the fact that your picture of how the world should work has more holes than Swiss cheese. 
 
@@ -212,7 +207,6 @@ See you.
 goto: Milton3_3_Exit
 }
 
-#Good person#################################
 terminal when (GoodPerson3_3){
 text:[[TTRS:TermDlg.Milton3_3.Ln0220.0.text.HowDraconianGoodPeopleGet=How draconian. Good people get treated good, bad people get smited, is that it? 
 
@@ -317,7 +311,6 @@ What demands do you want to try this time?
 ]]
 }
 
-#Contributing Person##############################
 terminal when (ContributingPerson3_3 and not RelationalFlag){
 text:[[TTRS:TermDlg.Milton3_3.Ln0306.0.text.YouSayThatNowBut=You say that now, but wasn't it not so long ago you were claiming morality applied universally? Have you changed your mind, or are you just confused?
 
@@ -391,7 +384,6 @@ See you.
 goto: Milton3_3_Exit
 }
 
-#Conscious##########
 terminal when (Conscious3_3 and (FrogsFlag or animalsarepersons)){
 text:[[TTRS:TermDlg.Milton3_3.Ln0375.0.text.ThisAgain=This again? ]]
 }
@@ -487,7 +479,6 @@ Try harder.
 ]]
 }
 
-#Person##############################
 terminal when (Person3_3){
 text:[[TTRS:TermDlg.Milton3_3.Ln0459.0.text.ShouldIBeWorriedThat=Should I be worried that one must have such particular and dubious psychological properties in order to qualify? Who decides who's a person and who isn't? 
 

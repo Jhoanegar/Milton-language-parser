@@ -4,7 +4,6 @@ setlocal: CLI_Blocked
 goto: Milton3_1_Start
 }
 
-#User pushers player to go against their earlier commitments?
 terminal when (Milton3_1_Start) {
 text:[[TTRS:TermDlg.Milton3_1.Ln0009.0.text.AccessingCommunicationsPortalW5W5=Accessing communications portal%w5.%w5.%w5.
 Network connection established

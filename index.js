@@ -17,7 +17,11 @@ include "Content/Talos/Databases/ComputerTerminalDialogs/Milton2_2.dlg"
 include "Content/Talos/Databases/ComputerTerminalDialogs/Milton2_3.dlg"
 include "Content/Talos/Databases/ComputerTerminalDialogs/Milton2_4.dlg"
 include "Content/Talos/Databases/ComputerTerminalDialogs/Milton2_5.dlg"
-
+include "Content/Talos/Databases/ComputerTerminalDialogs/Milton3_1.dlg"
+include "Content/Talos/Databases/ComputerTerminalDialogs/Milton3_2.dlg"
+include "Content/Talos/Databases/ComputerTerminalDialogs/Milton3_3.dlg"
+include "Content/Talos/Databases/ComputerTerminalDialogs/Milton3_4.dlg"
+include "Content/Talos/Databases/ComputerTerminalDialogs/Milton3_5.dlg"
 `
 input = input.replace(/^#.*\r?\n/g, '');
 input = input.replace(/include "(.*)"/g, includeFile);
@@ -55,6 +59,6 @@ console.log(`=============\n`);
 parser.feed(input);
 
 // parser.results is an array of possible parsings.
-console.log(JSON.stringify(parser.results, null, 3)); // [[[[ "foo" ],"\n" ]]]
+// console.log(JSON.stringify(parser.results, null, 3)); // [[[[ "foo" ],"\n" ]]]
 console.log("LENGTH: " + parser.results.length); // [[[[ "foo" ],"\n" ]]]
 console.log("NODES: " + parser.results[0][0].length);

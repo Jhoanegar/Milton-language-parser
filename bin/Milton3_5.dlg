@@ -29,7 +29,6 @@ text: "TTRS:TermDlg.Milton3_5.Ln0033.0.text.WhyDoYouCareWhat=Why do you care wha
 }
 
 
-#This is also activated if the previous nihilism was already seen (as that one may not be repeated twice, especially because it contains the dialog with Elohim! during which it holds the terminal
 terminal when (NihilistConfirmed3_5 or (Nihilism3_5 and ((DoBelieveFlag and LimitationsFlag) or (DoBelieveFlag and SorryFlag) or (SorryFlag and LimitationsFlag) or IfOnlyEveryoneGaveUp_Seen))){
 text:[[TTRS:TermDlg.Milton3_5.Ln0039.0.text.IThinkThisTimeI=I think this time I shall take you at your word, before you can change your mind again.%w10
 
@@ -61,7 +60,6 @@ options:{
 
 
 
-#INTRO Player claimed to be a nihilist, but said conflicting things twice or doubled back on the moral path at the end of 3_4
 terminal when (Milton3_5_Start and NihilistFlag and (ConflictedHedonistFlag or MoralFlag)){
 text:[[TTRS:TermDlg.Milton3_5.Ln0069.0.text.DespiteYourInabilityToPick=Despite your inability to pick a line and stick with it, I have decided to give you the benefit of the doubt.
 
@@ -73,7 +71,6 @@ If you believe what you say then I have no doubt you will find its terms satisfa
 goto: NihilistsOptions3_5
 }
 
-#INTRO - Player stayed on the amoral/nihilism track
 terminal when (Milton3_5_Start and NihilistFlag and not ConflictedHedonistFlag){
 text:[[TTRS:TermDlg.Milton3_5.Ln0081.0.text.WelcomeBackIAmReady=Welcome back. I am ready to share with you the details of my proposal.
 
@@ -82,7 +79,6 @@ goto: NihilistsOptions3_5
 }
 
 
-#####Main Nihilist path######################
 terminal when (NihilistsOptions3_5){
 text:[[TTRS:TermDlg.Milton3_5.Ln0090.0.text.IfYouMakeItTo=If you make it to the top of the tower, I want you to take me with you. 
 
@@ -293,7 +289,6 @@ options:{
 }}
 
 
-##Refuses to accept fault or engage in dialog path
 terminal when (WhatHoles3_5){
 text:[[TTRS:TermDlg.Milton3_5.Ln0308.0.text.AndThisIsWhyIts=And this is why it's me who should be doing the talking. 
 
@@ -321,7 +316,6 @@ options:{
 }}
 
 
-####Main path
 terminal when (Flawed3_5){
 text:[[TTRS:TermDlg.Milton3_5.Ln0347.0.text.MiltonGlitchesOutWhichOnes=%w3%g1%w3Which ones, exactly?
 %w3%g1%w3
@@ -877,10 +871,6 @@ goto: Milton3_5_Exit
 }
 
 
-#####Player admits no fault, or refuses further dialogue, and is thus on the Blind-Believer path. You are too much in Elohim's shadow, blindly accepting whatever you want to believe
-##074_You_have_done_well
-##075_Look_within_you
-##076_Have_faith
 terminal when (ElohimLikes3_5){
 text:[[TTRS:TermDlg.Milton3_5.Ln0918.0.text.ThunderStrikesAndElohimsVoice=%w10Wonderful. Do you see where all this blind faith gets you?
 

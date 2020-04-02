@@ -101,7 +101,6 @@ text:[[TTRS:TermDlg.Milton3_4.Ln0101.0.text.PerhapsOrPerhapsTryingTo=Perhaps. Or
 ]]
 }
 
-###All paths meet here
 terminal when (Imaginary3_4 or Complex3_4 or ObjectiveTruth3_4 or ConstructiveBridgeEnd3_4 or ScepticTwo3_4){
 text:[[TTRS:TermDlg.Milton3_4.Ln0108.0.text.PoseQuestionsLikeWhatShould=Pose questions like 'What should I do with myself?' and 'What is the world REALLY like?' enough, and you start to assume they have answers.%w5
 
@@ -199,8 +198,6 @@ set: NihilistFlag
 goto: Milton3_4_Exit
 }
 
-#Player must choose this path to end up on the constructive ending. 
-#Could be a good spot the first Milton glitch effect (discussed with Alen).
 terminal when (How3_4){
 text:[[TTRS:TermDlg.Milton3_4.Ln0206.0.text.MiltonGlitchesOutALittle=%g2%w10
 You've seen how easily your view of the world is manipulated, yet you trust those thoughts that run through your mind? 

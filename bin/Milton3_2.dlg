@@ -21,7 +21,6 @@ text:[[TTRS:TermDlg.Milton3_2.Ln0020.0.text.TakeYourTime=Take your time.
 
 ]]}
 
-#What's best for me
 terminal when (NoMorals3_2 and (HeroFlag or WhatGodWantsFlag)){
 text:[[TTRS:TermDlg.Milton3_2.Ln0026.0.text.YouKnowIThinkThat=You know, I think that right there was the very last time your transient beliefs are going to take me by surprise.%w20
 
@@ -101,7 +100,6 @@ options:{
 "TTRS:TermDlg.Milton3_2.Ln0101.0.option.OkayYesIAdmitI=Okay, yes, I admit I have some moral code." next: MoralBridge3_2 
 }}
 
-#What's Right###########################################################
 
 terminal when (Moral3_2 and (HeroFlag or Milton1_2Utilitarian or Milton1_2Liberal)){
 text:[[TTRS:TermDlg.Milton3_2.Ln0107.0.text.NoGreatSurprisesThereBut=No great surprises there, but let's make things just a little clearer. 
@@ -171,7 +169,6 @@ But what about those lucky few that find themselves inside your benevolent carte
 ]]
 }
 
-#Universal############################
 terminal when (Universal3_2){
 text:[[TTRS:TermDlg.Milton3_2.Ln0176.0.text.WhatAMagnanimousDictatorYou=What a magnanimous dictator you would make. Of course, I'm sure it would take a dictator to enforce a single moral code on the entire universe. 
 
@@ -273,7 +270,6 @@ set: GiveUp
 goto: CLI_Resume
 }
 
-#Egalitarianism#################################################################################
 terminal when (Egalitarianism3_2){
 text:[[TTRS:TermDlg.Milton3_2.Ln0279.0.text.StrandedOnTheOldEgalitarian=Stranded on the old egalitarian plateau, are you? I suppose you'd best tell me exactly which goods it is that everyone should have an equal share of.
 
@@ -472,7 +468,6 @@ text:[[TTRS:TermDlg.Milton3_2.Ln0470.0.text.PffItsAllVeryWell=Pff. It's all very
 set: StubbornEgalitarianFlag
 }
 
-#NonConsequentialism##############################################################################
 terminal when(NonConsequentialist3_2){
 text:[[TTRS:TermDlg.Milton3_2.Ln0478.0.text.AhYoureObviouslyOneOf=Ah, you're obviously one of the clever ones. So reasoning is supposed to lead us all to the same conclusions about what sort of a person we're supposed to be, is that it?
 
@@ -542,7 +537,6 @@ If you really want to say what you've been saying so far, I think you may have t
 ]]
 }
 
-#Utilitarianism##############################################################################
 terminal when (Utilitarian3_2){
 text:[[TTRS:TermDlg.Milton3_2.Ln0548.0.text.AhThatOldChestnutSo=Ah, that old chestnut. So just what is this goodness that you're seeking to maximise?
 
@@ -670,7 +664,6 @@ text:[[TTRS:TermDlg.Milton3_2.Ln0668.0.text.OnThatAtLeastYou=On that, at least, 
  set: StubbornUtilitarianFlag
 }
 
-#Gave up
 terminal when (GaveUp3_2){
 text:[[TTRS:TermDlg.Milton3_2.Ln0676.0.text.AdmittingTheProblemsAreBeyond=Admitting the problems are beyond your comprehension is the first step towards letting go.
 
@@ -683,7 +676,6 @@ set: Milton3_2_DONE
 goto: CLI_Resume
 }
 
-#Final confirmation text to seal off the dialog
 terminal when (CommittedUtilitarian3_2 or MaxWealth or AlsoMurder3_2 or Many3_2 or Want3_2 or DidntTry3_2 or Wrong3_2 or CommittedEgalHappiness3_2 or CommittedEgalWealth3_2 or EgalPrimaryGoodsWould or EgalPrimaryGoodsWouldNot or CommittedNonConsequentialist3_2 or Confused3_2 or End3_2){
 text:[[TTRS:TermDlg.Milton3_2.Ln0689.0.text.W10YouKnowThereAreShed=%w10You know, there are shed loads of broken theories less ridiculous than the one you're chewing through. How about I give you a bit of space to consider them?
 
