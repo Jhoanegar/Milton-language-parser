@@ -41,7 +41,7 @@ const lexer = moo.compile({
     LPAREN:  {match: /\(\s?/, value: trim},
     RPAREN:  {match: /\)\s?/, value: trim},
     LBRACE:  {match: /\{\s*/, value: trim},
-    RBRACE:  {match: /\}[ \t]?/, value: trim},
+    RBRACE:  {match: /\}\s*/, value: trim},
     TERMINAL: {match: /terminal\s?/, value: trim},
     PLAYER: {match: /player\s?/, value: trim},
     COLON: {match: /\:\s?/, value: trim},
@@ -63,13 +63,14 @@ stmt            -> %TERMINAL %WHEN exp termblock
                 | %PLAYER %WHEN exp termblock
 #Terminal block
 
-termblock       -> %LBRACE termstmt %RBRACE %NL:+
-termstmt        -> action (action):*
-action          -> %KEYWORD (%NL | %_):*
-                | %KEYWORD %COLON %IDENT
-                | %KEYWORD %COLON %PROMPT_STRING (%NL | %_):*
-                | %KEYWORD %COLON %OPT_STRING (%NL | %_):*
-                | %OPTIONS %COLON option_stmt  (%NL | %_):*
+termblock       -> %LBRACE termstmt
+termstmt        -> %KEYWORD termstmt
+                | %KEYWORD %COLON %IDENT termstmt
+                | %KEYWORD %COLON %PROMPT_STRING termstmt
+                | %KEYWORD %COLON %OPT_STRING termstmt
+                | %OPTIONS %COLON option_stmt termstmt
+                | (%_ | %NL) termstmt
+                | %RBRACE
 
 #Options statement
 option_stmt    -> %LBRACE option_param 
