@@ -24,7 +24,7 @@ terminal when (Booting and not MiltonAllowed and not MiltonNotAllowed and not
 #include "Content/Talos/Databases/ComputerTerminalDialogs/MLA_CommPortal.dlg"
 
 
-#include "Content/Talos/Databases/ComputerTerminalDialogs/MiltonTower1.dlg"
+include "Content/Talos/Databases/ComputerTerminalDialogs/MiltonTower1.dlg"
 #include "Content/Talos/Databases/ComputerTerminalDialogs/MiltonTower2.dlg"
 
 # Milton must come before cloud terminal texts, to be able to override them

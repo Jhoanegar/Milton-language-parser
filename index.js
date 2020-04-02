@@ -8,7 +8,8 @@ const parser = new nearley.Parser(nearley.Grammar.fromCompiled(grammar));
 let input = 
 `include "Content/Talos/Databases/ComputerTerminalDialogs/QueryMLA.dlg"
 include "Content/Talos/Databases/ComputerTerminalDialogs/MLA_CommPortal.dlg"
-
+include "Content/Talos/Databases/ComputerTerminalDialogs/MiltonTower1.dlg"
+#include "Content/Talos/Databases/ComputerTerminalDialogs/MiltonTower2.dlg"
 `
 input = input.replace(/#.*\r?\n/g, '');
 input = input.replace(/include "(.*)"/g, includeFile);
