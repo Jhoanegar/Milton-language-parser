@@ -8,17 +8,16 @@ Unrecognized error detected.%s0%w9
 ]]
 setlocal: CommPortal_FakeCLI
 setlocal: CLI_Blocked
-clear: CLI_Enabled  # dunno why it sometimes stays on from before
-goto: dummy # needed to collect prompt
+clear: CLI_Enabled
+goto: dummy
 }
 
-# used to return back here to the fake cli
 terminal when (CommPortal_ResumeFakeCLI) {
 text: [[TTRS:TermDlg.MLA_CommPortal.Ln0019.0.text.ExitingCommunicationsPortal=Exiting communications portal%w3.%w3.%w3.Done
 Resuming library archive session%w5.%w5.%w5.Done
 ]]
 setlocal: CommPortal_FakeCLI
-goto: dummy # needed to collect prompt
+goto: dummy
 }
 
 player when (CommPortal_FakeCLI and AccessCommPortalAvailable) {
@@ -270,6 +269,6 @@ Press any key to exit. ]]
 set: CommPortal_Cert_COMPLETED
 	
 	options:{
-	" " short:"TTRS:TermDlg.Common.Exit=exit" next: CLI_Resume  # once the cert is completed, this terminal will continue functioning for normal file viewing
+	" " short:"TTRS:TermDlg.Common.Exit=exit" next: CLI_Resume 
 	}
 }

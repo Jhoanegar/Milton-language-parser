@@ -1,4 +1,5 @@
-﻿terminal when (Milton2_2 and not Milton2_2_DONE and Booting and MiltonAllowed){ notext
+﻿
+terminal when (Milton2_2 and not Milton2_2_DONE and Booting and MiltonAllowed){ notext
 setlocal: CLI_Blocked
 goto: Milton2_2_Start
 }

@@ -4,7 +4,6 @@ setlocal: CLI_Blocked
 goto: Milton3_4_Start
 }
 
-#If player was sceptical of morality, and didn't say conflicting things more than once in the previous dialog
 terminal when (Milton3_4_Start and MoralScepticFlag and not ConflictedHedonistFlag){
 text:[[TTRS:TermDlg.Milton3_4.Ln0009.0.text.ThereYouAreYouKept=There you are, you kept me waiting.%w5
 
@@ -60,7 +59,6 @@ text:[[TTRS:TermDlg.Milton3_4.Ln0059.0.text.ThatsExactlyWhatILike=That's exactly
 
 ]]}
 
-#If player tried to defend moral claims in the previous dialogs, or was a moral sceptic but contradicted themselves twice
 terminal when (Milton3_4_Start and (MoralFlag or (MoralScepticFlag and ConflictedHedonistFlag))){
 text:[[TTRS:TermDlg.Milton3_4.Ln0065.0.text.ThereYouAreYouKept=There you are. You kept me waiting.%w5 I finally put my finger on what was bothering me. 
 

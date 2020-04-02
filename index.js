@@ -12,13 +12,13 @@ include "Content/Talos/Databases/ComputerTerminalDialogs/MiltonTower1.dlg"
 include "Content/Talos/Databases/ComputerTerminalDialogs/MiltonTower2.dlg"
 include "Content/Talos/Databases/ComputerTerminalDialogs/Milton1_1.dlg"
 include "Content/Talos/Databases/ComputerTerminalDialogs/Milton1_2.dlg"
-#include "Content/Talos/Databases/ComputerTerminalDialogs/Milton2_1.dlg"
-#include "Content/Talos/Databases/ComputerTerminalDialogs/Milton2_2.dlg"
-#include "Content/Talos/Databases/ComputerTerminalDialogs/Milton2_3.dlg"
+include "Content/Talos/Databases/ComputerTerminalDialogs/Milton2_1.dlg"
+include "Content/Talos/Databases/ComputerTerminalDialogs/Milton2_2.dlg"
+
 `
-input = input.replace(/#.*\r?\n/g, '');
+input = input.replace(/^#.*\r?\n/g, '');
 input = input.replace(/include "(.*)"/g, includeFile);
-input = input.replace(/#.*\r?\n/g, '');
+input = input.replace(/^#.*\r?\n/g, '');
 input = input.replace(/\n[\t ]+/g, ' ');
 
 function includeFile(match, file) {
@@ -28,9 +28,9 @@ function includeFile(match, file) {
   let basePath = path.resolve('./','bin');
   let fileName = path.basename(file);
   try {
-    let include = fs.readFileSync(path.resolve(basePath, fileName)).toString()
+    let include = fs.readFileSync(path.resolve(basePath, fileName)).toString().replace(/\uFEFF/g, '')
   
-    return include.trim() + "\n"
+    return include.trim()
   } catch (err) {
     throw err;
   }

@@ -1,6 +1,4 @@
-﻿##This is the second main interaction
-#Triggered by running MLA after having restored it.
-terminal when (RunMLA and MLAIntro_PhaseQuery){
+﻿terminal when (RunMLA and MLAIntro_PhaseQuery){
 notext
 setlocal: CLI_Blocked
 clear: CLI_Enabled
@@ -97,8 +95,6 @@ It also provides powerful networking and troubleshooting functions.
 Your query? : ]]
 }
 
-##Once player has had Milton describe his functions:
-
 player when (QueryMLA_ON and Describe_DONE and not HowOld_DONE){
 text: "TTRS:TermDlg.QueryMLA.Ln0106.0.text.HowOldAreTheLibrary=How old are the library archives?"
 set: HowOld_DONE
@@ -167,7 +163,6 @@ prompt: [[TTRS:TermDlg.QueryMLA.Ln0168.0.text.ProgressiveDataCorruptionIsInevita
 Your query? : ]]
 }
 
-##Once player has asked one question about the library
 player when (QueryMLA_ON and not OutsideWorld_DONE and (HowOld_DONE or WhatTerminal_DONE or HowLong_DONE or WhatStatus_DONE)){
 text:"TTRS:TermDlg.QueryMLA.Ln0175.0.text.ForgetTheLibraryCanYou=Forget the library, can you respond to queries on the outside world?"
 next: OutsideWorld

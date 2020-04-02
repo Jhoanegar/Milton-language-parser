@@ -1,5 +1,4 @@
-﻿#If player hasn't gone to the tower before heading to world 2
-terminal when (Tower1 and not Tower1_DONE and Booting and MiltonAllowed){
+﻿terminal when (Tower1 and not Tower1_DONE and Booting and MiltonAllowed){
 notext
 setlocal: CLI_Blocked
 clear: CLI_Enabled
@@ -50,7 +49,6 @@ I'll be off then. Just wanted to drop in and run a little interference.
 goto: Tower1End
 }
 
-#########Player says they will avoid the tower
 terminal when (WontClimb_Tower1){
 text:[[TTRS:TermDlg.MiltonTower1.Ln0055.0.text.OhNoHesReallyGotten=Oh no, he's really gotten to you, hasn't he?
 

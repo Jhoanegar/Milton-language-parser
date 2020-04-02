@@ -1,17 +1,4 @@
-﻿#Variables that affect this dialogue:
-
-# Set one of the following as your definition of a person
-#	"TTRS:TermDlg.Milton2_3.Ln0004.0.AHumanBeing=A human being" set: humanbeing
-#	"TTRS:TermDlg.Milton2_3.Ln0005.0.ACitizen=A citizen" set: citizen
-#	"TTRS:TermDlg.Milton2_3.Ln0006.0.ABeingOfNegativeEntropy=A being of negative entropy" set: negativeentropy 
-#	"TTRS:TermDlg.Milton2_3.Ln0007.0.ARationalAnimal=A rational animal" set: rationalanimal 
-#	"TTRS:TermDlg.Milton2_3.Ln0008.0.AProblemSolvingSystem=A problem solving system" set: problemsolving 
-
-#If you choose humanbeing you should also set either of these (not both):
-#	set: animalsarepersons
-#	If you think animals are not persons set: Milton1_2PersonDenial
-
-
+﻿
 terminal when (Milton2_3 and not Milton2_3_DONE and Booting and MiltonAllowed){ notext
 setlocal: CLI_Blocked
 goto: Milton2_3_Start

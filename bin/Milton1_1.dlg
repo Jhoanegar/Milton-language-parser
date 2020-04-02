@@ -200,6 +200,6 @@ Thank you. The certification process is now complete. You will receive a notific
 Press any key to exit. ]]
 set: Milton1_1_DONE
 	options: {
-	" " short:"TTRS:TermDlg.Common.Exit=exit" next: CLI_Resume  # once the cert is completed, this terminal will continue functioning for normal file viewing
+	" " short:"TTRS:TermDlg.Common.Exit=exit" next: CLI_Resume  
 	}
 }

@@ -1,10 +1,4 @@
-﻿## Tom, uncomment this if you want to put a Milton in the Gates ending terminal
-#terminal when (InTerminal_Ending_Gates and Booting) { notext
-#setlocal: CLI_Blocked
-#goto: Milton_Gates_Start
-#}
-
-######## This part handles the actual end of game command that is available only in this terminal
+﻿
 terminal when(CLI_list and InTerminal_Ending_Gates) {
 text:[[TTRS:TermDlg.Endings.Gates_Help=
 Type <span class="strong">/eternalize</span> to proceed towards eternal life.

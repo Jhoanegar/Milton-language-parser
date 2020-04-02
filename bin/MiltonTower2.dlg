@@ -1,5 +1,4 @@
-﻿##Once player has gone to the tower (if this is before he accesses world 3, otherwise cancel this dialog)
-terminal when (Tower2 and not Tower2_DONE and Booting and MiltonAllowed){
+﻿terminal when (Tower2 and not Tower2_DONE and Booting and MiltonAllowed){
 notext
 setlocal: CLI_Blocked
 clear: CLI_Enabled

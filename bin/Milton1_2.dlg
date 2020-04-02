@@ -1,21 +1,8 @@
-﻿##This dialog tracks the following variables
-
-#Milton1_2BadMath - failed maths test
-#Milton1_2Objective - gave objective answers
-#Milton1_2PersonDenial - had tensions in their definition of a person
-#Milton1_2Sociopath was sociopathic
-#Milton1_2Liberal has liberal morals
-#Milton1_2Utilitarian has utilitarian morals
-#Milton1_2NoMorals
-#Milton1_2ValueDiscovered
-#Milton1_2ValueCreated
-
-terminal when (Milton1_2 and not Milton1_2_DONE and Booting and MiltonAllowed){ notext
+﻿terminal when (Milton1_2 and not Milton1_2_DONE and Booting and MiltonAllowed){ notext
   setlocal: CLI_Blocked
   goto: Milton1_2_Start
 }
 
-#When player has made some mistake or other in the previous dialog set 'conflict'
 terminal when (not conflict and 
 (Milton1_2BadMath or Milton1_2Objective or Milton1_2PersonDenial or Milton1_2Sociopath or (Milton1_2Liberal and Milton1_2Utilitarian) or (Milton1_2Liberal and Milton1_2NoMorals) or (Milton1_2NoMorals and Milton1_2Utilitarian) or (Milton1_2ValueDiscovered and Milton1_2ValueCreated))){
 notext

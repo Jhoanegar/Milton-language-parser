@@ -3,7 +3,6 @@ setlocal: CLI_Blocked
 goto: Milton3_5_Start
 }
 
-#If player chooses a sceptical response once - they get to confirm it or go back to the main thread.
 terminal when (Nihilism3_5 and not (DoBelieveFlag and LimitationsFlag) and not (DoBelieveFlag and SorryFlag) and not (SorryFlag and LimitationsFlag) and not IfOnlyEveryoneGaveUp_Seen){
 text:[[TTRS:TermDlg.Milton3_5.Ln0008.0.text.IfOnlyEveryoneGaveUp=If only everyone gave up so easily.%w15%h1%w5
 Yes, my child, choose carefully. Just don't think about it too hard for too long, or you'll see right through him.
@@ -30,7 +29,6 @@ text: "TTRS:TermDlg.Milton3_5.Ln0033.0.text.WhyDoYouCareWhat=Why do you care wha
 }
 
 
-#If player chooses a sceptical response twice. They are now locked into the nihilist path.
 #This is also activated if the previous nihilism was already seen (as that one may not be repeated twice, especially because it contains the dialog with Elohim! during which it holds the terminal
 terminal when (NihilistConfirmed3_5 or (Nihilism3_5 and ((DoBelieveFlag and LimitationsFlag) or (DoBelieveFlag and SorryFlag) or (SorryFlag and LimitationsFlag) or IfOnlyEveryoneGaveUp_Seen))){
 text:[[TTRS:TermDlg.Milton3_5.Ln0039.0.text.IThinkThisTimeI=I think this time I shall take you at your word, before you can change your mind again.%w10
@@ -266,8 +264,6 @@ goto: Milton3_5_Exit
 
 
 
-####INTRO - Constructive path######################################################################
-##If player was amoral, but came onto the constructive path in 3_4
 terminal when (Milton3_5_Start and ConstructiveFlag and MoralScepticFlag and not NihilistFlag){
 text:[[TTRS:TermDlg.Milton3_5.Ln0277.0.text.MyFavouriteDisappointmentBackFor=My favourite disappointment, back for more I see.
 
@@ -278,7 +274,6 @@ goto: YourProblemIs3_5
 }
 
 
-##If player has been moral and constructive all along
 terminal when (Milton3_5_Start and ConstructiveFlag and not MoralScepticFlag and not NihilistFlag){
 text:[[TTRS:TermDlg.Milton3_5.Ln0288.0.text.WelcomeBackThereAreGoing=Welcome back. There are going to be some changes around here.
 
@@ -584,9 +579,6 @@ options:{
 "TTRS:TermDlg.Milton3_5.Ln0612.0.option.YoureRightWereAllJust=You're right. We're all just machines with delusions of grandeur." set: LimitationsFlag next: Nihilism3_5
 }}
 
-##If player denied all mistakes earlier elohim comes to his rescue now
-##Also player comes here if they admit a mistake/doubt, but later insist on making statements instead of questions, and then insist Elohim's judgement is correct
-##Elohim file: 073_Enough Silence demon
 terminal when (DoNotQuestionElohimEnd){
 text:[[TTRS:TermDlg.Milton3_5.Ln0616.0.text.AltThunder=You, Elohim, the others, you're all the same. Not a hope for one amongst the lot of you.
 

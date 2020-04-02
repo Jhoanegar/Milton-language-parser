@@ -1,14 +1,4 @@
-﻿#Variables that affect this dialogue
-#Set one of the following before beginning the terminal
-#Most of this dialog is unique to each of the four possibilities
-
-#What is consciousness made of?
-#Neurons set: Physicalist
-#The soul" set: Religious
-#Some non-physical thing" set: Dualist
-#Some complex physical system set: Functionalist
-
-terminal when (Milton2_4 and not Milton2_4_DONE and Booting and MiltonAllowed){notext
+﻿terminal when (Milton2_4 and not Milton2_4_DONE and Booting and MiltonAllowed){notext
 setlocal: CLI_Blocked
 goto: Milton2_4_Start
 }
@@ -356,7 +346,6 @@ text:[[TTRS:TermDlg.Milton2_4.Ln0353.0.text.WellItSoundsLikeThose=Well, it sound
 ]]
 }
 
-#If player doubted the ability of a computer to be conscious
 terminal when (Technophobe){
 text:[[TTRS:TermDlg.Milton2_4.Ln0360.0.text.ImTryingToSeeWhere=I'm trying to see where you're coming from, but it's no small task. Let me try one more time.
 
