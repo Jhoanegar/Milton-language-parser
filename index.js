@@ -52,9 +52,9 @@ function printSource(input) {
   return output;
 }
 // Parse something!
-console.log(`\n===========`)
-console.log(printSource(input));
-console.log(`=============\n`);
+// console.log(`\n===========`)
+// console.log(printSource(input));
+// console.log(`=============\n`);
 
 parser.feed(input);
 
@@ -62,3 +62,19 @@ parser.feed(input);
 // console.log(JSON.stringify(parser.results, null, 3)); // [[[[ "foo" ],"\n" ]]]
 console.log("LENGTH: " + parser.results.length); // [[[[ "foo" ],"\n" ]]]
 console.log("NODES: " + parser.results[0][0].length);
+
+let results = parser.results[0];
+
+let printValue = function(arr) {
+  for (let i = 0; i < arr.length; i++) {
+    const element = arr[i];
+    if (Array.isArray(element)) {
+      printValue(element)
+    } else {
+      // console.log(element)
+    }
+  }
+  
+}
+
+printValue(results);

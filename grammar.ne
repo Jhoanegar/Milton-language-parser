@@ -13,19 +13,19 @@
 let variables = {};
 const moo = require("moo");
 const trim = token => {
-    console.log(`"${token}"`)
+    //console.log(`"${token}"`)
     return token.trim()
 };
 const string = token => {
     var regex = /\[\[(?:[\w:\.]*=(?:[\s\S](?!\]\]))+[\S\s]| )\]\]\s*/ // Same regexp but with a capture group
     let match = token.match(regex)
-    console.log(match)
+    //console.log(match)
     return {string: match[2], name: match[1]};
 }
 const optString = token => {
     var regex = /"([\s\S]*)=?([a-z%\[\]\?\!,#:\+=\-\(\)\/ '\*_A-Z0-9]+)"/;
     let match = token.match(regex);
-    console.log(match)
+    //console.log(match)
     if (match && match[1] && match[2]) {
         return {string: match[2], name: match[1]}
     } else {
