@@ -6,21 +6,31 @@ function id(x) { return x[0]; }
 let variables = {};
 const moo = require("moo");
 const trim = token => {
-    //console.log(`"${token}"`)
+    console.log(`"${token}"`)
     return token.trim()
 };
 const string = token => {
     var regex = /\[\[(?:[\w:\.]*=(?:[\s\S](?!\]\]))+[\S\s]| )\]\]\s*/ // Same regexp but with a capture group
     let match = token.match(regex)
-    //console.log(match)
+    console.log(match)
     return {string: match[2], name: match[1]};
 }
 const optString = token => {
-    var regex = /"([\s\S]*)=?([a-z%\[\]\?\!,#:\+=\-\(\)\/ '\*_A-Z0-9]+)"/;
+    var regex = /"([\s\S]*)=?([a-z%\[\]\?\!,#:@\+=\-\(\)\/ '\*_A-Z0-9]+)"/;
     let match = token.match(regex);
-    //console.log(match)
+    console.log(match)
     if (match && match[1] && match[2]) {
         return {string: match[2], name: match[1]}
+    } else {
+        return {string: ' ', name: ' '}
+    }
+}
+const interString = token => {
+    var regex = /".*\$(\(.*\)).*"/;
+    let match = token.match(regex);
+    console.log(match)
+    if (match && match[1]) {
+        return {name: match[1], token: token}
     } else {
         return {string: ' ', name: ' '}
     }
@@ -29,7 +39,7 @@ const lexer = moo.compile({
     _:      /[ \t]+/,
     NUMBER:  /0|[1-9][0-9]*/,
     //EMPTY_STRING: /" " /,
-    OPT_STRING:  {match: /"[\w:\.]*=?[a-z%\[\]\?\!\.,#:\+=\-\(\)\/ \*'_A-Z0-9]*"/, value: optString},
+    OPT_STRING:  {match: /"[\w:\.]*=?[a-z%\[\]\?\!\.,#:@\+=\-\(\)\/ \*'_A-Z0-9]*"/, value: optString},
     PROMPT_STRING:  {match: /\[\[(?:[\w:\.]*=(?:[\s\S](?!\]\]))+[\S\s]| )\]\]\s*/, value: string},
     LPAREN:  {match: /\(\s?/, value: trim},
     RPAREN:  {match: /\)\s?/, value: trim},
@@ -38,7 +48,7 @@ const lexer = moo.compile({
     TERMINAL: {match: /terminal\s?/, value: trim},
     PLAYER: {match: /player\s?/, value: trim},
     COLON: {match: /\:\s*/, value: trim},
-    KEYWORD: {match: [/short\s?/, /next\s?/, /clear\s?/, /notext\s?/, /goto\s?/, /setlocal\s?/, /prompt\s?/, /text\s?/, /set\s?/,], value:trim},
+    KEYWORD: {match: [/autonext\s?/, /short\s?/, /next\s?/, /clear\s?/, /notext\s?/, /goto\s?/, /setlocal\s?/, /prompt\s?/, /text\s?/, /set\s?/,], value:trim},
     OPTIONS: {match: [/options\s?/], value: trim},
     WHEN: {match: /when\s?/, value: trim},
     NOT: [/not[\s\t]?/],
@@ -46,7 +56,7 @@ const lexer = moo.compile({
     OR: [/or\s?/],
     NL:  { match: /\r?\n/, lineBreaks: true },
     IDENT: { match: /[a-z_A-Z0-9]+\s*/, value: trim},
-    INSTRUCTION: ['notext']
+    INTER_STRING: { match: /".*\$\(.*\).*"/, value: interString}
 });
 var grammar = {
     Lexer: lexer,
@@ -63,7 +73,9 @@ var grammar = {
     {"name": "termstmt", "symbols": [(lexer.has("KEYWORD") ? {type: "KEYWORD"} : KEYWORD), (lexer.has("COLON") ? {type: "COLON"} : COLON), (lexer.has("IDENT") ? {type: "IDENT"} : IDENT), "termstmt"]},
     {"name": "termstmt", "symbols": [(lexer.has("KEYWORD") ? {type: "KEYWORD"} : KEYWORD), (lexer.has("COLON") ? {type: "COLON"} : COLON), (lexer.has("PROMPT_STRING") ? {type: "PROMPT_STRING"} : PROMPT_STRING), "termstmt"]},
     {"name": "termstmt", "symbols": [(lexer.has("KEYWORD") ? {type: "KEYWORD"} : KEYWORD), (lexer.has("COLON") ? {type: "COLON"} : COLON), (lexer.has("OPT_STRING") ? {type: "OPT_STRING"} : OPT_STRING), "termstmt"]},
+    {"name": "termstmt", "symbols": [(lexer.has("KEYWORD") ? {type: "KEYWORD"} : KEYWORD), (lexer.has("COLON") ? {type: "COLON"} : COLON), (lexer.has("INTER_STRING") ? {type: "INTER_STRING"} : INTER_STRING), "option_param"]},
     {"name": "termstmt", "symbols": [(lexer.has("OPTIONS") ? {type: "OPTIONS"} : OPTIONS), (lexer.has("COLON") ? {type: "COLON"} : COLON), "option_stmt", "termstmt"]},
+    {"name": "termstmt", "symbols": [(lexer.has("IDENT") ? {type: "IDENT"} : IDENT), "termstmt"]},
     {"name": "termstmt$subexpression$1", "symbols": [(lexer.has("_") ? {type: "_"} : _)]},
     {"name": "termstmt$subexpression$1", "symbols": [(lexer.has("NL") ? {type: "NL"} : NL)]},
     {"name": "termstmt", "symbols": ["termstmt$subexpression$1", "termstmt"]},

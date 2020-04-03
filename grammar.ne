@@ -1,33 +1,33 @@
-#Terminal: Single constant, string or token
-# if
 
-
-#nonterminal: Set of possible strings
-
-#rule/production rule: i
-#  ifStatement -> "if" condition "then" statement "endif"
-
-#@builtin "number.ne"
-#@builtin "string.ne" 
 @{%
 let variables = {};
 const moo = require("moo");
 const trim = token => {
-    //console.log(`"${token}"`)
+    console.log(`"${token}"`)
     return token.trim()
 };
 const string = token => {
     var regex = /\[\[(?:[\w:\.]*=(?:[\s\S](?!\]\]))+[\S\s]| )\]\]\s*/ // Same regexp but with a capture group
     let match = token.match(regex)
-    //console.log(match)
+    console.log(match)
     return {string: match[2], name: match[1]};
 }
 const optString = token => {
-    var regex = /"([\s\S]*)=?([a-z%\[\]\?\!,#:\+=\-\(\)\/ '\*_A-Z0-9]+)"/;
+    var regex = /"([\s\S]*)=?([a-z%\[\]\?\!,#:@\+=\-\(\)\/ '\*_A-Z0-9]+)"/;
     let match = token.match(regex);
-    //console.log(match)
+    console.log(match)
     if (match && match[1] && match[2]) {
         return {string: match[2], name: match[1]}
+    } else {
+        return {string: ' ', name: ' '}
+    }
+}
+const interString = token => {
+    var regex = /".*\$(\(.*\)).*"/;
+    let match = token.match(regex);
+    console.log(match)
+    if (match && match[1]) {
+        return {name: match[1], token: token}
     } else {
         return {string: ' ', name: ' '}
     }
@@ -36,7 +36,7 @@ const lexer = moo.compile({
     _:      /[ \t]+/,
     NUMBER:  /0|[1-9][0-9]*/,
     //EMPTY_STRING: /" " /,
-    OPT_STRING:  {match: /"[\w:\.]*=?[a-z%\[\]\?\!\.,#:\+=\-\(\)\/ \*'_A-Z0-9]*"/, value: optString},
+    OPT_STRING:  {match: /"[\w:\.]*=?[a-z%\[\]\?\!\.,#:@\+=\-\(\)\/ \*'_A-Z0-9]*"/, value: optString},
     PROMPT_STRING:  {match: /\[\[(?:[\w:\.]*=(?:[\s\S](?!\]\]))+[\S\s]| )\]\]\s*/, value: string},
     LPAREN:  {match: /\(\s?/, value: trim},
     RPAREN:  {match: /\)\s?/, value: trim},
@@ -45,7 +45,7 @@ const lexer = moo.compile({
     TERMINAL: {match: /terminal\s?/, value: trim},
     PLAYER: {match: /player\s?/, value: trim},
     COLON: {match: /\:\s*/, value: trim},
-    KEYWORD: {match: [/short\s?/, /next\s?/, /clear\s?/, /notext\s?/, /goto\s?/, /setlocal\s?/, /prompt\s?/, /text\s?/, /set\s?/,], value:trim},
+    KEYWORD: {match: [/autonext\s?/, /short\s?/, /next\s?/, /clear\s?/, /notext\s?/, /goto\s?/, /setlocal\s?/, /prompt\s?/, /text\s?/, /set\s?/,], value:trim},
     OPTIONS: {match: [/options\s?/], value: trim},
     WHEN: {match: /when\s?/, value: trim},
     NOT: [/not[\s\t]?/],
@@ -53,7 +53,7 @@ const lexer = moo.compile({
     OR: [/or\s?/],
     NL:  { match: /\r?\n/, lineBreaks: true },
     IDENT: { match: /[a-z_A-Z0-9]+\s*/, value: trim},
-    INSTRUCTION: ['notext']
+    INTER_STRING: { match: /".*\$\(.*\).*"/, value: interString}
 });
 %}
 @lexer lexer
@@ -68,7 +68,9 @@ termstmt        -> %KEYWORD termstmt
                 | %KEYWORD %COLON %IDENT termstmt
                 | %KEYWORD %COLON %PROMPT_STRING termstmt
                 | %KEYWORD %COLON %OPT_STRING termstmt
+                | %KEYWORD %COLON %INTER_STRING option_param
                 | %OPTIONS %COLON option_stmt termstmt
+                | %IDENT termstmt
                 | (%_ | %NL) termstmt
                 | %RBRACE
 

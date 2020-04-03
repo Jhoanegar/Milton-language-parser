@@ -1,20 +1,12 @@
-﻿# This file holds general statements that handle all CLI interface in most terminals.
-
-# This enables all ordinary terminals in the Clouds (i.e. not on Nexus), to boot into CLI
-terminal when ( Booting and not CLI_Blocked ) { notext
+﻿terminal when ( Booting and not CLI_Blocked ) { notext
   goto: CLI_Booting
 }
 
-##############################################
-# General booting sequence used by most terminals
-
-# once you see a floor terminal, or ending terminal, if you haven't used the CLI before, it makes no sense to go through the intro now (or later)
 terminal when (CLI_Booting and not MiltonAllowed) {
 notext
 set: CLI_SeenHelp
 }
 
-# first time we boot a bit slowly, for familiarization
 terminal when (CLI_Booting and not BootedBefore and not CLI_Blocked) {
   text: [[TTRS:TermDlg.CLI_Global.Ln0013.0.text.LoadingLibraryOSW1W1=
 Loading library session.%w1.%w1.%w1 %w9Done.
@@ -25,10 +17,9 @@ Initiating command prompt.%w1.%w1.%w1 %w9Done.
 ]]
   setlocal: CLI_Enabled
   set: BootedBefore
-  goto: CLI_BootSuffix    # this allows nexus floor terminals to append their device manager footer
+  goto: CLI_BootSuffix
 }
 
-# all other times we boot faster, not to nag the user
 terminal when (CLI_Booting and BootedBefore and not CLI_Blocked) {
   text: [[TTRS:TermDlg.CLI_Global.Ln0028.0.text.LoadingLibraryOSDoneMounting=
 Loading library session... Done.
@@ -36,7 +27,7 @@ Mounting local disks... [47 million] distributed resources found
 Connecting network drives...... %w3Error: network inaccessible.%s0%w5
 ]]
   setlocal: CLI_Enabled
-  goto: CLI_BootSuffix    # this allows nexus floor terminals to append their device manager footer
+  goto: CLI_BootSuffix
 }
 
 terminal when (CLI_Enabled and not Milton2_5_DONE and not CLI_MaybeAutoList) {
@@ -48,7 +39,6 @@ prompt: "TTRS:TermDlg.CLI_Global.Ln0041.0.text.AdminLocal=[admin@local]# "
 terminal when (CommPortal_FakeCLI and not CommPortal_Start and not CLI_MaybeAutoList) {
 prompt: "TTRS:TermDlg.CLI_Global.Ln0042.0.text.GuestUnknown=[guest@unknown]# "
 }
-# if the player knows how to use the list command, do the listing automatically when entering the terminal
 terminal when (CLI_MaybeAutoList and CLI_SeenHelp) { notext
 setlocal: CLI_AutoList
 }
@@ -59,13 +49,10 @@ player when (CLI_AutoList) {
   clear: CLI_AutoList
 }
 
-# this forces the prompt to show up when the terminal appears the first time, before the
 terminal when (CLI_MaybeAutoList and not CLI_SeenHelp) { notext
-goto: dummy # 
+goto: dummy
 }
 
-# jump here to resume normal CLI operation after Milton is done taking over
-# Edited this to give the player an option to return to library, or exit. It seems better than just going straight there, seems to tie off Milton better.
 terminal when (CLI_Resume) { 
 text: [[TTRS:TermDlg.CLI_Global.Ln0041.0.text.YourSupportSessionHasBeen=Terminating support session%w2.%w2.%w2.Done
 ]]
@@ -79,10 +66,6 @@ clear: CLI_Blocked
 setlocal: CLI_Enabled
 goto: CLI_MaybeAutoList
 }
-
-##############################################
-# This is the sequence that happens only once at first start, in the first terminal, until the user figures how to use the terminals.
-#
 
 player when (CLI_Enabled and not CLI_SeenHelp and not Typed_Hi) {
   text: "TTRS:TermDlg.CLI_Global.Ln0064.0.text.Hi=Hi"
@@ -112,16 +95,11 @@ player when (CLI_Enabled and not CLI_SeenHelp and not Typed_Dir) {
 
 terminal when (ErrorUnknownCommand) {
   text: "TTRS:TermDlg.CLI_Global.Ln0090.0.text.UnknownCommandTypeHelpFor=Unknown command. Type 'help' for list of available commands."
-  # this being "setlocal" instead of "set" makes sure that the user will see the "help" command only once, and not in all other terminals later
+
   setlocal: CLI_SeenUnknownCommand
 }
 
-##############################################
-# We want "list", "help" and "exit" to always be at the end of the list, in this order
-# Help only appears once the "unknown command" error has told the player that "help" is available.
-# Commands listed in help only appear once the player has seen help.
-
-player when (CLI_Enabled and CLI_SeenHelp and not TextsAvailable) { # the "and not TextsAvailable" is here so that list is not shown after executed once
+player when (CLI_Enabled and CLI_SeenHelp and not TextsAvailable) {
   text: "TTRS:TermDlg.Common.List=list"
   next: CLI_list
 }
@@ -131,7 +109,7 @@ terminal when (CLI_list and not InTerminal_Ending_Tower){
 Searching for locally cached resources%w1.%w1.%w1.%w1.
 
 %p
-	
+
 ]]
 setlocal: TextsAvailable
 set: "$(Terminal)_SeenTexts"
@@ -153,13 +131,11 @@ Basic terminal commands are:
   set: CLI_SeenHelp
 }
 
-# This command is always enabled at the start, up until the certification program is complete, but it is routed to different dialogs depending on state.
 player when (CLI_Enabled and CLI_SeenHelp and (MLAIntro_PhaseQuery or MLAIntro_PhaseBusy) and MiltonAllowed ) {
   text: "TTRS:TermDlg.CLI_Global.Ln0132.0.text.RunMla=run mla"
   next: RunMLA
 }
 
-# This is the text player would receive if trying to run MLA later in the game
 terminal when (RunMLA and MLAIntro_PhaseBusy){
 text:[[TTRS:TermDlg.CLI_Global.Ln0149.0.text.UnableToOpenASupport=Unable to open a support session. Library assistant software is busy elsewhere.
 
