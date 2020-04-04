@@ -10,8 +10,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "debug": "^4.1.1",
+    "enquirer": "^2.3.4",
+    "inquirer": "^7.1.0",
     "lodash": "^4.17.15",
     "moo": "^0.5.1",
-    "nearley": "^2.19.1"
+    "nearley": "^2.19.1",
+    "node-typewriter": "0.0.2"
   }
 }

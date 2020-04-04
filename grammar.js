@@ -16,7 +16,6 @@ stringsArray.forEach(string => {
 const _ = require('lodash');
 const moo = require("moo");
 const trim = token => {
-    console.log(`"${token}"`)
     return token.trim()
 };
 const promptString = token => {
@@ -28,7 +27,6 @@ const promptString = token => {
 const optString = token => {
     var regex = /"([\w:\.]*)=?([a-z%\[\]\?\!\.,#:@\+=\-\(\)\/ \*'_A-Z0-9]*)"/;
     let match = token.match(regex);
-    console.log(match)
     if (match && match[1] && match[2]) {
         return {string: match[2], name: match[1]}
     } else {
@@ -38,7 +36,6 @@ const optString = token => {
 const interString = token => {
     var regex = /".*\$(\(.*\)).*"/;
     let match = token.match(regex);
-    console.log(match)
     if (match && match[1]) {
         return {name: match[1], token: token}
     } else {
@@ -86,7 +83,7 @@ const ident = (data) => {
 }
 
 const stmt = data => {
-    return data;
+    return [...data];
 }
 const termstmt = data => {
     let output = {};
@@ -194,8 +191,8 @@ var grammar = {
     {"name": "main$ebnf$1$subexpression$1", "symbols": ["stmt"]},
     {"name": "main$ebnf$1$subexpression$1", "symbols": ["exp"]},
     {"name": "main$ebnf$1", "symbols": ["main$ebnf$1", "main$ebnf$1$subexpression$1"], "postprocess": function arrpush(d) {return d[0].concat([d[1]]);}},
-    {"name": "main", "symbols": ["main$ebnf$1"]},
-    {"name": "stmt", "symbols": [(lexer.has("TERMINAL") ? {type: "TERMINAL"} : TERMINAL), (lexer.has("WHEN") ? {type: "WHEN"} : WHEN), "exp", "termblock"]},
+    {"name": "main", "symbols": ["main$ebnf$1"], "postprocess": stmt},
+    {"name": "stmt", "symbols": [(lexer.has("TERMINAL") ? {type: "TERMINAL"} : TERMINAL), (lexer.has("WHEN") ? {type: "WHEN"} : WHEN), "exp", "termblock"], "postprocess": stmt},
     {"name": "stmt", "symbols": [(lexer.has("PLAYER") ? {type: "PLAYER"} : PLAYER), (lexer.has("WHEN") ? {type: "WHEN"} : WHEN), "exp", "termblock"], "postprocess": stmt},
     {"name": "termblock", "symbols": [(lexer.has("LBRACE") ? {type: "LBRACE"} : LBRACE), "termstmt"], "postprocess": termstmt},
     {"name": "termstmt", "symbols": [(lexer.has("KEYWORD") ? {type: "KEYWORD"} : KEYWORD), (lexer.has("COLON") ? {type: "COLON"} : COLON), (lexer.has("IDENT") ? {type: "IDENT"} : IDENT), "termstmt"], "postprocess": termstmt},

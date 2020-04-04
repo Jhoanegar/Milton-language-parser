@@ -80,7 +80,7 @@ const ident = (data) => {
 }
 
 const stmt = data => {
-    return data;
+    return [...data];
 }
 const termstmt = data => {
     let output = {};
@@ -184,8 +184,8 @@ const reject = data => {
 %}
 @lexer lexer
 
-main            -> (stmt | exp):*
-stmt            -> %TERMINAL %WHEN exp termblock
+main            -> (stmt | exp):*                                   {% stmt %}
+stmt            -> %TERMINAL %WHEN exp termblock                    {% stmt %}
                 | %PLAYER %WHEN exp termblock                       {% stmt %}
 #Terminal block
 
