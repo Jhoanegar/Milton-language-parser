@@ -62,4 +62,6 @@ let printValue = function(arr) {
   
 }
 
+fs.writeFileSync('./output.json', JSON.stringify(results, null, 2));
+
 printValue(results);

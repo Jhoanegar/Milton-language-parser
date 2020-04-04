@@ -1,15 +1,23 @@
 
 @{%
 debugger;
-global.variables = require('./src/configuration')['QueryMLA.dlg'];
+const fs = require('fs');
+const stringsArray = fs.readFileSync('./locales/es.txt').toString().split(/\r\n/);
+const strings = {};
+stringsArray.forEach(string => {
+    let match = string.match(/([^=]+)=(.*)/)
+    if (match && match[1] && match[2]) {
+        strings[match[1]] = match[2];
+    }
+})
 const _ = require('lodash');
 const moo = require("moo");
 const trim = token => {
     console.log(`"${token}"`)
     return token.trim()
 };
-const string = token => {
-    var regex = /\[\[(?:[\w:\.]*=(?:[\s\S](?!\]\]))+[\S\s]| )\]\]\s*/ // Same regexp but with a capture group
+const promptString = token => {
+    var regex = /\[\[(?:([\w:\.]*)=((?:[\s\S](?!\]\]))+[\S\s])| )\]\]\s*/ // Same regexp but with a capture group
     let match = token.match(regex)
     console.log(match)
     return {string: match[2], name: match[1]};
@@ -39,7 +47,7 @@ const lexer = moo.compile({
     NUMBER:  /0|[1-9][0-9]*/,
     //EMPTY_STRING: /" " /,
     OPT_STRING:  {match: /"[\w:\.]*=?[a-z%\[\]\?\!\.,#:@\+=\-\(\)\/ \*'_A-Z0-9]*"/, value: optString},
-    PROMPT_STRING:  {match: /\[\[(?:[\w:\.]*=(?:[\s\S](?!\]\]))+[\S\s]| )\]\]\s*/, value: string},
+    PROMPT_STRING:  {match: /\[\[(?:[\w:\.]*=(?:[\s\S](?!\]\]))+[\S\s]| )\]\]\s*/, value: promptString},
     LPAREN:  {match: /\(\s?/, value: trim},
     RPAREN:  {match: /\)\s?/, value: trim},
     LBRACE:  {match: /\{\s*/, value: trim},
@@ -59,54 +67,27 @@ const lexer = moo.compile({
 });
 
 const ident = (data) => {
-    let output;
+    let output = {};
     if (data[0].type == 'NOT') {
-        output = !data[1].value;
-    }
-    else if (data.length == 1) {
-        output = variables[data[0].value] ? true : false;
+        output = {not: data[1].value};
+    } else if (data.length == 1 && data[0].type == 'IDENT') {
+        output[data[0].value] = true;
     } else if (data[0].type == 'LPAREN' && data[2] && data[2].type == 'RPAREN'){
         output = data[1]
-    }
-    return output;
-}
-const and = data => {
-    let lhs = data[0];
-    let output;
-    if (data[1].length == 0) {
-        output = data[0]
-    } else if (data[1][0].length == 2) {
-        if (data[1][0][0].type == 'AND') {
-            output = lhs && data[1][0][1];
-        }
-    }
-    return output;
-}
-const or = data => {
-    let lhs = data[0];
-    let rhs;
-    let output;
-    if (data[1].length == 2) {
-        if (data[1].type == 'OR') {
-            output = lhs || rhs;
-        }
-    } else if (data[1].length == 0) {
-        output = data[0]
+    } else if (data.length == 2 && data[1].length == 1 && data[1][0][0].type == 'AND') {
+        output = _.merge(data[0], data[1][0][1]);
+    } else {
+        output = data[0];
     }
     return output;
 }
 
 const stmt = data => {
-    debugger;
     return data;
 }
 const termstmt = data => {
-    debugger;
     let output = {};
-    if (data.length >= 3 &&
-        data[0].type == 'KEYWORD' &&
-        data[1].type == 'COLON' &&
-        data[2].type == 'IDENT') {
+    if (data[0].type == 'KEYWORD') {
         switch (data[0].value) {
             case 'notext':
                 output['notext'] = true;
@@ -114,30 +95,37 @@ const termstmt = data => {
             case 'setlocal':
             case 'set':
             case 'goto':
+            case 'next':
+            case 'text':
                 output[data[0].value] = data[2].value;
-                variables[data[2].value] = true;
                 break;
             case 'clear':
                 output[data[0].value] = data[2].value;
-                variables[data[2].value] = false;
                 break;
+            case 'prompt':
+                output[data[0].value] = strings[data[2].value.name.replace('TTRS:', '')];
+            break;
+            default:
+                throw new Error(`${JSON.stringify(data[0])} not implemented yet`)
         }
-    } else if (data[0].type == 'KEYWORD' && !data[1].type) {
+    } else if (data[0].type == 'KEYWORD' && data[1] && !data[1].type) {
         data[1][data[0].value] = true;
         output = data[1];
     } else if (data[0].type == 'RBRACE') {
         // do nothing
-    } else if (data[0].type == 'LBRACE') {
+    } else if (data[0].type == 'LBRACE' || (data[0][0] && data[0][0].type == 'NL')) {
         output = data[1];
     }
-    if (data && data[3] && Object.keys(data[3]).length > 0) {
+    if (data[0].type == 'KEYWORD' && data[1].type == 'COLON' && data[2].type == 'IDENT') {
         output = _.merge(output, data[3]);
+    } else if (data[0].type == 'KEYWORD' && data[1] && !data[1].type) {
+        output = _.merge(output, data[1]);
     }
+
     return output;
 }
 
 const reject = data => {
-    debugger;
     return null;
 }
 %}
@@ -157,7 +145,7 @@ termstmt        ->
                 | %OPTIONS %COLON option_stmt termstmt              {% termstmt %}
                 | %KEYWORD termstmt                                 {% termstmt %}
                 | %IDENT termstmt                                   {% termstmt %}
-                | (%_ | %NL) termstmt                               {% reject %}
+                | (%_ | %NL) termstmt                               {% termstmt %}
                 | %RBRACE                                           {% termstmt %}
 
 #Options statement
@@ -170,8 +158,8 @@ option_param   -> %OPT_STRING option_param
                 | %RBRACE
 
 # Logical operators with precedence
-exp             -> term (%OR term):*                {% or %}
-term            -> factor (%AND factor):*           {% and %}
+exp             -> term (%OR term):*                {% ident %}
+term            -> factor (%AND factor):*           {% ident %}
 factor          -> %NOT factor                      {% ident %}
 factor          -> %LPAREN exp %RPAREN              {% ident %}
 factor          -> %IDENT                           {% ident %}

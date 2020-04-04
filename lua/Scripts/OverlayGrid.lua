@@ -1,0 +1,2 @@
+﻿camera:SetCurrent()
+camera:DisableRightHandLaserPointer()
