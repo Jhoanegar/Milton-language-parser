@@ -26,7 +26,7 @@ const promptString = token => {
     return {string: match[2], name: match[1]};
 }
 const optString = token => {
-    var regex = /"([\s\S]*)=?([a-z%\[\]\?\!,#:@\+=\-\(\)\/ '\*_A-Z0-9]+)"/;
+    var regex = /"([\w:\.]*)=?([a-z%\[\]\?\!\.,#:@\+=\-\(\)\/ \*'_A-Z0-9]*)"/;
     let match = token.match(regex);
     console.log(match)
     if (match && match[1] && match[2]) {
@@ -107,6 +107,9 @@ const termstmt = data => {
                 break;
             case 'prompt':
                 output[data[0].value] = strings[data[2].value.name.replace('TTRS:', '')];
+                if (data[3]) {
+                    output = _.merge(output, data[3]);
+                }
             break;
             default:
                 throw new Error(`${JSON.stringify(data[0])} not implemented yet`)
@@ -114,9 +117,62 @@ const termstmt = data => {
     } else if (data[0].type == 'KEYWORD' && data[1] && !data[1].type) {
         data[1][data[0].value] = true;
         output = data[1];
+    } else if (data[0].type == 'OPTIONS' && data[1] && data[1].type == 'COLON' && data[2] && Array.isArray(data[2].options)) {
+        output = data[2];
     } else if (data[0].type == 'RBRACE') {
         // do nothing
     } else if (data[0].type == 'LBRACE' || (data[0][0] && data[0][0].type == 'NL')) {
+        output = data[1];
+    }
+    if (data[0].type == 'KEYWORD' && data[1].type == 'COLON' && data[2].type == 'IDENT') {
+        output = _.merge(output, data[3]);
+    } else if (data[0].type == 'KEYWORD' && data[1] && !data[1].type) {
+        output = _.merge(output, data[1]);
+    }
+
+    return output;
+}
+
+const options = data => {
+    let output = {};
+    if (data[0].type == 'KEYWORD') {
+        switch (data[0].value) {
+            case 'notext':
+                output['notext'] = true;
+                break;
+            case 'setlocal':
+            case 'set':
+            case 'goto':
+            case 'next':
+            case 'text':
+                output[data[0].value] = data[2].value;
+                break;
+            case 'clear':
+                output[data[0].value] = data[2].value;
+                break;
+            case 'prompt':
+                output[data[0].value] = strings[data[2].value.name.replace('TTRS:', '')];
+            break;
+            default:
+                throw new Error(`${JSON.stringify(data[0])} not implemented yet`)
+        }
+    } else if (data[0].type == 'KEYWORD' && data[1] && !data[1].type) {
+        data[1][data[0].value] = true;
+        output = data[1];
+    } else if (data[0].type == 'OPT_STRING') {
+        let prompt = {prompt: { text: strings[data[0].value.name.replace('TTRS:', '')] }};
+        if (data[1].options) {
+            let options = _.clone(data[1]).options;
+            delete data[1].options;
+            data[1].prompt = prompt;
+            output = {options: [data[1],...options]};
+        } else {
+            output.options = [];
+            output.options.push(_.merge(prompt, data[1]));
+        }
+    } else if (data[0].type == 'RBRACE') {
+        // do nothing
+    } else if (data[0].type == 'LBRACE' || (data[0][0] && (data[0][0].type == 'NL' || data[0][0].type == '_'))) {
         output = data[1];
     }
     if (data[0].type == 'KEYWORD' && data[1].type == 'COLON' && data[2].type == 'IDENT') {
@@ -153,15 +209,15 @@ var grammar = {
     {"name": "termstmt$subexpression$1", "symbols": [(lexer.has("NL") ? {type: "NL"} : NL)]},
     {"name": "termstmt", "symbols": ["termstmt$subexpression$1", "termstmt"], "postprocess": termstmt},
     {"name": "termstmt", "symbols": [(lexer.has("RBRACE") ? {type: "RBRACE"} : RBRACE)], "postprocess": termstmt},
-    {"name": "option_stmt", "symbols": [(lexer.has("LBRACE") ? {type: "LBRACE"} : LBRACE), "option_param"]},
-    {"name": "option_param", "symbols": [(lexer.has("OPT_STRING") ? {type: "OPT_STRING"} : OPT_STRING), "option_param"]},
-    {"name": "option_param", "symbols": [(lexer.has("PROMPT_STRING") ? {type: "PROMPT_STRING"} : PROMPT_STRING), "option_param"]},
-    {"name": "option_param", "symbols": [(lexer.has("KEYWORD") ? {type: "KEYWORD"} : KEYWORD), (lexer.has("COLON") ? {type: "COLON"} : COLON), (lexer.has("IDENT") ? {type: "IDENT"} : IDENT), "option_param"]},
-    {"name": "option_param", "symbols": [(lexer.has("KEYWORD") ? {type: "KEYWORD"} : KEYWORD), (lexer.has("COLON") ? {type: "COLON"} : COLON), (lexer.has("OPT_STRING") ? {type: "OPT_STRING"} : OPT_STRING), "option_param"]},
+    {"name": "option_stmt", "symbols": [(lexer.has("LBRACE") ? {type: "LBRACE"} : LBRACE), "option_param"], "postprocess": options},
+    {"name": "option_param", "symbols": [(lexer.has("OPT_STRING") ? {type: "OPT_STRING"} : OPT_STRING), "option_param"], "postprocess": options},
+    {"name": "option_param", "symbols": [(lexer.has("PROMPT_STRING") ? {type: "PROMPT_STRING"} : PROMPT_STRING), "option_param"], "postprocess": options},
+    {"name": "option_param", "symbols": [(lexer.has("KEYWORD") ? {type: "KEYWORD"} : KEYWORD), (lexer.has("COLON") ? {type: "COLON"} : COLON), (lexer.has("IDENT") ? {type: "IDENT"} : IDENT), "option_param"], "postprocess": options},
+    {"name": "option_param", "symbols": [(lexer.has("KEYWORD") ? {type: "KEYWORD"} : KEYWORD), (lexer.has("COLON") ? {type: "COLON"} : COLON), (lexer.has("OPT_STRING") ? {type: "OPT_STRING"} : OPT_STRING), "option_param"], "postprocess": options},
     {"name": "option_param$subexpression$1", "symbols": [(lexer.has("_") ? {type: "_"} : _)]},
     {"name": "option_param$subexpression$1", "symbols": [(lexer.has("NL") ? {type: "NL"} : NL)]},
-    {"name": "option_param", "symbols": ["option_param$subexpression$1", "option_param"]},
-    {"name": "option_param", "symbols": [(lexer.has("RBRACE") ? {type: "RBRACE"} : RBRACE)]},
+    {"name": "option_param", "symbols": ["option_param$subexpression$1", "option_param"], "postprocess": options},
+    {"name": "option_param", "symbols": [(lexer.has("RBRACE") ? {type: "RBRACE"} : RBRACE)], "postprocess": options},
     {"name": "exp$ebnf$1", "symbols": []},
     {"name": "exp$ebnf$1$subexpression$1", "symbols": [(lexer.has("OR") ? {type: "OR"} : OR), "term"]},
     {"name": "exp$ebnf$1", "symbols": ["exp$ebnf$1", "exp$ebnf$1$subexpression$1"], "postprocess": function arrpush(d) {return d[0].concat([d[1]]);}},

@@ -23,7 +23,7 @@ const promptString = token => {
     return {string: match[2], name: match[1]};
 }
 const optString = token => {
-    var regex = /"([\s\S]*)=?([a-z%\[\]\?\!,#:@\+=\-\(\)\/ '\*_A-Z0-9]+)"/;
+    var regex = /"([\w:\.]*)=?([a-z%\[\]\?\!\.,#:@\+=\-\(\)\/ \*'_A-Z0-9]*)"/;
     let match = token.match(regex);
     console.log(match)
     if (match && match[1] && match[2]) {
@@ -104,6 +104,9 @@ const termstmt = data => {
                 break;
             case 'prompt':
                 output[data[0].value] = strings[data[2].value.name.replace('TTRS:', '')];
+                if (data[3]) {
+                    output = _.merge(output, data[3]);
+                }
             break;
             default:
                 throw new Error(`${JSON.stringify(data[0])} not implemented yet`)
@@ -111,9 +114,62 @@ const termstmt = data => {
     } else if (data[0].type == 'KEYWORD' && data[1] && !data[1].type) {
         data[1][data[0].value] = true;
         output = data[1];
+    } else if (data[0].type == 'OPTIONS' && data[1] && data[1].type == 'COLON' && data[2] && Array.isArray(data[2].options)) {
+        output = data[2];
     } else if (data[0].type == 'RBRACE') {
         // do nothing
     } else if (data[0].type == 'LBRACE' || (data[0][0] && data[0][0].type == 'NL')) {
+        output = data[1];
+    }
+    if (data[0].type == 'KEYWORD' && data[1].type == 'COLON' && data[2].type == 'IDENT') {
+        output = _.merge(output, data[3]);
+    } else if (data[0].type == 'KEYWORD' && data[1] && !data[1].type) {
+        output = _.merge(output, data[1]);
+    }
+
+    return output;
+}
+
+const options = data => {
+    let output = {};
+    if (data[0].type == 'KEYWORD') {
+        switch (data[0].value) {
+            case 'notext':
+                output['notext'] = true;
+                break;
+            case 'setlocal':
+            case 'set':
+            case 'goto':
+            case 'next':
+            case 'text':
+                output[data[0].value] = data[2].value;
+                break;
+            case 'clear':
+                output[data[0].value] = data[2].value;
+                break;
+            case 'prompt':
+                output[data[0].value] = strings[data[2].value.name.replace('TTRS:', '')];
+            break;
+            default:
+                throw new Error(`${JSON.stringify(data[0])} not implemented yet`)
+        }
+    } else if (data[0].type == 'KEYWORD' && data[1] && !data[1].type) {
+        data[1][data[0].value] = true;
+        output = data[1];
+    } else if (data[0].type == 'OPT_STRING') {
+        let prompt = {prompt: { text: strings[data[0].value.name.replace('TTRS:', '')] }};
+        if (data[1].options) {
+            let options = _.clone(data[1]).options;
+            delete data[1].options;
+            data[1].prompt = prompt;
+            output = {options: [data[1],...options]};
+        } else {
+            output.options = [];
+            output.options.push(_.merge(prompt, data[1]));
+        }
+    } else if (data[0].type == 'RBRACE') {
+        // do nothing
+    } else if (data[0].type == 'LBRACE' || (data[0][0] && (data[0][0].type == 'NL' || data[0][0].type == '_'))) {
         output = data[1];
     }
     if (data[0].type == 'KEYWORD' && data[1].type == 'COLON' && data[2].type == 'IDENT') {
@@ -149,19 +205,19 @@ termstmt        ->
                 | %RBRACE                                           {% termstmt %}
 
 #Options statement
-option_stmt    -> %LBRACE option_param 
-option_param   -> %OPT_STRING option_param
-                | %PROMPT_STRING option_param
-                | %KEYWORD %COLON %IDENT option_param
-                | %KEYWORD %COLON %OPT_STRING option_param
-                | (%_ | %NL) option_param
-                | %RBRACE
+option_stmt    -> %LBRACE option_param                              {% options %}
+option_param   -> %OPT_STRING option_param                          {% options %}
+                | %PROMPT_STRING option_param                       {% options %}
+                | %KEYWORD %COLON %IDENT option_param               {% options %}
+                | %KEYWORD %COLON %OPT_STRING option_param          {% options %}
+                | (%_ | %NL) option_param                           {% options %}
+                | %RBRACE                                           {% options %}
 
 # Logical operators with precedence
-exp             -> term (%OR term):*                {% ident %}
-term            -> factor (%AND factor):*           {% ident %}
-factor          -> %NOT factor                      {% ident %}
-factor          -> %LPAREN exp %RPAREN              {% ident %}
-factor          -> %IDENT                           {% ident %}
+exp             -> term (%OR term):*                                {% ident %}
+term            -> factor (%AND factor):*                           {% ident %}
+factor          -> %NOT factor                                      {% ident %}
+factor          -> %LPAREN exp %RPAREN                              {% ident %}
+factor          -> %IDENT                                           {% ident %}
 
 ####################################

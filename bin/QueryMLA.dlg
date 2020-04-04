@@ -1,10 +1,4 @@
-﻿terminal when (RunMLA and MLAIntro_PhaseQuery){
-notext
-setlocal: CLI_Blocked
-clear: CLI_Enabled
-set: QueryMLA_ON
-goto: QueryMLA_START
-}
+﻿
 
 terminal when (QueryMLA_START){
 prompt:[[TTRS:TermDlg.QueryMLA.Ln0014.0.text.LibraryAssistantFilesHaveBeen=Loading Milton Library Assistant%w5.%w5.%w5.Done%w1
