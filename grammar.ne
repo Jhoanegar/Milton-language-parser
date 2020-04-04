@@ -13,7 +13,6 @@ stringsArray.forEach(string => {
 const _ = require('lodash');
 const moo = require("moo");
 const trim = token => {
-    console.log(`"${token}"`)
     return token.trim()
 };
 const promptString = token => {
@@ -25,7 +24,6 @@ const promptString = token => {
 const optString = token => {
     var regex = /"([\w:\.]*)=?([a-z%\[\]\?\!\.,#:@\+=\-\(\)\/ \*'_A-Z0-9]*)"/;
     let match = token.match(regex);
-    console.log(match)
     if (match && match[1] && match[2]) {
         return {string: match[2], name: match[1]}
     } else {
@@ -35,7 +33,6 @@ const optString = token => {
 const interString = token => {
     var regex = /".*\$(\(.*\)).*"/;
     let match = token.match(regex);
-    console.log(match)
     if (match && match[1]) {
         return {name: match[1], token: token}
     } else {
@@ -96,12 +93,12 @@ const termstmt = data => {
             case 'set':
             case 'goto':
             case 'next':
-            case 'text':
                 output[data[0].value] = data[2].value;
                 break;
             case 'clear':
                 output[data[0].value] = data[2].value;
                 break;
+            case 'text':
             case 'prompt':
                 output[data[0].value] = strings[data[2].value.name.replace('TTRS:', '')];
                 if (data[3]) {
@@ -141,13 +138,13 @@ const options = data => {
             case 'set':
             case 'goto':
             case 'next':
-            case 'text':
                 output[data[0].value] = data[2].value;
                 break;
             case 'clear':
                 output[data[0].value] = data[2].value;
                 break;
             case 'prompt':
+            case 'text':
                 output[data[0].value] = strings[data[2].value.name.replace('TTRS:', '')];
             break;
             default:

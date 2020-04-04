@@ -99,12 +99,12 @@ const termstmt = data => {
             case 'set':
             case 'goto':
             case 'next':
-            case 'text':
                 output[data[0].value] = data[2].value;
                 break;
             case 'clear':
                 output[data[0].value] = data[2].value;
                 break;
+            case 'text':
             case 'prompt':
                 output[data[0].value] = strings[data[2].value.name.replace('TTRS:', '')];
                 if (data[3]) {
@@ -144,13 +144,13 @@ const options = data => {
             case 'set':
             case 'goto':
             case 'next':
-            case 'text':
                 output[data[0].value] = data[2].value;
                 break;
             case 'clear':
                 output[data[0].value] = data[2].value;
                 break;
             case 'prompt':
+            case 'text':
                 output[data[0].value] = strings[data[2].value.name.replace('TTRS:', '')];
             break;
             default:
