@@ -1,6 +1,8 @@
 
 @{%
-let variables = {};
+debugger;
+global.variables = require('./src/configuration')['QueryMLA.dlg'];
+const _ = require('lodash');
 const moo = require("moo");
 const trim = token => {
     console.log(`"${token}"`)
@@ -55,24 +57,108 @@ const lexer = moo.compile({
     IDENT: { match: /[a-z_A-Z0-9]+\s*/, value: trim},
     INTER_STRING: { match: /".*\$\(.*\).*"/, value: interString}
 });
+
+const ident = (data) => {
+    let output;
+    if (data[0].type == 'NOT') {
+        output = !data[1].value;
+    }
+    else if (data.length == 1) {
+        output = variables[data[0].value] ? true : false;
+    } else if (data[0].type == 'LPAREN' && data[2] && data[2].type == 'RPAREN'){
+        output = data[1]
+    }
+    return output;
+}
+const and = data => {
+    let lhs = data[0];
+    let output;
+    if (data[1].length == 0) {
+        output = data[0]
+    } else if (data[1][0].length == 2) {
+        if (data[1][0][0].type == 'AND') {
+            output = lhs && data[1][0][1];
+        }
+    }
+    return output;
+}
+const or = data => {
+    let lhs = data[0];
+    let rhs;
+    let output;
+    if (data[1].length == 2) {
+        if (data[1].type == 'OR') {
+            output = lhs || rhs;
+        }
+    } else if (data[1].length == 0) {
+        output = data[0]
+    }
+    return output;
+}
+
+const stmt = data => {
+    debugger;
+    return data;
+}
+const termstmt = data => {
+    debugger;
+    let output = {};
+    if (data.length >= 3 &&
+        data[0].type == 'KEYWORD' &&
+        data[1].type == 'COLON' &&
+        data[2].type == 'IDENT') {
+        switch (data[0].value) {
+            case 'notext':
+                output['notext'] = true;
+                break;
+            case 'setlocal':
+            case 'set':
+            case 'goto':
+                output[data[0].value] = data[2].value;
+                variables[data[2].value] = true;
+                break;
+            case 'clear':
+                output[data[0].value] = data[2].value;
+                variables[data[2].value] = false;
+                break;
+        }
+    } else if (data[0].type == 'KEYWORD' && !data[1].type) {
+        data[1][data[0].value] = true;
+        output = data[1];
+    } else if (data[0].type == 'RBRACE') {
+        // do nothing
+    } else if (data[0].type == 'LBRACE') {
+        output = data[1];
+    }
+    if (data && data[3] && Object.keys(data[3]).length > 0) {
+        output = _.merge(output, data[3]);
+    }
+    return output;
+}
+
+const reject = data => {
+    debugger;
+    return null;
+}
 %}
 @lexer lexer
 
 main            -> (stmt | exp):*
 stmt            -> %TERMINAL %WHEN exp termblock
-                | %PLAYER %WHEN exp termblock
+                | %PLAYER %WHEN exp termblock                       {% stmt %}
 #Terminal block
 
-termblock       -> %LBRACE termstmt
-termstmt        -> %KEYWORD termstmt
-                | %KEYWORD %COLON %IDENT termstmt
-                | %KEYWORD %COLON %PROMPT_STRING termstmt
-                | %KEYWORD %COLON %OPT_STRING termstmt
-                | %KEYWORD %COLON %INTER_STRING option_param
-                | %OPTIONS %COLON option_stmt termstmt
-                | %IDENT termstmt
-                | (%_ | %NL) termstmt
-                | %RBRACE
+termblock       -> %LBRACE termstmt                                 {% termstmt %}
+termstmt        ->
+                  %KEYWORD %COLON %IDENT termstmt                   {% termstmt %}
+                | %KEYWORD %COLON %PROMPT_STRING termstmt           {% termstmt %}
+                | %KEYWORD %COLON %OPT_STRING termstmt              {% termstmt %}
+                | %KEYWORD %COLON %INTER_STRING option_param        {% termstmt %}
+                | %OPTIONS %COLON option_stmt termstmt              {% termstmt %}
+                | %KEYWORD termstmt                                 {% termstmt %}
+                | %IDENT termstmt                                   {% termstmt %}
+                | (%_ | %NL) termstmt                               {% reject %}
+                | %RBRACE                                           {% termstmt %}
 
 #Options statement
 option_stmt    -> %LBRACE option_param 
@@ -84,9 +170,10 @@ option_param   -> %OPT_STRING option_param
                 | %RBRACE
 
 # Logical operators with precedence
-exp             -> term (%OR term):*
-term            -> factor (%AND factor):*
-factor          -> %IDENT
-factor          -> %NOT factor
-factor          -> %LPAREN exp %RPAREN
+exp             -> term (%OR term):*                {% or %}
+term            -> factor (%AND factor):*           {% and %}
+factor          -> %NOT factor                      {% ident %}
+factor          -> %LPAREN exp %RPAREN              {% ident %}
+factor          -> %IDENT                           {% ident %}
+
 ####################################
