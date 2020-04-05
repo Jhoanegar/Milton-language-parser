@@ -11,21 +11,28 @@ const initialConditions = {
 
 let mainLoop = new EventEmitter();
 (async () => {
+    //initServer() // To stop the terminal from closing
     mainLoop.on('operation', async data => {
         debug("Running operation...");
         await data;
     })
-    //process.stdin.resume();
+    mainLoop.on('response', async data => {
+        debug(`Initial Contitions: ${JSON.stringify(initialConditions,null, 3)}`)
+
+        nextTick()
+    })
     nextTick()
 })();
 
 function nextTick() {
+    debug("Processing next Tick");
     let i = 0;
     let result;
     while (program[i]) {
-        debug("Processing next Tick");
-        let result = processInstruction(program[i][0]);
+        let instruction = program[i][0];
+        let result = processInstruction(instruction);
         if (result) {
+            instruction.consumed = true;
             debug("Queueing operation")
             mainLoop.emit('operation', result);
             break;
@@ -35,6 +42,10 @@ function nextTick() {
 }
 
 function processInstruction(instruction) {
+    debugger;
+    if (instruction.consumed) {
+        return;
+    }
     if (terminalStatement(instruction) && conditionsMet(instruction[2])) {
         return terminal(instruction[3]);
     }
@@ -80,16 +91,44 @@ async function printToConsole(message) {
             console.log("");
         } else {
             await sleep(1)
-            return type(currentMessage + "\n", '1000')
+            return type(currentMessage + "\n", '200')
         }
-    })
+    }, Promise.resolve())
 }
 
 async function printOptions(options) {
     let result = Promise.resolve();
     let choices = options.map(option => option.prompt.text);
     let question = new AutoComplete({message: '>>', choices})
-    return question.run();
+    let response = getValuesForResponse(options, await question.run());
+    updateInitialConditions(response);
+    mainLoop.emit('response', response);
+}
+
+function updateInitialConditions(response) {
+    _.forOwn(response, (value, key) => {
+        switch(key) {
+            case 'next':
+            case 'set':
+            case 'setlocal':
+                initialConditions[value] = true;
+                break;
+            default:
+                throw new Error(`Key: ${key}:${value} not implemented yet`);
+        }
+    })
+}
+
+function getValuesForResponse(options, response) {
+    let option = _.find(options, option => option.prompt.text == response)
+    let values = {};
+    _.forOwn(option, (value, key) => {
+        if (key != 'prompt') {
+            values[key] = value;
+        }
+    })
+    return values
+    
 }
 
 function msleep(n) {
@@ -100,3 +139,13 @@ function sleep(n) {
 }
 
 
+function initServer() {
+    var net = require('net');
+
+    var server = net.createServer(function(socket) {
+        socket.write('Echo server\r\n');
+        socket.pipe(socket);
+    });
+    
+    server.listen(1337, '127.0.0.1');
+}
