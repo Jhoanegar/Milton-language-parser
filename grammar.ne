@@ -154,15 +154,16 @@ const options = data => {
         data[1][data[0].value] = true;
         output = data[1];
     } else if (data[0].type == 'OPT_STRING') {
-        let prompt = {prompt: { text: strings[data[0].value.name.replace('TTRS:', '')] }};
+        debugger;
+        let prompt = { text: strings[data[0].value.name.replace('TTRS:', '')] };
         if (data[1].options) {
             let options = _.clone(data[1]).options;
             delete data[1].options;
             data[1].prompt = prompt;
             output = {options: [data[1],...options]};
         } else {
-            output.options = [];
-            output.options.push(_.merge(prompt, data[1]));
+            data[1].prompt = prompt;
+            output.options = [data[1]]
         }
     } else if (data[0].type == 'RBRACE') {
         // do nothing
