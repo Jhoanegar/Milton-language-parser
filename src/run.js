@@ -35,8 +35,7 @@ let expectingPlayer = false;
 
 async function nextTick() {
     debug("Processing next Tick " + PI);
-    debug("State: ", JSON.stringify(initialConditions, null, 3));
-    debugger;
+    status("State: ", JSON.stringify(initialConditions, null, 3));
     if (!program[PI]) {
         debug("Reset PI");
         await player();
@@ -55,6 +54,9 @@ async function nextTick() {
 }
 
 function processInstruction(instruction) {
+    if (PI===20) {
+        instruction;
+    }
     if (instruction.consumed) {
         return {terminal: false};
     }
@@ -83,11 +85,10 @@ function playerStatement(instruction) {
 }
 
 function conditionsMet(conditions, operator='and') {
-    status("Checking", conditions)
     var met = operator === 'and' ? true : false;
     _.forOwn(conditions, (value, key) => {
         if (key === "$or") {
-            met = met && conditionsMet(initialConditions[key], 'or')
+            met = met && conditionsMet(value, 'or')
         } else if (value === true && initialConditions[key] !== value && operator === 'and') {
             met = false;
             return false;
@@ -99,7 +100,6 @@ function conditionsMet(conditions, operator='and') {
             return false;
         }
     })
-    status(`Conditions ${met ? 'were' : 'were not'} met`)
     return met;
 }
 
@@ -161,6 +161,9 @@ function updateInitialConditions(response) {
                 break;
             case 'prompt':
             case 'options':
+                 break;
+            case 'clear':
+                delete initialConditions[value]
                  break;
             default:
                 throw new Error(`Key: ${key}:${value} not implemented yet`);
