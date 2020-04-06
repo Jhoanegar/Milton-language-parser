@@ -152,22 +152,27 @@ async function printOptions(options, source="terminal") {
 }
 
 function updateInitialConditions(response) {
-    _.forOwn(response, (value, key) => {
-        switch(key) {
-            case 'next':
-            case 'set':
-            case 'setlocal':
-                initialConditions[value] = true;
-                break;
-            case 'prompt':
-            case 'options':
-                 break;
-            case 'clear':
-                delete initialConditions[value]
-                 break;
-            default:
-                throw new Error(`Key: ${key}:${value} not implemented yet`);
-        }
+    if (!response.operations) {
+        return
+    }
+    response.operations.forEach(operation => {
+        _.forOwn(operation, (value, key) => {
+            switch(key) {
+                case 'next':
+                case 'set':
+                case 'setlocal':
+                    initialConditions[value] = true;
+                    break;
+                case 'prompt':
+                case 'options':
+                    break;
+                case 'clear':
+                    delete initialConditions[value]
+                    break;
+                default:
+                    throw new Error(`Key: ${key}:${value} not implemented yet`);
+            }
+        })
     })
 }
 

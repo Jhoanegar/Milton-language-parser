@@ -150,10 +150,11 @@ const options = data => {
             case 'set':
             case 'goto':
             case 'next':
-                output.operations = [{[data[0].value]: data[2].value}];
-                break;
             case 'clear':
                 output.operations = [{[data[0].value]: data[2].value}];
+                if (data[3]) {
+                    output = _.merge(output, data[3]);
+                }
                 break;
             case 'prompt':
             case 'text':
@@ -193,8 +194,10 @@ const options = data => {
     }
     if (data[0].type == 'KEYWORD' && data[1].type == 'COLON' && data[2].type == 'IDENT' && data[3] && data[3].operations && data[3].operations.length > 0) {
         output.operations = _.concat(output.operations, data[3].operations);
+        output = _.merge(output, data[3]);
     } else if (data[0].type == 'KEYWORD' && data[1] && !data[1].type) {
-        output.operations = _.merge(output.operations, data[1].operations);
+        output.operations = _.concat(output.operations, data[1].operations);
+        output = _.merge(output, data[1]);
     }
     return output;
 }
