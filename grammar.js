@@ -21,7 +21,6 @@ const trim = token => {
 const promptString = token => {
     var regex = /\[\[(?:([\w:\.]*)=((?:[\s\S](?!\]\]))+[\S\s])| )\]\]\s*/ // Same regexp but with a capture group
     let match = token.match(regex)
-    console.log(match)
     return {string: match[2], name: match[1]};
 }
 const optString = token => {
@@ -114,12 +113,13 @@ const termstmt = data => {
             case 'text':
             case 'prompt':
                 output[data[0].value] = strings[data[2].value.name.replace('TTRS:', '')];
+
                 if (data[3]) {
                     output = _.merge(output, data[3]);
                 }
             break;
             default:
-                throw new Error(`${JSON.stringify(data[0])} not implemented yet`)
+                throw new Error(`termstmt ${JSON.stringify(data[0])} not implemented yet`)
         }
     } else if (data[0].type == 'KEYWORD' && data[1] && !data[1].type) {
         data[1][data[0].value] = true;
@@ -142,6 +142,7 @@ const termstmt = data => {
 
 const options = data => {
     let output = {};
+    console.log(JSON.stringify(data, null, 3));
     if (data[0].type == 'KEYWORD') {
         switch (data[0].value) {
             case 'notext':
@@ -158,16 +159,26 @@ const options = data => {
                 break;
             case 'prompt':
             case 'text':
+            case 'short':
                 output[data[0].value] = strings[data[2].value.name.replace('TTRS:', '')];
+                if (!output[data[0].value]) {
+                    throw new Error("String not found " + JSON.stringify(data, null , 3))
+                }
             break;
             default:
-                throw new Error(`${JSON.stringify(data[0])} not implemented yet`)
+                throw new Error(`Option ${JSON.stringify(data[0])} not implemented yet`)
         }
     } else if (data[0].type == 'KEYWORD' && data[1] && !data[1].type) {
         data[1][data[0].value] = true;
         output = data[1];
     } else if (data[0].type == 'OPT_STRING') {
         let prompt = { text: strings[data[0].value.name.replace('TTRS:', '')] };
+        if (!prompt.text) {
+            prompt.text = data[0].text;
+        }
+        if (!prompt.text) {
+            throw new Error("Undefined string " + data[0]);
+        }
         if (data[1].options) {
             let options = _.clone(data[1]).options;
             delete data[1].options;
@@ -187,7 +198,6 @@ const options = data => {
     } else if (data[0].type == 'KEYWORD' && data[1] && !data[1].type) {
         output = _.merge(output, data[1]);
     }
-
     return output;
 }
 

@@ -211,4 +211,7 @@ clear: QueryMLA_ON
 clear: MLAIntro_PhaseQuery
 set: MLAIntro_PhaseBusy
 next: CLI_Resume
+set: MLAIntro_PhaseCommPortal
+set: Booting
+set: MiltonAllowed
 }
