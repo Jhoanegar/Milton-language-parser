@@ -96,6 +96,7 @@ const stmt = data => {
 }
 const termstmt = data => {
     let output = {};
+    debugger;
     if (data[0].type == 'KEYWORD') {
         switch (data[0].value) {
             case 'notext':
@@ -105,10 +106,10 @@ const termstmt = data => {
             case 'set':
             case 'goto':
             case 'next':
-                output[data[0].value] = data[2].value;
+                output.operations = [{[data[0].value]: data[2].value}];
                 break;
             case 'clear':
-                output[data[0].value] = data[2].value;
+                output.operations = [{[data[0].value]: data[2].value}];
                 break;
             case 'text':
             case 'prompt':
@@ -131,10 +132,10 @@ const termstmt = data => {
     } else if (data[0].type == 'LBRACE' || (data[0][0] && data[0][0].type == 'NL')) {
         output = data[1];
     }
-    if (data[0].type == 'KEYWORD' && data[1].type == 'COLON' && data[2].type == 'IDENT') {
-        output = _.merge(output, data[3]);
+    if (data[0].type == 'KEYWORD' && data[1].type == 'COLON' && data[2].type == 'IDENT' && data[3] && data[3].operations && data[3].operations.length >= 1) {
+        output.operations = _.merge(output.operations, data[3].operations);
     } else if (data[0].type == 'KEYWORD' && data[1] && !data[1].type) {
-        output = _.merge(output, data[1]);
+        output.operations = _.merge(output.operations, data[1].operations);
     }
 
     return output;
@@ -152,10 +153,10 @@ const options = data => {
             case 'set':
             case 'goto':
             case 'next':
-                output[data[0].value] = data[2].value;
+                output.operations = [{[data[0].value]: data[2].value}];
                 break;
             case 'clear':
-                output[data[0].value] = data[2].value;
+                output.operations = [{[data[0].value]: data[2].value}];
                 break;
             case 'prompt':
             case 'text':
@@ -193,10 +194,10 @@ const options = data => {
     } else if (data[0].type == 'LBRACE' || (data[0][0] && (data[0][0].type == 'NL' || data[0][0].type == '_'))) {
         output = data[1];
     }
-    if (data[0].type == 'KEYWORD' && data[1].type == 'COLON' && data[2].type == 'IDENT') {
-        output = _.merge(output, data[3]);
+    if (data[0].type == 'KEYWORD' && data[1].type == 'COLON' && data[2].type == 'IDENT' && data[3] && data[3].operations && data[3].operations.length > 0) {
+        output.operations = _.concat(output.operations, data[3].operations);
     } else if (data[0].type == 'KEYWORD' && data[1] && !data[1].type) {
-        output = _.merge(output, data[1]);
+        output.operations = _.merge(output.operations, data[1].operations);
     }
     return output;
 }
