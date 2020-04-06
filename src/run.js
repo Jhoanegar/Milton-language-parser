@@ -1,4 +1,5 @@
 const debug = require('debug')('milton');
+const status = require('debug')('status');
 const ask = require('enquirer').prompt
 const { AutoComplete } = require('enquirer');
 const type = require('node-typewriter')
@@ -6,10 +7,15 @@ const _ = require('lodash')
 const { EventEmitter } = require('events')
 const program = require('../output.json')
 const initialConditions = {
-    QueryMLA_START: true
+    QueryMLA_START: true,
+    QueryMLA_ON: true
 };
 
 let mainLoop = new EventEmitter();
+let PI = 0;
+let instructionsTotal = program[0].length;
+let playerOptions = [];
+let expectingPlayer = false;
 (async () => {
     //initServer() // To stop the terminal from closing
     mainLoop.on('operation', async data => {
@@ -17,60 +23,88 @@ let mainLoop = new EventEmitter();
         await data;
     })
     mainLoop.on('response', async data => {
-        debug(`Initial Contitions: ${JSON.stringify(initialConditions,null, 3)}`)
-
-        nextTick()
+        await nextTick()
     })
-    nextTick()
+    mainLoop.on('endtick', () => {
+       debug("endtick") 
+        PI++;
+       nextTick();
+    })
+    await nextTick()
 })();
 
-function nextTick() {
-    debug("Processing next Tick");
-    let i = 0;
-    let result;
-    while (program[i]) {
-        let instruction = program[i][0];
-        let result = processInstruction(instruction);
-        if (result) {
-            instruction.consumed = true;
-            debug("Queueing operation")
-            mainLoop.emit('operation', result);
-            break;
-        }
-        i++
+async function nextTick() {
+    debug("Processing next Tick " + PI);
+    debug("State: ", JSON.stringify(initialConditions, null, 3));
+    debugger;
+    if (!program[PI]) {
+        debug("Reset PI");
+        await player();
+        PI = 0;
     }
+    instruction = program[PI][0];
+
+    let result = processInstruction(instruction);
+    if (result.terminal) {
+        await result.operation;
+        instruction.consumed = true;
+        debug("Queueing operation")
+        mainLoop.emit('operation');
+    }
+    mainLoop.emit('endtick');
 }
 
 function processInstruction(instruction) {
-    debugger;
     if (instruction.consumed) {
-        return;
+        return {terminal: false};
     }
     if (terminalStatement(instruction) && conditionsMet(instruction[2])) {
-        return terminal(instruction[3]);
+        return {terminal: true, operation: terminal(instruction[3])};
+    } else if (playerStatement(instruction) && conditionsMet(instruction[2])) {
+        playerOptions.push(instruction[3]);
+        return {terminal: false}
     }
+
+    return {terminal: false}
 }
 
 function terminalStatement(instruction) {
-    return instruction[0] && instruction[0].type == "TERMINAL"
+    return instruction[0] && (instruction[0].type == "TERMINAL")
         && instruction[1] && instruction[1].type == 'WHEN'
         && instruction[2]
         && instruction[3]
 }
 
-function conditionsMet(conditions) {
-    var conditionsMet = true;
+function playerStatement(instruction) {
+    return instruction[0] && instruction[0].type == "PLAYER"
+        && instruction[1] && instruction[1].type == 'WHEN'
+        && instruction[2]
+        && instruction[3]
+}
+
+function conditionsMet(conditions, operator='and') {
+    status("Checking", conditions)
+    var met = operator === 'and' ? true : false;
     _.forOwn(conditions, (value, key) => {
-        if (initialConditions[key] != value) {
-            conditionsMet = false;
+        if (key === "$or") {
+            met = met && conditionsMet(initialConditions[key], 'or')
+        } else if (value === true && initialConditions[key] !== value && operator === 'and') {
+            met = false;
+            return false;
+        } else if (value === false && initialConditions[key] === true && operator === 'and') {
+            met = false;
+            return false;
+        } else if (initialConditions[key] === value && operator === 'or') {
+            met = true;
             return false;
         }
     })
-    return conditionsMet;
+    status(`Conditions ${met ? 'were' : 'were not'} met`)
+    return met;
 }
 
-async function terminal({ prompt, options }) {
-
+async function terminal(params) {
+    let { prompt, options } = params;
     let result = Promise.resolve();
     if (prompt) {
         debug("Printing prompt");
@@ -80,7 +114,12 @@ async function terminal({ prompt, options }) {
         debug("printint options");
         response = await printOptions(options);
     }
+    updateInitialConditions(params);    
     return response;
+}
+
+async function player() {
+    await printOptions(playerOptions, option => option.text)
 }
 
 async function printToConsole(message) {
@@ -90,19 +129,22 @@ async function printToConsole(message) {
         if (currentMessage.length == 0) {
             console.log("");
         } else {
-            await sleep(1)
+            await msleep(100);
             return type(currentMessage + "\n", '200')
         }
     }, Promise.resolve())
 }
 
-async function printOptions(options) {
+async function printOptions(options, adapter) {
+    if (!adapter) {
+        adapter = option => option.prompt.text
+    }
     let result = Promise.resolve();
-    let choices = options.map(option => option.prompt.text);
+    let choices = options.map(adapter);
     let question = new AutoComplete({message: '>>', choices})
     let response = getValuesForResponse(options, await question.run());
     updateInitialConditions(response);
-    mainLoop.emit('response', response);
+    // mainLoop.emit('response', response);
 }
 
 function updateInitialConditions(response) {
@@ -113,6 +155,10 @@ function updateInitialConditions(response) {
             case 'setlocal':
                 initialConditions[value] = true;
                 break;
+            case 'prompt':
+            case 'options':
+            case 'text':
+                 break;
             default:
                 throw new Error(`Key: ${key}:${value} not implemented yet`);
         }

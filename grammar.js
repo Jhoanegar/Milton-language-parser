@@ -69,13 +69,23 @@ const lexer = moo.compile({
 const ident = (data) => {
     let output = {};
     if (data[0].type == 'NOT') {
-        output = {not: data[1].value};
+        let keys = Object.keys(data[1]);
+        keys.forEach(key=> {
+            data[1][key] = false;
+        })
+        output = data[1];
     } else if (data.length == 1 && data[0].type == 'IDENT') {
         output[data[0].value] = true;
     } else if (data[0].type == 'LPAREN' && data[2] && data[2].type == 'RPAREN'){
         output = data[1]
-    } else if (data.length == 2 && data[1].length == 1 && data[1][0][0].type == 'AND') {
-        output = _.merge(data[0], data[1][0][1]);
+    } else if (data.length == 2 && data[1].length >= 1) {
+        data[1].forEach(operand => {
+            if (operand[0].type == 'AND') {
+                output = _.merge(data[0], operand[1]);
+            } else if (operand[0].type == 'OR') {
+                output = {$or: _.merge(data[0], operand[1])}
+            }
+        })
     } else {
         output = data[0];
     }
@@ -157,7 +167,6 @@ const options = data => {
         data[1][data[0].value] = true;
         output = data[1];
     } else if (data[0].type == 'OPT_STRING') {
-        debugger;
         let prompt = { text: strings[data[0].value.name.replace('TTRS:', '')] };
         if (data[1].options) {
             let options = _.clone(data[1]).options;
