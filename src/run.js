@@ -49,6 +49,7 @@ async function nextTick() {
         instruction.consumed = true;
         debug("Queueing operation")
         mainLoop.emit('operation');
+        pi = -1;
     }
     mainLoop.emit('endtick');
 }
@@ -161,6 +162,7 @@ function updateInitialConditions(response) {
                 case 'next':
                 case 'set':
                 case 'setlocal':
+                case 'goto':
                     initialConditions[value] = true;
                     break;
                 case 'prompt':

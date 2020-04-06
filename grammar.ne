@@ -126,13 +126,15 @@ const termstmt = data => {
         output = data[2];
     } else if (data[0].type == 'RBRACE') {
         // do nothing
-    } else if (data[0].type == 'LBRACE' || (data[0][0] && data[0][0].type == 'NL')) {
+    } else if (data[0].type == 'LBRACE' || (data[0][0] && (data[0][0].type == 'NL' || data[0][0].type === '_'))) {
         output = data[1];
     }
     if (data[0].type == 'KEYWORD' && data[1].type == 'COLON' && data[2].type == 'IDENT' && data[3] && data[3].operations && data[3].operations.length >= 1) {
-        output.operations = _.merge(output.operations, data[3].operations);
+        output.operations = _.concat(output.operations, data[3].operations);
+        delete data[3].operations;
+        output = _.merge(output, data[3]);
     } else if (data[0].type == 'KEYWORD' && data[1] && !data[1].type) {
-        output.operations = _.merge(output.operations, data[1].operations);
+        output.operations = _.concat(output.operations, data[1].operations);
     }
 
     return output;
