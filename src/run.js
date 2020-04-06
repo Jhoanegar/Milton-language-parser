@@ -119,7 +119,8 @@ async function terminal(params) {
 }
 
 async function player() {
-    await printOptions(playerOptions, option => option.text)
+    await printOptions(playerOptions, "player")
+    playerOptions = [];
 }
 
 async function printToConsole(message) {
@@ -135,14 +136,17 @@ async function printToConsole(message) {
     }, Promise.resolve())
 }
 
-async function printOptions(options, adapter) {
-    if (!adapter) {
+async function printOptions(options, source="terminal") {
+    let adapter;
+    if (source === "terminal") {
         adapter = option => option.prompt.text
+    } else {
+        adapter = option => option.text
     }
     let result = Promise.resolve();
     let choices = options.map(adapter);
     let question = new AutoComplete({message: '>>', choices})
-    let response = getValuesForResponse(options, await question.run());
+    let response = getValuesForResponse(options, await question.run(), source);
     updateInitialConditions(response);
     // mainLoop.emit('response', response);
 }
@@ -157,7 +161,6 @@ function updateInitialConditions(response) {
                 break;
             case 'prompt':
             case 'options':
-            case 'text':
                  break;
             default:
                 throw new Error(`Key: ${key}:${value} not implemented yet`);
@@ -165,11 +168,16 @@ function updateInitialConditions(response) {
     })
 }
 
-function getValuesForResponse(options, response) {
-    let option = _.find(options, option => option.prompt.text == response)
+function getValuesForResponse(options, response, source) {
+    let option;
+    if (source === "terminal") {
+        option = _.find(options, option => option.prompt.text == response)
+    } else {
+        option = _.find(options, option => option.text == response)
+    }
     let values = {};
     _.forOwn(option, (value, key) => {
-        if (key != 'prompt') {
+        if (key !== 'prompt' && key !== 'text') {
             values[key] = value;
         }
     })
