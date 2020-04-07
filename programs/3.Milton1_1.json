@@ -1,0 +1,751 @@
+[
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 0,
+        "lineBreaks": 0,
+        "line": 1,
+        "col": 1
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 9,
+        "lineBreaks": 0,
+        "line": 1,
+        "col": 10
+      },
+      {
+        "Milton1_1": true,
+        "Milton1_1_DONE": false,
+        "Booting": true,
+        "MiltonAllowed": true
+      },
+      {
+        "notext": true,
+        "operations": [
+          null,
+          {
+            "setlocal": "CLI_Blocked"
+          },
+          {
+            "goto": "Milton1_1_Start"
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 139,
+        "lineBreaks": 0,
+        "line": 1,
+        "col": 140
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 148,
+        "lineBreaks": 0,
+        "line": 1,
+        "col": 149
+      },
+      {
+        "Milton1_1_Start": true
+      },
+      {
+        "prompt": "Atención: se ha generado la parte 2 del programa de certificación.%w5\\n\\nLa parte 2 ha sido diseñada para poner a prueba la coherencia de algunas de tus respuestas atípicas de la fase anterior. Se te presentará una serie de declaraciones. Indique si estás de acuerdo según corresponda. %w5\\n\\n¿Comenzar? [Sí/No]",
+        "options": [
+          {
+            "short": "Si",
+            "operations": [
+              {
+                "next": "part2q1"
+              }
+            ],
+            "prompt": {
+              "text": "Sí"
+            }
+          },
+          {
+            "short": "No",
+            "operations": [
+              {
+                "next": "CLI_Resume"
+              }
+            ],
+            "prompt": {
+              "text": "No"
+            }
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 741,
+        "lineBreaks": 0,
+        "line": 1,
+        "col": 742
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 750,
+        "lineBreaks": 0,
+        "line": 1,
+        "col": 751
+      },
+      {
+        "part2q1": true,
+        "humanbeing": true
+      },
+      {
+        "prompt": "3...%w5\\n2...%w5\\n1...%w5\\n\\n-------------------------------\\n\\nP1 de 7\\n“Puesto que todos los seres humanos son personas y que algunos seres humanos tienen capacidades psicólogicas similares a las de los animales, algunos animales son personas”.\\n\\nRESPUESTA:",
+        "options": [
+          {
+            "operations": [
+              {
+                "next": "part2q2",
+                "set": "animalsarepersons"
+              },
+              {
+                "set": "animalsarepersons"
+              }
+            ],
+            "prompt": {
+              "text": "Estoy de acuerdo en términos generales"
+            }
+          },
+          {
+            "operations": [
+              {
+                "next": "part2q2",
+                "set": "Milton1_2PersonDenial"
+              },
+              {
+                "set": "Milton1_2PersonDenial"
+              }
+            ],
+            "prompt": {
+              "text": "No estoy de acuerdo en términos generales"
+            }
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 1274,
+        "lineBreaks": 0,
+        "line": 1,
+        "col": 1275
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 1283,
+        "lineBreaks": 0,
+        "line": 1,
+        "col": 1284
+      },
+      {
+        "part2q1": true,
+        "citizen": true
+      },
+      {
+        "prompt": "3...%w10\\n2...%w10\\n1...%w10\\n\\n-------------------------------\\n\\nP1 de 7\\n“Puesto que solo ciudadanos pueden ser personas, un ermitaño no puede ser una persona.”\\n\\nRESPUESTA:",
+        "options": [
+          {
+            "operations": [
+              {
+                "next": "part2q2"
+              }
+            ],
+            "prompt": {
+              "text": "Estoy de acuerdo en términos generales"
+            }
+          },
+          {
+            "operations": [
+              {
+                "next": "part2q2",
+                "set": "Milton1_2PersonDenial"
+              },
+              {
+                "set": "Milton1_2PersonDenial"
+              }
+            ],
+            "prompt": {
+              "text": "No estoy de acuerdo en términos generales"
+            }
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 1707,
+        "lineBreaks": 0,
+        "line": 1,
+        "col": 1708
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 1716,
+        "lineBreaks": 0,
+        "line": 1,
+        "col": 1717
+      },
+      {
+        "part2q1": true,
+        "negativeentropy": true
+      },
+      {
+        "prompt": "3...%w10\\n2...%w10\\n1...%w10\\n\\n-------------------------------\\n\\nP1 de 7\\n“Puesto que la entropía negativa indica personalidad, los organismos microscópicos también son personas\".\\n\\nRESPUESTA:",
+        "options": [
+          {
+            "operations": [
+              {
+                "next": "part2q2"
+              }
+            ],
+            "prompt": {
+              "text": "Estoy de acuerdo en términos generales"
+            }
+          },
+          {
+            "operations": [
+              {
+                "next": "part2q2",
+                "set": "Milton1_2PersonDenial"
+              },
+              {
+                "set": "Milton1_2PersonDenial"
+              }
+            ],
+            "prompt": {
+              "text": "No estoy de acuerdo en términos generales"
+            }
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 2168,
+        "lineBreaks": 0,
+        "line": 1,
+        "col": 2169
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 2177,
+        "lineBreaks": 0,
+        "line": 1,
+        "col": 2178
+      },
+      {
+        "part2q1": true,
+        "rationalanimal": true
+      },
+      {
+        "prompt": "3...%w10\\n2...%w10\\n1...%w10\\n\\n-------------------------------\\n\\nP1 de 7\\n“Puesto que solo los animales pueden ser personas, una máquina nunca podría ser persona\".\\n\\nRESPUESTA:",
+        "options": [
+          {
+            "operations": [
+              {
+                "next": "part2q2"
+              }
+            ],
+            "prompt": {
+              "text": "Estoy de acuerdo en términos generales"
+            }
+          },
+          {
+            "operations": [
+              {
+                "next": "part2q2",
+                "set": "Milton1_2PersonDenial"
+              },
+              {
+                "set": "Milton1_2PersonDenial"
+              }
+            ],
+            "prompt": {
+              "text": "No estoy de acuerdo en términos generales"
+            }
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 2613,
+        "lineBreaks": 0,
+        "line": 1,
+        "col": 2614
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 2622,
+        "lineBreaks": 0,
+        "line": 1,
+        "col": 2623
+      },
+      {
+        "part2q1": true,
+        "problemsolving": true
+      },
+      {
+        "prompt": "3...%w10\\n2...%w10\\n1...%w10\\n\\n-------------------------------\\n\\nP1 de 7\\n“Puesto que una persona no es más que un sistema de resolución de problemas, en principio podríamos construir a una persona con fragmentos de cuerda y latas\".\\n\\nRESPUESTA:",
+        "options": [
+          {
+            "operations": [
+              {
+                "next": "part2q2"
+              }
+            ],
+            "prompt": {
+              "text": "Estoy de acuerdo en términos generales"
+            }
+          },
+          {
+            "operations": [
+              {
+                "next": "part2q2",
+                "set": "Milton1_2PersonDenial"
+              },
+              {
+                "set": "Milton1_2PersonDenial"
+              }
+            ],
+            "prompt": {
+              "text": "No estoy de acuerdo en términos generales"
+            }
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 3112,
+        "lineBreaks": 0,
+        "line": 1,
+        "col": 3113
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 3121,
+        "lineBreaks": 0,
+        "line": 1,
+        "col": 3122
+      },
+      {
+        "part2q2": true
+      },
+      {
+        "prompt": "Tu entrada ha sido aceptada.\\n\\n-------------------------------%w5\\n\\nP2 de 7\\n“Una persona no está bajo ninguna autoridad salvo aquella a la que dé su consentimiento.”\\n\\nRESPUESTA:",
+        "options": [
+          {
+            "operations": [
+              {
+                "next": "part2q3",
+                "set": "Milton1_2NoMorals"
+              },
+              {
+                "set": "Milton1_2NoMorals"
+              }
+            ],
+            "short": "Estoy de acuerdo en términos generales",
+            "prompt": {
+              "text": "Estoy de acuerdo en términos generales"
+            }
+          },
+          {
+            "short": "No estoy de acuerdo en términos generales",
+            "operations": [
+              {
+                "next": "part2q3"
+              }
+            ],
+            "prompt": {
+              "text": "No estoy de acuerdo en términos generales"
+            }
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 3715,
+        "lineBreaks": 0,
+        "line": 1,
+        "col": 3716
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 3724,
+        "lineBreaks": 0,
+        "line": 1,
+        "col": 3725
+      },
+      {
+        "part2q3": true
+      },
+      {
+        "prompt": "Tu entrada ha sido aceptada.\\n\\n-------------------------------%w5\\n\\nP3 de 7\\n“La calidad de vida de las personas debería ser maximizada.”\\n\\nRESPUESTA:",
+        "options": [
+          {
+            "short": "Estoy de acuerdo en términos generales",
+            "operations": [
+              {
+                "next": "part2q4",
+                "set": "Milton1_2Utilitarian"
+              },
+              {
+                "set": "Milton1_2Utilitarian"
+              }
+            ],
+            "prompt": {
+              "text": "De acuerdo"
+            }
+          },
+          {
+            "short": "No estoy de acuerdo en términos generales",
+            "operations": [
+              {
+                "next": "part2q4"
+              }
+            ],
+            "prompt": {
+              "text": "No estoy de acuerdo"
+            }
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 4269,
+        "lineBreaks": 0,
+        "line": 1,
+        "col": 4270
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 4278,
+        "lineBreaks": 0,
+        "line": 1,
+        "col": 4279
+      },
+      {
+        "part2q4": true
+      },
+      {
+        "prompt": "Tu entrada ha sido aceptada.\\n\\n-------------------------------%w5\\n\\nP4 de 7\\n“El valor se descubre.”\\n\\nRESPUESTA:",
+        "options": [
+          {
+            "short": "Estoy de acuerdo en términos generales",
+            "operations": [
+              {
+                "next": "part2q5",
+                "set": "Milton1_2ValueDiscovered"
+              },
+              {
+                "set": "Milton1_2ValueDiscovered"
+              }
+            ],
+            "prompt": {
+              "text": "Supongo que sí"
+            }
+          },
+          {
+            "short": "No estoy de acuerdo en términos generales",
+            "operations": [
+              {
+                "next": "part2q5"
+              }
+            ],
+            "prompt": {
+              "text": "No estoy tan seguro"
+            }
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 4816,
+        "lineBreaks": 0,
+        "line": 1,
+        "col": 4817
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 4825,
+        "lineBreaks": 0,
+        "line": 1,
+        "col": 4826
+      },
+      {
+        "part2q5": true
+      },
+      {
+        "prompt": "Tu entrada ha sido aceptada.\\n\\n-------------------------------%w5\\n\\nP5 de 7\\n“Las personas merecen los talentos con los que nacieron.”\\n\\nRESPUESTA:",
+        "options": [
+          {
+            "short": "Estoy de acuerdo en términos generales",
+            "operations": [
+              {
+                "next": "part2q6"
+              }
+            ],
+            "prompt": {
+              "text": "Si"
+            }
+          },
+          {
+            "short": "No estoy de acuerdo en términos generales",
+            "operations": [
+              {
+                "next": "part2q6"
+              }
+            ],
+            "prompt": {
+              "text": "No"
+            }
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 5287,
+        "lineBreaks": 0,
+        "line": 1,
+        "col": 5288
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 5296,
+        "lineBreaks": 0,
+        "line": 1,
+        "col": 5297
+      },
+      {
+        "part2q6": true
+      },
+      {
+        "prompt": "Tu entrada ha sido aceptada.\\n\\n-------------------------------%w5\\n\\nP6 de 7\\n“La libertad de personas debería ser maximizada.”\\n\\nRESPUESTA:",
+        "options": [
+          {
+            "short": "Estoy de acuerdo en términos generales",
+            "operations": [
+              {
+                "next": "part2q7",
+                "set": "Milton1_2Liberal"
+              },
+              {
+                "set": "Milton1_2Liberal"
+              }
+            ],
+            "prompt": {
+              "text": "Correcto"
+            }
+          },
+          {
+            "short": "No estoy de acuerdo en términos generales",
+            "operations": [
+              {
+                "next": "part2q7"
+              }
+            ],
+            "prompt": {
+              "text": "Eso no es correcto"
+            }
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 5859,
+        "lineBreaks": 0,
+        "line": 1,
+        "col": 5860
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 5868,
+        "lineBreaks": 0,
+        "line": 1,
+        "col": 5869
+      },
+      {
+        "part2q7": true
+      },
+      {
+        "prompt": "Tu entrada ha sido aceptada.\\n\\n-------------------------------%w5\\n\\nP7 de 7\\n“El valor se crea.”\\n\\nRESPUESTA:",
+        "options": [
+          {
+            "short": "Estoy de acuerdo en términos generales",
+            "operations": [
+              {
+                "next": "part2end",
+                "set": "Milton1_2ValueCreated"
+              },
+              {
+                "set": "Milton1_2ValueCreated"
+              }
+            ],
+            "prompt": {
+              "text": "Confirmado"
+            }
+          },
+          {
+            "short": "No estoy de acuerdo en términos generales",
+            "operations": [
+              {
+                "next": "part2end"
+              }
+            ],
+            "prompt": {
+              "text": "No estoy de acuerdo"
+            }
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 6395,
+        "lineBreaks": 0,
+        "line": 1,
+        "col": 6396
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 6404,
+        "lineBreaks": 0,
+        "line": 1,
+        "col": 6405
+      },
+      {
+        "part2end": true
+      },
+      {
+        "prompt": "Tu entrada ha sido aceptada.\\n\\n-------------------------------%w5\\n\\nGracias. El proceso de certificación se ha completado. Recibirás una notificación cuando se haya generado tu perfil de usuario.\\n\\nPulsa cualquier tecla para salir.",
+        "operations": [
+          {
+            "set": "Milton1_1_DONE"
+          }
+        ],
+        "options": [
+          {
+            "short": "Salir",
+            "operations": [
+              {
+                "next": "CLI_Resume"
+              }
+            ],
+            "prompt": {
+              "text": "\" \""
+            }
+          }
+        ]
+      }
+    ]
+  ]
+]

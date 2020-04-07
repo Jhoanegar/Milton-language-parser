@@ -6,7 +6,8 @@ const {prompt, AutoComplete} = require('enquirer');
 const Program = require('./Program');
 let initialConditions = {
     QueryMLA_START: true,
-    QueryMLA_ON: true
+    QueryMLA_ON: true,
+    "Milton1_1_Start": true // Milton_1_1
 };
 let secondaryConditions = {
     QueryMLA_START: true,
@@ -51,6 +52,9 @@ const programs = [
     },
     {
         value: '2.MLA_CommPortal',
+    },
+    {
+        value: '3.Milton1_1',
     }
 ];
 let showMenu = true;
