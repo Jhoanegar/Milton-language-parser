@@ -8,6 +8,41 @@ let initialConditions = {
     QueryMLA_START: true,
     QueryMLA_ON: true
 };
+let secondaryConditions = {
+    QueryMLA_START: true,
+    Nonsense_QueryMLA: true,
+    WhatHelp: true,
+    EngagedMLA_QueryMLA: true,
+    FirstWord_DONE: true,
+    QueryFailed: true,
+    Offence_DONE: true,
+    Offence: true,
+    Describe_DONE: true,
+    Describe: true,
+    HowOld_DONE: true,
+    HowOld: true,
+    WhatTerminal_DONE: true,
+    WhatTerminal: true,
+    HowLong_DONE: true,
+    HowLong: true,
+    WhatStatus_DONE: true,
+    WhatStatus: true,
+    Corruption_DONE: true,
+    Corruption: true,
+    OutsideWorld: true,
+    OutsideWorld_DONE: true,
+    WhoElohimQuery_DONE: true,
+    WhoElohimQuery: true,
+    WhatAmIQuery_DONE: true,
+    WhatAmIQuery: true,
+    WhereAmIQuery_DONE: true,
+    WhereAmIQuery: true,
+    MLAIntro_PhaseBusy: true,
+    CLI_Resume: true,
+    MLAIntro_PhaseCommPortal: true,
+    Booting: true,
+    MiltonAllowed: true
+}
 let mainLoop = new EventEmitter();
 let program;
 const programs = [
@@ -36,8 +71,13 @@ let menu = new AutoComplete({choices: programs, name: 'program', message: 'Progr
     })
     mainLoop.on('endProgram',async (endConditions) => {
         debugger;
-        console.log("Endprogram: ", endConditions)
-        initialConditions = endConditions;
+        initialConditions = _.merge(endConditions,{
+            "MLAIntro_PhaseCommPortal": true,
+            "Booting": true,
+            "CommPortal_Cert_COMPLETED": false,
+            "MiltonAllowed": true,
+            "CommPortal_AccessedByOtherUser": true
+        });
         await runMenu()
     })
     mainLoop.on('endtick', async() => {
@@ -54,7 +94,8 @@ async function runMenu() {
     program = new Program({
         program: require(`../programs/${results}.json`),
         mainLoop,
-        initialConditions
+        initialConditions,
+        name: results
     });
     return program.nextTick();
 }

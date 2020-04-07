@@ -11,6 +11,7 @@ class Program {
         program,
         mainLoop,
         initialConditions,
+        name,
         sleepMs=100,
         typeSpeed=100
     }) {
@@ -24,9 +25,13 @@ class Program {
         this.currentInstruction;
         this.stopped = false;
         this.instructionsNotMatched = 0;
+        this.name = name
     }
 
     async nextTick() {
+        if (this.name == '2.MLA_CommPortal') {
+            debugger;
+        }
         this.PC++;
         debug("Processing next Tick " + this.PC);
         status("State: ", JSON.stringify(this.initialConditions, null, 3));
@@ -65,7 +70,7 @@ class Program {
         if (this.terminalStatement(instruction) && this.conditionsMet(instruction[2])) {
             return {terminal: true, operation: this.terminal(instruction[3])};
         } else if (this.playerStatement(instruction) && this.conditionsMet(instruction[2])) {
-            this.playerOptions.push(instruction[3]);
+            this.addPlayerStatement(instruction[3]);
             return {terminal: false}
         }
 
@@ -106,7 +111,8 @@ class Program {
     }
 
     async terminal(params) {
-        let { prompt, options } = params;
+        let prompt = params.prompt || params.text;
+        let options = params.options;
         let result = Promise.resolve();
         let response;
         if (prompt) {
@@ -119,6 +125,11 @@ class Program {
         }
         this.updateInitialConditions(params);
         return response;
+    }
+
+    addPlayerStatement(statement) {
+        this.playerOptions.push(statement);
+        this.playerOptions = _.uniqBy(this.playerOptions, item => item.text || item.prompt)
     }
 
     async player() {
@@ -139,8 +150,9 @@ class Program {
             if (currentMessage.length == 0) {
                 console.log("");
             } else {
-                await this.msleep(this.sleepMs);
-                return type(currentMessage + "\n", this.typeSpeed)
+                // await this.msleep(this.sleepMs);
+                // return type(currentMessage + "\n", this.typeSpeed)
+                console.log(currentMessage + "\n")
             }
         }, Promise.resolve())
     }

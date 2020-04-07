@@ -132,9 +132,11 @@ const termstmt = data => {
     } else if (data[0].type == 'LBRACE' || (data[0][0] && (data[0][0].type == 'NL' || data[0][0].type === '_'))) {
         output = data[1];
     }
-    if (data[0].type == 'KEYWORD' && data[1].type == 'COLON' && data[2].type == 'IDENT' && data[3] && data[3].operations && data[3].operations.length >= 1) {
-        output.operations = _.concat(output.operations, data[3].operations);
-        delete data[3].operations;
+    if (data[0].type == 'KEYWORD' && data[1].type == 'COLON' && data[2].type == 'IDENT' && data[3]) {
+        if (data[3].operations && data[3].operations.length >= 1) {
+            output.operations = _.concat(output.operations, data[3].operations);
+            delete data[3].operations;
+        }
         output = _.merge(output, data[3]);
     } else if (data[0].type == 'KEYWORD' && data[1] && !data[1].type) {
         output.operations = _.concat(output.operations, data[1].operations);
@@ -167,6 +169,9 @@ const options = data => {
                 output[data[0].value] = strings[data[2].value.name.replace('TTRS:', '')];
                 if (!output[data[0].value]) {
                     throw new Error("String not found " + JSON.stringify(data[2], null , 3))
+                }
+                if (data[3]) {
+                    output = _.merge(output, data[3]);
                 }
             break;
             default:
