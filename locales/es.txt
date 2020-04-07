@@ -4471,7 +4471,7 @@ TermDlg.MLA_CommPortal.Ln0168.0.text.ThatResponseIsIncorrect=La respuesta es inc
 TermDlg.MLA_CommPortal.Ln0170.0.option.TryAgain=Intentar de nuevo
 TermDlg.MLA_CommPortal.Ln0175.0.text.Q1Of432=\nP1 of 4\n3+2=?\n¿Cuál es la solución?\nRESPUESTA:
 TermDlg.MLA_CommPortal.Ln0189.0.text.YourInputHasBeenAccepted=Tu entrada ha sido aceptada.\n\n-------------------------------\n\nP2 de 4\n¿Cuál es tu reacción subjetiva a esta imagen?\n\n^_^\n\nRESPUESTA:
-TermDlg.MLA_CommPortal.Ln0201.0.option.Content=Contenido
+TermDlg.MLA_CommPortal.Ln0201.0.option.Content=Feliz
 TermDlg.MLA_CommPortal.Ln0202.0.option.Mountains=Montañas
 TermDlg.MLA_CommPortal.Ln0203.0.option.Face=Cara
 TermDlg.MLA_CommPortal.Ln0204.0.option.Angry=Enfadado

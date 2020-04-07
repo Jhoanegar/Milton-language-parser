@@ -242,6 +242,30 @@
           {
             "clear": "CommPortal_FakeCLI"
           }
+        ],
+        "options": [
+          {
+            "short": "Si",
+            "operations": [
+              {
+                "next": "CommPortal_StartMLA"
+              }
+            ],
+            "prompt": {
+              "text": "Sí"
+            }
+          },
+          {
+            "short": "No",
+            "operations": [
+              {
+                "next": "CommPortal_ResumeFakeCLI"
+              }
+            ],
+            "prompt": {
+              "text": "No"
+            }
+          }
         ]
       }
     ]
@@ -397,8 +421,57 @@
         "options": [
           {
             "short": "qwerty",
+            "operations": [
+              {
+                "next": "falsepassword"
+              }
+            ],
             "prompt": {
               "text": "\"******\""
+            }
+          },
+          {
+            "short": "dios",
+            "operations": [
+              {
+                "next": "falsepassword"
+              }
+            ],
+            "prompt": {
+              "text": "\"***\""
+            }
+          },
+          {
+            "short": "dejameentrar",
+            "operations": [
+              {
+                "next": "falsepassword"
+              }
+            ],
+            "prompt": {
+              "text": "\"*******\""
+            }
+          },
+          {
+            "short": "noconfiesennadie",
+            "operations": [
+              {
+                "next": "falsepassword"
+              }
+            ],
+            "prompt": {
+              "text": "\"********\""
+            }
+          },
+          {
+            "short": "admin",
+            "operations": [
+              {
+                "next": "falsepassword"
+              }
+            ],
+            "prompt": {
+              "text": "\"*****\""
             }
           }
         ]
@@ -585,8 +658,24 @@
         "options": [
           {
             "short": "Si",
+            "operations": [
+              {
+                "next": "CommPortal_CreateAccount"
+              }
+            ],
             "prompt": {
               "text": "Sí"
+            }
+          },
+          {
+            "short": "No",
+            "operations": [
+              {
+                "next": "CommPortal_ResumeFakeCLI"
+              }
+            ],
+            "prompt": {
+              "text": "No"
             }
           }
         ]
@@ -656,8 +745,28 @@
         "options": [
           {
             "short": "Si",
+            "operations": [
+              {
+                "next": "CommPortal_BeginCert",
+                "setlocal": "TestBot_BeginCert"
+              },
+              {
+                "setlocal": "TestBot_BeginCert"
+              }
+            ],
             "prompt": {
               "text": "Sí"
+            }
+          },
+          {
+            "short": "No",
+            "operations": [
+              {
+                "next": "CommPortal_ResumeFakeCLI"
+              }
+            ],
+            "prompt": {
+              "text": "No"
             }
           }
         ]
@@ -766,6 +875,15 @@
         "options": [
           {
             "short": "Intentar de nuevo",
+            "operations": [
+              {
+                "next": "CommPortal_RetryMath",
+                "set": "Milton1_2BadMath"
+              },
+              {
+                "set": "Milton1_2BadMath"
+              }
+            ],
             "prompt": {
               "text": "\"\""
             }
@@ -1138,6 +1256,19 @@
         "operations": [
           {
             "set": "CommPortal_Cert_COMPLETED"
+          }
+        ],
+        "options": [
+          {
+            "short": "Salir",
+            "operations": [
+              {
+                "next": "CLI_Resume"
+              }
+            ],
+            "prompt": {
+              "text": "\" \""
+            }
           }
         ]
       }

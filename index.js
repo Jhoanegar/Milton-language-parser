@@ -6,23 +6,12 @@ const argv = require('yargs').argv
 
 // Create a Parser object from our grammar.
 const parser = new nearley.Parser(nearley.Grammar.fromCompiled(grammar));
-// let input = 
-// `include "Content/Talos/Databases/ComputerTerminalDialogs/${argv.in}"
-// `
 let input = 
-`terminal when (CommPortal_Start){
-  prompt: [[TTRS:TermDlg.MLA_CommPortal.Ln0044.0.text.ConnectingNetworkDrivesW3W3=Connecting network drives.%w3.%w3.%w3.%w3.%w3 %w9Error: network inaccessible.%s0%w9
-  ###75639$ Encountered unknown errors
-    
-  Run MLA troubleshooter? [Y/N] ]]
-    clear: CommPortal_FakeCLI
-    options: {
-      "TTRS:TermDlg.Common.YesShort=Y" short: "TTRS:TermDlg.Common.Yes2=Yes" next: CommPortal_StartMLA
-      "TTRS:TermDlg.Common.NoShort=N" short: "TTRS:TermDlg.Common.No2=No" next: CommPortal_ResumeFakeCLI
-    }
-  }
-  
+`include "Content/Talos/Databases/ComputerTerminalDialogs/${argv.in}"
 `
+// let input = 
+// `
+// `
 input = input.replace(/^#.*\r?\n/g, '');
 input = input.replace(/include "(.*)"/g, includeFile);
 input = input.replace(/^#.*\r?\n/g, '');
