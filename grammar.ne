@@ -2,7 +2,7 @@
 @{%
 debugger;
 const fs = require('fs');
-const stringsArray = fs.readFileSync('./locales/es.txt').toString().split(/\r\n/);
+const stringsArray = fs.readFileSync('./locales/es.txt').toString().split(/\r?\n/);
 const strings = {};
 stringsArray.forEach(string => {
     let match = string.match(/([^=]+)=(.*)/)
@@ -142,7 +142,7 @@ const termstmt = data => {
 
 const options = data => {
     let output = {};
-    console.log(JSON.stringify(data, null, 3));
+    //console.log(JSON.stringify(data, null, 3));
     if (data[0].type == 'KEYWORD') {
         switch (data[0].value) {
             case 'notext':
@@ -163,7 +163,7 @@ const options = data => {
             case 'short':
                 output[data[0].value] = strings[data[2].value.name.replace('TTRS:', '')];
                 if (!output[data[0].value]) {
-                    throw new Error("String not found " + JSON.stringify(data, null , 3))
+                    throw new Error("String not found " + JSON.stringify(data[2], null , 3))
                 }
             break;
             default:
