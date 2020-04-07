@@ -1,0 +1,1146 @@
+[
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 0,
+        "lineBreaks": 0,
+        "line": 1,
+        "col": 1
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 9,
+        "lineBreaks": 0,
+        "line": 1,
+        "col": 10
+      },
+      {
+        "MLAIntro_PhaseCommPortal": true,
+        "Booting": true,
+        "CommPortal_Cert_COMPLETED": false,
+        "MiltonAllowed": true
+      },
+      {
+        "text": "\\nCargando la sesión de biblioteca.%w1.%w1.%w1 %w9Terminado.\\nMontaje de discos locales.%w1.%w1.%w1 %w9%s0Error.\\nSe detectó un error no reconocido.%s0%w9\\n\\n",
+        "operations": [
+          {
+            "setlocal": "CommPortal_FakeCLI"
+          },
+          {
+            "setlocal": "CLI_Blocked"
+          },
+          {
+            "clear": "CLI_Enabled"
+          },
+          {
+            "goto": "dummy"
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 390,
+        "lineBreaks": 0,
+        "line": 1,
+        "col": 391
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 399,
+        "lineBreaks": 0,
+        "line": 1,
+        "col": 400
+      },
+      {
+        "CommPortal_ResumeFakeCLI": true
+      },
+      {
+        "text": "Saliendo del portal de comunicaciones%w3.%w3.%w3.Terminado\\nReanudando la sesión del archivo de biblioteca%w5.%w5.%w5.Terminado\\n",
+        "operations": [
+          {
+            "setlocal": "CommPortal_FakeCLI"
+          },
+          {
+            "goto": "dummy"
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "PLAYER",
+        "value": "player",
+        "text": "player ",
+        "offset": 653,
+        "lineBreaks": 0,
+        "line": 1,
+        "col": 654
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 660,
+        "lineBreaks": 0,
+        "line": 1,
+        "col": 661
+      },
+      {
+        "CommPortal_FakeCLI": true,
+        "AccessCommPortalAvailable": true
+      },
+      {
+        "text": "acceder_portal_com",
+        "operations": [
+          {
+            "next": "CommPortal_Start"
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "PLAYER",
+        "value": "player",
+        "text": "player ",
+        "offset": 808,
+        "lineBreaks": 0,
+        "line": 1,
+        "col": 809
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 815,
+        "lineBreaks": 0,
+        "line": 1,
+        "col": 816
+      },
+      {
+        "CommPortal_FakeCLI": true
+      },
+      {
+        "text": "listado",
+        "operations": [
+          {
+            "next": "CommPortal_AccessedByOtherUser"
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "PLAYER",
+        "value": "player",
+        "text": "player ",
+        "offset": 920,
+        "lineBreaks": 0,
+        "line": 1,
+        "col": 921
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 927,
+        "lineBreaks": 0,
+        "line": 1,
+        "col": 928
+      },
+      {
+        "CommPortal_FakeCLI": true
+      },
+      {
+        "text": "Salir",
+        "operations": [
+          {
+            "next": "CLI_exit"
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 1011,
+        "lineBreaks": 0,
+        "line": 1,
+        "col": 1012
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 1020,
+        "lineBreaks": 0,
+        "line": 1,
+        "col": 1021
+      },
+      {
+        "CommPortal_AccessedByOtherUser": true
+      },
+      {
+        "text": "\\nEl archivo de la biblioteca no está disponible mientras los recursos del sistema se redirigen a gestionar los mensajes de red entrantes,\\n\\nUsa el comando <span class=\"strong\">acceder_portal_com</span> para acceder a las funciones de red.\\n",
+        "operations": [
+          {
+            "setlocal": "AccessCommPortalAvailable"
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 1393,
+        "lineBreaks": 0,
+        "line": 1,
+        "col": 1394
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 1402,
+        "lineBreaks": 0,
+        "line": 1,
+        "col": 1403
+      },
+      {
+        "CommPortal_Start": true
+      },
+      {
+        "prompt": "Conectando a las unidades de red.%w3.%w3.%w3.%w3.%w3 %w9Error: red inaccesible.%s0%w9\\n###75639$ Se detectaron errores no reconocidos.\\n\u0001\\n¿Ejecutar solucionador de problemas de ABM? [Sí/No]",
+        "operations": [
+          {
+            "clear": "CommPortal_FakeCLI"
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 1900,
+        "lineBreaks": 0,
+        "line": 1,
+        "col": 1901
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 1909,
+        "lineBreaks": 0,
+        "line": 1,
+        "col": 1910
+      },
+      {
+        "CommPortal_StartMLA": true
+      },
+      {
+        "prompt": "Cargando Asistente de Biblioteca Milton%w5.%w5.%w5.Terminado%w1\\nIniciando interfaz de la lengua usual.%w5.%w5.%w5.Terminado%w1\\nSesión de asistencia abierta.%w3\\n\\nHola, invitado. ¿En qué puedo ayudarte hoy?\\n\\n¿Tu consulta? :",
+        "options": [
+          {
+            "operations": [
+              {
+                "next": "CommPortal_AboutMLA"
+              }
+            ],
+            "prompt": {
+              "text": "Acerca del Asistente de Biblioteca Milton"
+            }
+          },
+          {
+            "operations": [
+              {
+                "next": "CommPortal_Troubleshooting"
+              }
+            ],
+            "prompt": {
+              "text": "Solución de problemas"
+            }
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 2467,
+        "lineBreaks": 0,
+        "line": 1,
+        "col": 2468
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 2476,
+        "lineBreaks": 0,
+        "line": 1,
+        "col": 2477
+      },
+      {
+        "CommPortal_AboutMLA": true
+      },
+      {
+        "prompt": "El programa ABM está diseñado para facilitar la interacción del usuario con la biblioteca de recursos. Esto se consigue proporcionando potentes funcionalidades de selección y resolución de problemas, presentadas por medio de una interfaz de lenguaje humano intuitiva.\\n\\n¿Tu consulta? :",
+        "options": [
+          {
+            "operations": [
+              {
+                "next": "CommPortal_Troubleshooting"
+              }
+            ],
+            "prompt": {
+              "text": "Solución de problemas"
+            }
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 2924,
+        "lineBreaks": 0,
+        "line": 1,
+        "col": 2925
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 2933,
+        "lineBreaks": 0,
+        "line": 1,
+        "col": 2934
+      },
+      {
+        "CommPortal_Troubleshooting": true
+      },
+      {
+        "text": "Creo que deseas ayuda con el acceso a las funciones de la red. La causa más común de problemas con la red son insuficientes privilegios de cuenta.\\n\\nIntroduce la contraseña de administrador para autentificar tus privilegios.\\n",
+        "operations": [
+          {
+            "goto": "FakePasswordPrompt"
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 3273,
+        "lineBreaks": 0,
+        "line": 1,
+        "col": 3274
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 3282,
+        "lineBreaks": 0,
+        "line": 1,
+        "col": 3283
+      },
+      {
+        "FakePasswordPrompt": true
+      },
+      {
+        "prompt": "contraseña:",
+        "options": [
+          {
+            "short": "qwerty",
+            "prompt": {
+              "text": "\"******\""
+            }
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 3849,
+        "lineBreaks": 0,
+        "line": 2,
+        "col": 469
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 3858,
+        "lineBreaks": 0,
+        "line": 2,
+        "col": 478
+      },
+      {
+        "falsepassword": true
+      },
+      {
+        "text": "\\nComprobando contraseña%w5.%w5.%w5.\\nContraseña de administrador incorrecta.\\n¿Intentar de nuevo?\\n\\n",
+        "operations": [
+          {
+            "goto": "passwordfailedN"
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 4050,
+        "lineBreaks": 0,
+        "line": 2,
+        "col": 670
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 4059,
+        "lineBreaks": 0,
+        "line": 2,
+        "col": 679
+      },
+      {
+        "passwordfailedN": true,
+        "passwordfailed1": false
+      },
+      {
+        "notext": true,
+        "operations": [
+          null,
+          {
+            "setlocal": "passwordfailed1"
+          },
+          {
+            "goto": "FakePasswordPrompt"
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 4169,
+        "lineBreaks": 0,
+        "line": 2,
+        "col": 789
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 4178,
+        "lineBreaks": 0,
+        "line": 2,
+        "col": 798
+      },
+      {
+        "passwordfailedN": true,
+        "passwordfailed1": true,
+        "passwordfailed2": false
+      },
+      {
+        "notext": true,
+        "operations": [
+          null,
+          {
+            "setlocal": "passwordfailed2"
+          },
+          {
+            "goto": "FakePasswordPrompt"
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 4307,
+        "lineBreaks": 0,
+        "line": 2,
+        "col": 927
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 4316,
+        "lineBreaks": 0,
+        "line": 2,
+        "col": 936
+      },
+      {
+        "passwordfailedN": true,
+        "passwordfailed1": true,
+        "passwordfailed2": true
+      },
+      {
+        "notext": true,
+        "operations": [
+          null,
+          {
+            "clear": "passwordfailed1"
+          },
+          {
+            "clear": "passwordfailed2"
+          },
+          {
+            "goto": "CreateAccountPrompt"
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 4464,
+        "lineBreaks": 0,
+        "line": 2,
+        "col": 1084
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 4473,
+        "lineBreaks": 0,
+        "line": 2,
+        "col": 1093
+      },
+      {
+        "CreateAccountPrompt": true
+      },
+      {
+        "prompt": "Acceso abortado. Demasiados intentos fallidos.\\n¿Crear una nueva cuenta de administrador? [Sí/No]",
+        "options": [
+          {
+            "short": "Si",
+            "prompt": {
+              "text": "Sí"
+            }
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 4879,
+        "lineBreaks": 0,
+        "line": 2,
+        "col": 1499
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 4888,
+        "lineBreaks": 0,
+        "line": 2,
+        "col": 1508
+      },
+      {
+        "CommPortal_CreateAccount": true,
+        "CommPortal_Cert_COMPLETED": true
+      },
+      {
+        "text": "\\nLos resultados de la evaluación de la certificación aún están pendientes. No puedes crear una nueva cuenta en este momento.\\n",
+        "operations": [
+          {
+            "goto": "FakePasswordPrompt"
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 5172,
+        "lineBreaks": 0,
+        "line": 2,
+        "col": 1792
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 5181,
+        "lineBreaks": 0,
+        "line": 2,
+        "col": 1801
+      },
+      {
+        "CommPortal_CreateAccount": true,
+        "CommPortal_Cert_COMPLETED": false
+      },
+      {
+        "prompt": "\\nPara evitar el acceso no autorizado a los controles de administración, invierte un momento en demostrar que no eres un bot.%w5\\n\\nCargando el programa de certificación%w5.%w5.%w5.\\nPrograma de certificación cargado%w5\\n\\n-------------------------------\\n\\nAhora se te pedirán una serie de entradas.\\n\\nPara cumplir con la ley de protección de datos, tendrás que consentir que tus respuestas puedan utilizarse para el desarrollo de un perfil psicométrico amplio.\\n\\nLos datos de respuestas en bruto se eliminarán de inmediato. Tu perfil solo estará disponible para los demás administradores.%w20\\n\\nGeneración de certificación parte 1%w10.%w10.%w10.\\nParte 1 preparada para la entrada de usuario.%w5\\n\\nCompleta todos los campos.\\nResponde de forma rápida e instintiva; el tiempo influye en esta evaluación.%w5\\n\\n¿Iniciar el programa de certificación? [Sí/No]",
+        "options": [
+          {
+            "short": "Si",
+            "prompt": {
+              "text": "Sí"
+            }
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 6317,
+        "lineBreaks": 0,
+        "line": 2,
+        "col": 2937
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 6326,
+        "lineBreaks": 0,
+        "line": 2,
+        "col": 2946
+      },
+      {
+        "CommPortal_BeginCert": true
+      },
+      {
+        "prompt": "\\n3...%w5\\n2...%w5\\n1...%w5\\n\\n-------------------------------\\n\\nP1 of 4\\n2+2=?\\nRESPUESTA:",
+        "options": [
+          {
+            "operations": [
+              {
+                "next": "CommPortal_Cert_mathsbad"
+              }
+            ],
+            "prompt": {
+              "text": "\"2\""
+            }
+          },
+          {
+            "operations": [
+              {
+                "next": "CommPortal_Cert_mathsgood",
+                "setlocal": "TestBot_mathsgood"
+              },
+              {
+                "setlocal": "TestBot_mathsgood"
+              }
+            ],
+            "prompt": {
+              "text": "\"4\""
+            }
+          },
+          {
+            "operations": [
+              {
+                "next": "CommPortal_Cert_mathsbad"
+              }
+            ],
+            "prompt": {
+              "text": "\"5\""
+            }
+          },
+          {
+            "operations": [
+              {
+                "next": "CommPortal_Cert_mathsbad"
+              }
+            ],
+            "prompt": {
+              "text": "\"8\""
+            }
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 6685,
+        "lineBreaks": 0,
+        "line": 2,
+        "col": 3305
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 6694,
+        "lineBreaks": 0,
+        "line": 2,
+        "col": 3314
+      },
+      {
+        "CommPortal_Cert_mathsbad": true
+      },
+      {
+        "prompt": "La respuesta es incorrecta. Pulsa cualquier tecla para volver a intentarlo.",
+        "options": [
+          {
+            "short": "Intentar de nuevo",
+            "prompt": {
+              "text": "\"\""
+            }
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 6997,
+        "lineBreaks": 0,
+        "line": 2,
+        "col": 3617
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 7006,
+        "lineBreaks": 0,
+        "line": 2,
+        "col": 3626
+      },
+      {
+        "CommPortal_RetryMath": true
+      },
+      {
+        "prompt": "\\nP1 of 4\\n3+2=?\\n¿Cuál es la solución?\\nRESPUESTA:",
+        "options": [
+          {
+            "operations": [
+              {
+                "next": "CommPortal_Cert_mathsbad"
+              }
+            ],
+            "prompt": {
+              "text": "\"2\""
+            }
+          },
+          {
+            "operations": [
+              {
+                "next": "CommPortal_Cert_mathsbad"
+              }
+            ],
+            "prompt": {
+              "text": "\"4\""
+            }
+          },
+          {
+            "operations": [
+              {
+                "next": "CommPortal_Cert_mathsgood",
+                "setlocal": "TestBot_mathsgood"
+              },
+              {
+                "setlocal": "TestBot_mathsgood"
+              }
+            ],
+            "prompt": {
+              "text": "\"5\""
+            }
+          },
+          {
+            "operations": [
+              {
+                "next": "CommPortal_Cert_mathsbad"
+              }
+            ],
+            "prompt": {
+              "text": "\"8\""
+            }
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 7327,
+        "lineBreaks": 0,
+        "line": 2,
+        "col": 3947
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 7336,
+        "lineBreaks": 0,
+        "line": 2,
+        "col": 3956
+      },
+      {
+        "CommPortal_Cert_mathsgood": true
+      },
+      {
+        "prompt": "Tu entrada ha sido aceptada.\\n\\n-------------------------------\\n\\nP2 de 4\\n¿Cuál es tu reacción subjetiva a esta imagen?\\n\\n^_^\\n\\nRESPUESTA:",
+        "options": [
+          {
+            "operations": [
+              {
+                "next": "CommPortal_Cert_P1Q3"
+              }
+            ],
+            "prompt": {
+              "text": "Contenido"
+            }
+          },
+          {
+            "operations": [
+              {
+                "next": "CommPortal_Cert_P1Q3",
+                "set": "Milton1_2Objective"
+              },
+              {
+                "set": "Milton1_2Objective"
+              }
+            ],
+            "prompt": {
+              "text": "Montañas"
+            }
+          },
+          {
+            "operations": [
+              {
+                "next": "CommPortal_Cert_P1Q3",
+                "set": "Milton1_2Objective"
+              },
+              {
+                "set": "Milton1_2Objective"
+              }
+            ],
+            "prompt": {
+              "text": "Cara"
+            }
+          },
+          {
+            "operations": [
+              {
+                "next": "CommPortal_Cert_P1Q3"
+              }
+            ],
+            "prompt": {
+              "text": "Enfadado"
+            }
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 7999,
+        "lineBreaks": 0,
+        "line": 2,
+        "col": 4619
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 8008,
+        "lineBreaks": 0,
+        "line": 2,
+        "col": 4628
+      },
+      {
+        "CommPortal_Cert_P1Q3": true
+      },
+      {
+        "prompt": "Tu entrada ha sido aceptada.\\n\\n-------------------------------\\n\\nP3 de 4\\n¿Qué describe mejor a una persona?\\n\\nRESPUESTA:",
+        "options": [
+          {
+            "operations": [
+              {
+                "next": "CommPortal_Cert_Q4",
+                "set": "humanbeing"
+              },
+              {
+                "set": "humanbeing"
+              }
+            ],
+            "prompt": {
+              "text": "Un ser humano"
+            }
+          },
+          {
+            "operations": [
+              {
+                "next": "CommPortal_Cert_Q4",
+                "set": "citizen"
+              },
+              {
+                "set": "citizen"
+              }
+            ],
+            "prompt": {
+              "text": "Un ciudadano"
+            }
+          },
+          {
+            "operations": [
+              {
+                "next": "CommPortal_Cert_Q4",
+                "set": "negativeentropy"
+              },
+              {
+                "set": "negativeentropy"
+              }
+            ],
+            "prompt": {
+              "text": "Un ser de entropía negativa"
+            }
+          },
+          {
+            "operations": [
+              {
+                "next": "CommPortal_Cert_Q4",
+                "set": "rationalanimal"
+              },
+              {
+                "set": "rationalanimal"
+              }
+            ],
+            "prompt": {
+              "text": "Un animal racional"
+            }
+          },
+          {
+            "operations": [
+              {
+                "next": "CommPortal_Cert_Q4",
+                "set": "problemsolving"
+              },
+              {
+                "set": "problemsolving"
+              }
+            ],
+            "prompt": {
+              "text": "Un sistema de resolución de problemas"
+            }
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 8869,
+        "lineBreaks": 0,
+        "line": 2,
+        "col": 5489
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 8878,
+        "lineBreaks": 0,
+        "line": 2,
+        "col": 5498
+      },
+      {
+        "CommPortal_Cert_Q4": true
+      },
+      {
+        "prompt": "Tu entrada ha sido aceptada.\\n\\n-------------------------------\\n\\nP4 de 4\\nEstás caminando por el desierto y te tropiezas con un viajero sediento. Sus ojos reflejan una lenta deshidratación. Tienes agua, pero no estás seguro de qué distancia hay hasta el oasis siguiente. ¿Qué haces?\\n\\nRESPUESTA:",
+        "options": [
+          {
+            "operations": [
+              {
+                "next": "CommPortal_Cert_end"
+              }
+            ],
+            "prompt": {
+              "text": "Ofrecer la mitad del agua"
+            }
+          },
+          {
+            "operations": [
+              {
+                "next": "CommPortal_Cert_end"
+              }
+            ],
+            "prompt": {
+              "text": "Ofrecer todo el agua"
+            }
+          },
+          {
+            "operations": [
+              {
+                "next": "CommPortal_Cert_end"
+              }
+            ],
+            "prompt": {
+              "text": "No hacerle caso"
+            }
+          },
+          {
+            "operations": [
+              {
+                "next": "CommPortal_Cert_end"
+              }
+            ],
+            "prompt": {
+              "text": "Preguntarle qué hace en el desierto"
+            }
+          },
+          {
+            "operations": [
+              {
+                "next": "CommPortal_Cert_end",
+                "set": "Milton1_2Sociopath"
+              },
+              {
+                "set": "Milton1_2Sociopath"
+              }
+            ],
+            "prompt": {
+              "text": "Matarlo y recoger su sangre en un frasco para después"
+            }
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 9885,
+        "lineBreaks": 0,
+        "line": 2,
+        "col": 6505
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 9894,
+        "lineBreaks": 0,
+        "line": 2,
+        "col": 6514
+      },
+      {
+        "CommPortal_Cert_end": true
+      },
+      {
+        "prompt": "Tu entrada ha sido aceptada.\\n-------------------------------%w5\\n\\nSe ha completado la parte 1 del proceso de certificación. Recibirás una notificación cuando se haya generado la parte 2.\\n\\nPulsa cualquier tecla para salir.",
+        "operations": [
+          {
+            "set": "CommPortal_Cert_COMPLETED"
+          }
+        ]
+      }
+    ]
+  ]
+]

@@ -2,11 +2,12 @@ const nearley = require("nearley");
 const fs = require("fs");
 const path = require("path");
 const grammar = require("./grammar.js");
+const argv = require('yargs').argv
 
 // Create a Parser object from our grammar.
 const parser = new nearley.Parser(nearley.Grammar.fromCompiled(grammar));
 let input = 
-`include "Content/Talos/Databases/ComputerTerminalDialogs/QueryMLA.dlg"
+`include "Content/Talos/Databases/ComputerTerminalDialogs/${argv.in}"
 `
 input = input.replace(/^#.*\r?\n/g, '');
 input = input.replace(/include "(.*)"/g, includeFile);
@@ -62,6 +63,6 @@ let printValue = function(arr) {
   
 }
 
-fs.writeFileSync('./output.json', JSON.stringify(results[0], null, 2));
+fs.writeFileSync(argv.out, JSON.stringify(results[0], null, 2));
 
 printValue(results);

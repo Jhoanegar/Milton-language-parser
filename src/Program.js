@@ -35,7 +35,7 @@ class Program {
             await this.player();
             this.PC = 0;
             if (this.instructionsNotMatched >= this.program.length) {
-                this.mainLoop.emit('endProgram');
+                this.mainLoop.emit('endProgram', this.initialConditions);
                 this.stopped = true;
             }
         }

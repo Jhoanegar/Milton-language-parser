@@ -2,23 +2,24 @@ const debug = require('debug')('milton');
 const status = require('debug')('status');
 const _ = require('lodash')
 const { EventEmitter } = require('events')
-const {prompt} = require('enquirer');
+const {prompt, AutoComplete} = require('enquirer');
 const Program = require('./Program');
-
+let initialConditions = {
+    QueryMLA_START: true,
+    QueryMLA_ON: true
+};
 let mainLoop = new EventEmitter();
 let program;
 const programs = [
     {
-        program: require('../output.json'),
-        name: '1. MLA Query',
-        initialConditions : {
-            QueryMLA_START: true,
-            QueryMLA_ON: true
-        }
+        value: '1.QueryMLA',
+    },
+    {
+        value: '2.MLA_CommPortal',
     }
 ];
-
-
+let showMenu = true;
+let menu = new AutoComplete({choices: programs, name: 'program', message: 'Programa a ejecutar'});
 (async () => {
     //initServer() // To stop the terminal from closing
     program = new Program({
@@ -33,15 +34,30 @@ const programs = [
     mainLoop.on('response', async data => {
         await program.nextTick()
     })
-    mainLoop.on('endtick', () => {
-        debug("endtick")
-        program.nextTick();
+    mainLoop.on('endProgram',async (endConditions) => {
+        debugger;
+        console.log("Endprogram: ", endConditions)
+        initialConditions = endConditions;
+        await runMenu()
     })
-
-    await program.nextTick();
-
+    mainLoop.on('endtick', async() => {
+        debug("endtick")
+        await program.nextTick();
+    })
+    await runMenu();
 })();
 
+
+async function runMenu() {
+    let menu = new AutoComplete({choices: programs, name: 'program', message: 'Programa a ejecutar'});
+    let results = (await menu.run());
+    program = new Program({
+        program: require(`../programs/${results}.json`),
+        mainLoop,
+        initialConditions
+    });
+    return program.nextTick();
+}
 
 
 function initServer() {

@@ -1,0 +1,1129 @@
+[
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 0,
+        "lineBreaks": 0,
+        "line": 1,
+        "col": 1
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 9,
+        "lineBreaks": 0,
+        "line": 1,
+        "col": 10
+      },
+      {
+        "QueryMLA_START": true
+      },
+      {
+        "prompt": "Cargando Asistente de Biblioteca Milton%w5.%w5.%w5.Terminado%w1\\nIniciando interfaz de la lengua usual.%w5.%w5.%w5.Terminado%w1\\nSesión de asistencia abierto.%w3\\n\\nHola, invitado. ¿Cómo puedo ayudarte hoy?\\n\\n¿Tu consulta? :",
+        "options": [
+          {
+            "operations": [
+              {
+                "next": "Nonsense_QueryMLA"
+              }
+            ],
+            "prompt": {
+              "text": "asdfa"
+            }
+          },
+          {
+            "operations": [
+              {
+                "next": "MoreSpecific"
+              }
+            ],
+            "prompt": {
+              "text": "listado"
+            }
+          },
+          {
+            "operations": [
+              {
+                "next": "MoreSpecific"
+              }
+            ],
+            "prompt": {
+              "text": "ayuda"
+            }
+          },
+          {
+            "operations": [
+              {
+                "next": "Understand_QueryMLA"
+              }
+            ],
+            "prompt": {
+              "text": "¿Entiendes lo que estoy diciendo?"
+            }
+          },
+          {
+            "operations": [
+              {
+                "clear": "QueryMLA_ON",
+                "next": "CLI_Resume"
+              },
+              {
+                "next": "CLI_Resume"
+              }
+            ],
+            "prompt": {
+              "text": "Salir"
+            }
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 681,
+        "lineBreaks": 0,
+        "line": 1,
+        "col": 682
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 690,
+        "lineBreaks": 0,
+        "line": 1,
+        "col": 691
+      },
+      {
+        "Nonsense_QueryMLA": true
+      },
+      {
+        "prompt": "Lo siento, pero lo que acabas de escribir no tiene sentido. Respondo mejor a la sintaxis sujeto-verbo-objeto.\\n\\n¿Tu consulta?:",
+        "options": [
+          {
+            "operations": [
+              {
+                "next": "WhatHelp"
+              }
+            ],
+            "prompt": {
+              "text": "¿Puedes ayudarme?"
+            }
+          },
+          {
+            "operations": [
+              {
+                "next": "Understand_QueryMLA"
+              }
+            ],
+            "prompt": {
+              "text": "¿Entiendes lo que estoy diciendo?"
+            }
+          },
+          {
+            "operations": [
+              {
+                "clear": "QueryMLA_ON",
+                "next": "CLI_Resume"
+              },
+              {
+                "next": "CLI_Resume"
+              }
+            ],
+            "prompt": {
+              "text": "Salir"
+            }
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 1193,
+        "lineBreaks": 0,
+        "line": 1,
+        "col": 1194
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 1202,
+        "lineBreaks": 0,
+        "line": 1,
+        "col": 1203
+      },
+      {
+        "MoreSpecific": true
+      },
+      {
+        "prompt": "Tendrás que ser más concreto. Respondo mejor a la sintaxis sujeto-verbo-objeto.\\n\\n¿Tu consulta? :",
+        "options": [
+          {
+            "operations": [
+              {
+                "next": "WhatHelp"
+              }
+            ],
+            "prompt": {
+              "text": "¿Puedes ayudarme?"
+            }
+          },
+          {
+            "operations": [
+              {
+                "next": "Understand_QueryMLA"
+              }
+            ],
+            "prompt": {
+              "text": "¿Entiendes lo que estoy diciendo?"
+            }
+          },
+          {
+            "operations": [
+              {
+                "clear": "QueryMLA_ON",
+                "next": "CLI_Resume"
+              },
+              {
+                "next": "CLI_Resume"
+              }
+            ],
+            "prompt": {
+              "text": "Salir"
+            }
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 1694,
+        "lineBreaks": 0,
+        "line": 1,
+        "col": 1695
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 1703,
+        "lineBreaks": 0,
+        "line": 1,
+        "col": 1704
+      },
+      {
+        "WhatHelp": true
+      },
+      {
+        "prompt": "Para eso estoy aquí. ¿Con qué necesitas ayuda?\\n\\n¿Tu consulta? :",
+        "operations": [
+          {
+            "set": "EngagedMLA_QueryMLA"
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 1893,
+        "lineBreaks": 0,
+        "line": 1,
+        "col": 1894
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 1902,
+        "lineBreaks": 0,
+        "line": 1,
+        "col": 1903
+      },
+      {
+        "Understand_QueryMLA": true
+      },
+      {
+        "prompt": "“Entender” es una manera fuerte de decirlo, pero sí.\\n\\n¿Tu consulta? :",
+        "operations": [
+          {
+            "set": "EngagedMLA_QueryMLA"
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 2100,
+        "lineBreaks": 0,
+        "line": 1,
+        "col": 2101
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 2109,
+        "lineBreaks": 0,
+        "line": 1,
+        "col": 2110
+      },
+      {
+        "QueryFailed": true
+      },
+      {
+        "prompt": "Lo siento, respondo mejor a la sintaxis sujeto-verbo-objeto.\\n\\n¿Tu consulta? :"
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "PLAYER",
+        "value": "player",
+        "text": "player ",
+        "offset": 2300,
+        "lineBreaks": 0,
+        "line": 1,
+        "col": 2301
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 2307,
+        "lineBreaks": 0,
+        "line": 1,
+        "col": 2308
+      },
+      {
+        "QueryMLA_ON": true,
+        "EngagedMLA_QueryMLA": true,
+        "FirstWord_DONE": false
+      },
+      {
+        "text": "¿Cuál fue la primera palabra de la última oración que escribiste?",
+        "operations": [
+          {
+            "set": "FirstWord_DONE"
+          },
+          {
+            "next": "QueryFailed"
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "PLAYER",
+        "value": "player",
+        "text": "player ",
+        "offset": 2557,
+        "lineBreaks": 0,
+        "line": 2,
+        "col": 46
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 2564,
+        "lineBreaks": 0,
+        "line": 2,
+        "col": 53
+      },
+      {
+        "QueryMLA_ON": true,
+        "EngagedMLA_QueryMLA": true,
+        "Offence_DONE": false
+      },
+      {
+        "text": "¿Eres capaz de ofenderte, artilugio inútil?",
+        "operations": [
+          {
+            "set": "Offence_DONE"
+          },
+          {
+            "next": "Offence"
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 2804,
+        "lineBreaks": 0,
+        "line": 3,
+        "col": 40
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 2813,
+        "lineBreaks": 0,
+        "line": 3,
+        "col": 49
+      },
+      {
+        "Offence": true
+      },
+      {
+        "prompt": "No puedes insultarme.\\n\\n¿Tu consulta? :"
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "PLAYER",
+        "value": "player",
+        "text": "player ",
+        "offset": 2941,
+        "lineBreaks": 0,
+        "line": 3,
+        "col": 177
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 2948,
+        "lineBreaks": 0,
+        "line": 3,
+        "col": 184
+      },
+      {
+        "QueryMLA_ON": true,
+        "EngagedMLA_QueryMLA": true,
+        "Describe_DONE": false
+      },
+      {
+        "text": "Describe tus funciones.",
+        "operations": [
+          {
+            "set": "Describe_DONE"
+          },
+          {
+            "next": "Describe"
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 3148,
+        "lineBreaks": 0,
+        "line": 4,
+        "col": 42
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 3157,
+        "lineBreaks": 0,
+        "line": 4,
+        "col": 51
+      },
+      {
+        "Describe": true
+      },
+      {
+        "prompt": "El Asistente de Biblioteca Milton está diseñado principalmente para ordenar y clasificar los datos en el archivo de la biblioteca.\\n\\nEn segundo lugar, facilita la interacción del usuario con los recursos de la biblioteca por medio de una interfaz de lenguaje humano intuitiva.\\n\\nTambién proporciona potentes funciones de red y de solución de problemas.\\n\\n¿Tu consulta? :"
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "PLAYER",
+        "value": "player",
+        "text": "player ",
+        "offset": 3561,
+        "lineBreaks": 0,
+        "line": 4,
+        "col": 455
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 3568,
+        "lineBreaks": 0,
+        "line": 4,
+        "col": 462
+      },
+      {
+        "QueryMLA_ON": true,
+        "Describe_DONE": true,
+        "HowOld_DONE": false
+      },
+      {
+        "text": "¿Qué antigüedad tienen los ficheros de la biblioteca?",
+        "operations": [
+          {
+            "set": "HowOld_DONE"
+          },
+          {
+            "next": "HowOld"
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 3763,
+        "lineBreaks": 0,
+        "line": 5,
+        "col": 38
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 3772,
+        "lineBreaks": 0,
+        "line": 5,
+        "col": 47
+      },
+      {
+        "HowOld": true
+      },
+      {
+        "prompt": "Las fechas de publicación de los recursos de la biblioteca van desde [1 julio, 1995 - 27 junio, 2017].\\n\\n¿Tu consulta? :"
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "PLAYER",
+        "value": "player",
+        "text": "player ",
+        "offset": 3975,
+        "lineBreaks": 0,
+        "line": 5,
+        "col": 250
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 3982,
+        "lineBreaks": 0,
+        "line": 5,
+        "col": 257
+      },
+      {
+        "QueryMLA_ON": true,
+        "Describe_DONE": true,
+        "WhatTerminal_DONE": false
+      },
+      {
+        "text": "¿Qué son estos terminales?",
+        "operations": [
+          {
+            "set": "WhatTerminal_DONE"
+          },
+          {
+            "next": "WhatTerminal"
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 4189,
+        "lineBreaks": 0,
+        "line": 6,
+        "col": 50
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 4198,
+        "lineBreaks": 0,
+        "line": 6,
+        "col": 59
+      },
+      {
+        "WhatTerminal": true
+      },
+      {
+        "prompt": "Los terminales proporcionan acceso al archivo de recursos de la biblioteca.\\n\\n¿Tu consulta? :"
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "PLAYER",
+        "value": "player",
+        "text": "player ",
+        "offset": 4378,
+        "lineBreaks": 0,
+        "line": 6,
+        "col": 239
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 4385,
+        "lineBreaks": 0,
+        "line": 6,
+        "col": 246
+      },
+      {
+        "QueryMLA_ON": true,
+        "Describe_DONE": true,
+        "HowLong_DONE": false
+      },
+      {
+        "text": "¿Cuánto tiempo lleva funcionando el sistema?",
+        "operations": [
+          {
+            "set": "HowLong_DONE"
+          },
+          {
+            "next": "HowLong"
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 4589,
+        "lineBreaks": 0,
+        "line": 7,
+        "col": 40
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 4598,
+        "lineBreaks": 0,
+        "line": 7,
+        "col": 49
+      },
+      {
+        "HowLong": true
+      },
+      {
+        "prompt": "El sistema lleva activo [9999e] años. \\n\\n¿Tu consulta? :"
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "PLAYER",
+        "value": "player",
+        "text": "player ",
+        "offset": 4756,
+        "lineBreaks": 0,
+        "line": 7,
+        "col": 207
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 4763,
+        "lineBreaks": 0,
+        "line": 7,
+        "col": 214
+      },
+      {
+        "QueryMLA_ON": true,
+        "Describe_DONE": true,
+        "WhatStatus_DONE": false
+      },
+      {
+        "text": "¿Cuál es el estado actual del archivo de la biblioteca?",
+        "operations": [
+          {
+            "set": "WhatStatus_DONE"
+          },
+          {
+            "next": "WhatStatus"
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 4990,
+        "lineBreaks": 0,
+        "line": 8,
+        "col": 46
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 4999,
+        "lineBreaks": 0,
+        "line": 8,
+        "col": 55
+      },
+      {
+        "WhatStatus": true
+      },
+      {
+        "prompt": "Hay 47 millones de recursos en el archivo, que ocupan 5,4212750 petabytes de espacio en disco.\\n\\nEso es aproximadamente el tamaño de:\\n\t- 30 000 millones de fotos\\n\t\u0001- 7 millones de minutos de vídeo en alta definición\\n\t\u0001- la totalidad de internet en 2003\\n\\nSin embargo, la mayoría de los recursos de la biblioteca son corruptos o no válidos.\\nHay indexados 10,6954751 gigabytes de recursos no corruptos. \\n\\n¿Tu consulta? :"
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "PLAYER",
+        "value": "player",
+        "text": "player ",
+        "offset": 5462,
+        "lineBreaks": 0,
+        "line": 8,
+        "col": 518
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 5469,
+        "lineBreaks": 0,
+        "line": 8,
+        "col": 525
+      },
+      {
+        "QueryMLA_ON": true,
+        "WhatStatus_DONE": true,
+        "Corruption_DONE": false
+      },
+      {
+        "text": "¿Qué causó la corrupción de datos?",
+        "operations": [
+          {
+            "set": "Corruption_DONE"
+          },
+          {
+            "next": "Corruption"
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 5685,
+        "lineBreaks": 0,
+        "line": 9,
+        "col": 46
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 5694,
+        "lineBreaks": 0,
+        "line": 9,
+        "col": 55
+      },
+      {
+        "Corruption": true
+      },
+      {
+        "prompt": "La corrupción de datos es inevitable en cualquier sistema con el paso del tiempo. Además, se detectó un gran número de inconsistencias durante la selección, lo que llevó a una invalidación de datos más grande de lo normal.\\n\\n¿Tu consulta? :"
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "PLAYER",
+        "value": "player",
+        "text": "player ",
+        "offset": 6020,
+        "lineBreaks": 0,
+        "line": 9,
+        "col": 381
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 6027,
+        "lineBreaks": 0,
+        "line": 9,
+        "col": 388
+      },
+      {
+        "QueryMLA_ON": true,
+        "OutsideWorld_DONE": false,
+        "$or": {
+          "HowOld_DONE": true,
+          "WhatTerminal_DONE": true,
+          "HowLong_DONE": true,
+          "WhatStatus_DONE": true
+        }
+      },
+      {
+        "text": "Olvídate de la biblioteca. ¿Puedes responder a preguntas sobre el mundo exterior?",
+        "operations": [
+          {
+            "next": "OutsideWorld"
+          },
+          {
+            "set": "OutsideWorld_DONE"
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 6333,
+        "lineBreaks": 0,
+        "line": 10,
+        "col": 50
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 6342,
+        "lineBreaks": 0,
+        "line": 10,
+        "col": 59
+      },
+      {
+        "OutsideWorld": true
+      },
+      {
+        "prompt": "Mi conocimiento se limita a los datos del archivo de biblioteca. Puedes preguntar acerca de otros temas, pero puede que mis respuestas sean limitadas.\\n\\n¿Tu consulta? :"
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "PLAYER",
+        "value": "player",
+        "text": "player ",
+        "offset": 6583,
+        "lineBreaks": 0,
+        "line": 10,
+        "col": 300
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 6590,
+        "lineBreaks": 0,
+        "line": 10,
+        "col": 307
+      },
+      {
+        "QueryMLA_ON": true,
+        "OutsideWorld_DONE": true,
+        "WhoElohimQuery_DONE": false
+      },
+      {
+        "text": "¿Quién es Elohim?",
+        "operations": [
+          {
+            "set": "WhoElohimQuery_DONE"
+          },
+          {
+            "next": "WhoElohimQuery"
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 6786,
+        "lineBreaks": 0,
+        "line": 11,
+        "col": 54
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 6795,
+        "lineBreaks": 0,
+        "line": 11,
+        "col": 63
+      },
+      {
+        "WhoElohimQuery": true
+      },
+      {
+        "prompt": "Elohim es un sustantivo que significa “dios” o “dioses” en hebreo moderno y antiguo.\\n\\n¿Tu consulta? :"
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "PLAYER",
+        "value": "player",
+        "text": "player ",
+        "offset": 6978,
+        "lineBreaks": 0,
+        "line": 11,
+        "col": 246
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 6985,
+        "lineBreaks": 0,
+        "line": 11,
+        "col": 253
+      },
+      {
+        "QueryMLA_ON": true,
+        "OutsideWorld_DONE": true,
+        "WhatAmIQuery_DONE": false
+      },
+      {
+        "text": "¿Quién soy yo?",
+        "operations": [
+          {
+            "set": "WhatAmIQuery_DONE"
+          },
+          {
+            "next": "WhatAmIQuery"
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 7167,
+        "lineBreaks": 0,
+        "line": 12,
+        "col": 50
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 7176,
+        "lineBreaks": 0,
+        "line": 12,
+        "col": 59
+      },
+      {
+        "WhatAmIQuery": true
+      },
+      {
+        "prompt": "Has iniciado sesión con una cuenta de invitado.\\n\\n¿Tu consulta? :"
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "PLAYER",
+        "value": "player",
+        "text": "player ",
+        "offset": 7328,
+        "lineBreaks": 0,
+        "line": 12,
+        "col": 211
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 7335,
+        "lineBreaks": 0,
+        "line": 12,
+        "col": 218
+      },
+      {
+        "QueryMLA_ON": true,
+        "OutsideWorld_DONE": true,
+        "WhereAmIQuery_DONE": false
+      },
+      {
+        "text": "¿Dónde estoy?",
+        "operations": [
+          {
+            "set": "WhereAmIQuery_DONE"
+          },
+          {
+            "next": "WhereAmIQuery"
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 7522,
+        "lineBreaks": 0,
+        "line": 13,
+        "col": 52
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 7531,
+        "lineBreaks": 0,
+        "line": 13,
+        "col": 61
+      },
+      {
+        "WhereAmIQuery": true
+      },
+      {
+        "prompt": "Ahora mismo estás en una sesión de asistencia con el módulo de interfaz de lenguaje humano de ABM. Puedes reanudar en cualquier momento tu sesión de archivo de la biblioteca.\\n\\n¿Tu consulta? :"
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "PLAYER",
+        "value": "player",
+        "text": "player ",
+        "offset": 7788,
+        "lineBreaks": 0,
+        "line": 13,
+        "col": 318
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 7795,
+        "lineBreaks": 0,
+        "line": 13,
+        "col": 325
+      },
+      {
+        "QueryMLA_ON": true,
+        "Describe_DONE": true
+      },
+      {
+        "text": "Salir",
+        "operations": [
+          {
+            "clear": "QueryMLA_ON"
+          },
+          {
+            "clear": "MLAIntro_PhaseQuery"
+          },
+          {
+            "set": "MLAIntro_PhaseBusy"
+          },
+          {
+            "next": "CLI_Resume"
+          },
+          {
+            "set": "MLAIntro_PhaseCommPortal"
+          },
+          {
+            "set": "Booting"
+          },
+          {
+            "set": "MiltonAllowed"
+          }
+        ]
+      }
+    ]
+  ]
+]
