@@ -1,0 +1,829 @@
+[
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 0,
+        "lineBreaks": 0,
+        "line": 1,
+        "col": 1
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 9,
+        "lineBreaks": 0,
+        "line": 1,
+        "col": 10
+      },
+      {
+        "Milton1_2": true,
+        "Milton1_2_DONE": false,
+        "Booting": true,
+        "MiltonAllowed": true
+      },
+      {
+        "operations": [
+          {
+            "notext": true,
+            "setlocal": "CLI_Blocked"
+          },
+          {
+            "goto": "Milton1_2_Start"
+          },
+          {
+            "setlocal": "CLI_Blocked"
+          },
+          {
+            "goto": "Milton1_2_Start"
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 139,
+        "lineBreaks": 0,
+        "line": 1,
+        "col": 140
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 148,
+        "lineBreaks": 0,
+        "line": 1,
+        "col": 149
+      },
+      {
+        "conflict": false,
+        "$or": {
+          "Milton1_2BadMath": true,
+          "Milton1_2Objective": true,
+          "Milton1_2PersonDenial": true,
+          "Milton1_2Sociopath": true,
+          "Milton1_2Liberal": true,
+          "Milton1_2Utilitarian": true,
+          "Milton1_2NoMorals": true,
+          "Milton1_2ValueDiscovered": true,
+          "Milton1_2ValueCreated": true
+        }
+      },
+      {
+        "operations": [
+          {
+            "notext": true,
+            "set": "conflict"
+          },
+          {
+            "set": "conflict"
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 487,
+        "lineBreaks": 0,
+        "line": 2,
+        "col": 21
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 496,
+        "lineBreaks": 0,
+        "line": 2,
+        "col": 30
+      },
+      {
+        "Milton1_2_Start": true
+      },
+      {
+        "text": "Atención: se ha generado tu perfil de usuario.%w5\\n\\n¿Descargar perfil? [Sí/No]\\n\\n",
+        "options": [
+          {
+            "short": "Si",
+            "operations": [
+              {
+                "next": "Download1_2"
+              }
+            ],
+            "prompt": {
+              "text": "Sí"
+            }
+          },
+          {
+            "short": "No",
+            "operations": [
+              {
+                "next": "Ignore1_2"
+              }
+            ],
+            "prompt": {
+              "text": "No"
+            }
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 880,
+        "lineBreaks": 0,
+        "line": 2,
+        "col": 414
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 889,
+        "lineBreaks": 0,
+        "line": 2,
+        "col": 423
+      },
+      {
+        "Ignore1_2": true
+      },
+      {
+        "text": "Las funcionalidades avanzadas no están disponibles para los usuarios con perfiles incompletos. ¿Estás seguro?\\n\\n",
+        "options": [
+          {
+            "operations": [
+              {
+                "next": "Download1_2"
+              }
+            ],
+            "prompt": {
+              "text": "descargar perf.usuario"
+            }
+          },
+          {
+            "operations": [
+              {
+                "next": "CLI_Resume"
+              }
+            ],
+            "prompt": {
+              "text": "Salir"
+            }
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 1236,
+        "lineBreaks": 0,
+        "line": 2,
+        "col": 770
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 1245,
+        "lineBreaks": 0,
+        "line": 2,
+        "col": 779
+      },
+      {
+        "Download1_2": true
+      },
+      {
+        "text": "Descargando perf.usuario%w5.%w5.%w5.\\nRegistrando el perfil%w5.%w5.%w5.\\n\\n-------------------------------\\n\\nEnhorabuena, tu nueva cuenta de usuario ha sido registrada, ¿Quieres ver los detalles?\\n\\n",
+        "operations": [
+          {
+            "set": "Milton1_2_DONE"
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "PLAYER",
+        "value": "player",
+        "text": "player ",
+        "offset": 1568,
+        "lineBreaks": 0,
+        "line": 2,
+        "col": 1102
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 1577,
+        "lineBreaks": 0,
+        "line": 2,
+        "col": 1111
+      },
+      {
+        "$or": {
+          "Download1_2": true,
+          "DisplayConflicts": true,
+          "DisplayPsych": true,
+          "DisplayPriv": true,
+          "SupportEnd": true,
+          "AccessCommsDenied": true
+        }
+      },
+      {
+        "operations": [
+          {
+            "notext": true
+          }
+        ],
+        "options": [
+          {
+            "operations": [
+              {
+                "next": "DisplayConflicts"
+              }
+            ],
+            "prompt": {
+              "text": "Mostrar conflictos"
+            }
+          },
+          {
+            "operations": [
+              {
+                "next": "DisplayPsych"
+              }
+            ],
+            "prompt": {
+              "text": "Mostrar perfil psicológico"
+            }
+          },
+          {
+            "operations": [
+              {
+                "next": "DisplayPriv"
+              }
+            ],
+            "prompt": {
+              "text": "Mostrar privilegios de la cuenta"
+            }
+          },
+          {
+            "operations": [
+              {
+                "next": "AccessCommsDenied"
+              }
+            ],
+            "prompt": {
+              "text": "acceder_portal_com"
+            }
+          },
+          {
+            "operations": [
+              {
+                "next": "CLI_Resume"
+              }
+            ],
+            "prompt": {
+              "text": "Salir"
+            }
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 2174,
+        "lineBreaks": 0,
+        "line": 3,
+        "col": 483
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 2183,
+        "lineBreaks": 0,
+        "line": 3,
+        "col": 492
+      },
+      {
+        "AccessCommsDenied": true
+      },
+      {
+        "text": "Actualmente tienes una cuenta básica. Acceso a la red está restringido a los administradores. Disfruta de las funcionalidades básicas.\\n\\n"
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 2413,
+        "lineBreaks": 0,
+        "line": 3,
+        "col": 722
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 2422,
+        "lineBreaks": 0,
+        "line": 3,
+        "col": 731
+      },
+      {
+        "DisplayConflicts": true
+      },
+      {
+        "text": "\\n\\nCONFLICTOS\\n"
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 2526,
+        "lineBreaks": 0,
+        "line": 3,
+        "col": 835
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 2535,
+        "lineBreaks": 0,
+        "line": 3,
+        "col": 844
+      },
+      {
+        "DisplayConflicts": true,
+        "Milton1_2BadMath": true
+      },
+      {
+        "text": "- Error del usuario en matemáticas.%w5\\n"
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 2702,
+        "lineBreaks": 0,
+        "line": 3,
+        "col": 1011
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 2711,
+        "lineBreaks": 0,
+        "line": 3,
+        "col": 1020
+      },
+      {
+        "DisplayConflicts": true,
+        "Milton1_2Objective": true
+      },
+      {
+        "text": "- El usuario proporcionó una respuesta objetiva al ser preguntado por una subjetiva.%w5\\n"
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 2919,
+        "lineBreaks": 0,
+        "line": 3,
+        "col": 1228
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 2928,
+        "lineBreaks": 0,
+        "line": 3,
+        "col": 1237
+      },
+      {
+        "DisplayConflicts": true,
+        "Milton1_2PersonDenial": true
+      },
+      {
+        "text": "- El usuario proporcionó una descripción particular de la personalidad, pero estuvo incómodo con sus implicaciones.%w5\\n"
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 3163,
+        "lineBreaks": 0,
+        "line": 3,
+        "col": 1472
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 3172,
+        "lineBreaks": 0,
+        "line": 3,
+        "col": 1481
+      },
+      {
+        "DisplayConflicts": true,
+        "Milton1_2Liberal": true,
+        "Milton1_2Utilitarian": true
+      },
+      {
+        "text": "- El usuario trató de maximizar tanto la libertad como la calidad de la vida, pero estos ideales son incompatibles.%w5\\n"
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 3420,
+        "lineBreaks": 0,
+        "line": 3,
+        "col": 1729
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 3429,
+        "lineBreaks": 0,
+        "line": 3,
+        "col": 1738
+      },
+      {
+        "$or": {
+          "DisplayConflicts": true,
+          "Milton1_2NoMorals": true,
+          "Milton1_2Liberal": true,
+          "Milton1_2Utilitarian": true
+        }
+      },
+      {
+        "text": "- El usuario negó autoridad moral, pero defendió reivindicaciones morales.%w5\\n"
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 3712,
+        "lineBreaks": 0,
+        "line": 3,
+        "col": 2021
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 3721,
+        "lineBreaks": 0,
+        "line": 3,
+        "col": 2030
+      },
+      {
+        "DisplayConflicts": true,
+        "Milton1_2ValueDiscovered": true,
+        "Milton1_2ValueCreated": true
+      },
+      {
+        "text": "- El usuario tuvo ideas inconsistentes sobre el valor.%w5\\n"
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 3931,
+        "lineBreaks": 0,
+        "line": 3,
+        "col": 2240
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 3940,
+        "lineBreaks": 0,
+        "line": 3,
+        "col": 2249
+      },
+      {
+        "DisplayConflicts": true,
+        "Milton1_2Sociopath": true
+      },
+      {
+        "text": "- El usuario mostró tendencias sociópatas.%w5\\n\t\\n"
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 4127,
+        "lineBreaks": 0,
+        "line": 3,
+        "col": 2436
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 4136,
+        "lineBreaks": 0,
+        "line": 3,
+        "col": 2445
+      },
+      {
+        "DisplayConflicts": true,
+        "conflict": false
+      },
+      {
+        "text": "No se detectaron conflictos durante el proceso de certificación.\\nSe ha añadido una nota a esta cuenta en la que se solicita una futura revisión del administrador.%w10\\nNota: falta de conflicto indica rasgos propios de un bot.\\n\\n",
+        "operations": [
+          {
+            "set": "NoConflict"
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 4470,
+        "lineBreaks": 0,
+        "line": 3,
+        "col": 2779
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 4479,
+        "lineBreaks": 0,
+        "line": 3,
+        "col": 2788
+      },
+      {
+        "DisplayPsych": true
+      },
+      {
+        "text": "\\n\\nPERFIL PSICOLÓGICO\\nPuede que ya estés criticando tu propia actuación, pero está claro que sabes cómo te afecta el mundo de las ideas, aunque estés cansado de la realidad y dejes que tus preferencias dicten tus creencias. Tienes grandes capacidades sin utilizar que aún no has aprovechado. De apariencia disciplinada y controlada, interiormente eres precavido e inseguro, pero te enorgulleces de ser un pensador independiente y no aceptas las declaraciones de los demás sin pruebas satisfactorias.\\n\\n"
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 5128,
+        "lineBreaks": 0,
+        "line": 3,
+        "col": 3437
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 5137,
+        "lineBreaks": 0,
+        "line": 3,
+        "col": 3446
+      },
+      {
+        "DisplayPriv": true
+      },
+      {
+        "text": "\\n\\nPRIVILEGIOS DE PERFIL\\nSolo privilegios de cuenta básica\\n\\nDebido a las notas sobresalientes de tu cuenta y a pesar de mostrar muchas de las características de una persona, no se te puede conceder el estado de administrador en este momento.\\n\\nMientras tanto, disfruta de las funcionalidades básicas de la cuenta.\\n\\n"
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 5541,
+        "lineBreaks": 0,
+        "line": 3,
+        "col": 3850
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 5550,
+        "lineBreaks": 0,
+        "line": 3,
+        "col": 3859
+      },
+      {
+        "SupportTicket": true
+      },
+      {
+        "text": "Siento no haber podido ayudarle mejor. Si sigues teniendo problemas, descríbelos.\\n\\n",
+        "options": [
+          {
+            "operations": [
+              {
+                "next": "SupportEnd",
+                "set": "CertTicketSent"
+              },
+              {
+                "set": "CertTicketSent"
+              }
+            ],
+            "prompt": {
+              "text": "Error en la certificación de la cuenta"
+            }
+          },
+          {
+            "operations": [
+              {
+                "next": "SupportEnd",
+                "set": "PassTicketSent"
+              },
+              {
+                "set": "PassTicketSent"
+              }
+            ],
+            "prompt": {
+              "text": "Perdida la contraseña de administrador"
+            }
+          },
+          {
+            "operations": [
+              {
+                "next": "SupportEnd",
+                "set": "AarghTicketSent"
+              },
+              {
+                "set": "AarghTicketSent"
+              }
+            ],
+            "prompt": {
+              "text": "Aaaarrgghhhh"
+            }
+          },
+          {
+            "operations": [
+              {
+                "next": "CLI_Resume"
+              }
+            ],
+            "prompt": {
+              "text": "Salir"
+            }
+          }
+        ]
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 6172,
+        "lineBreaks": 0,
+        "line": 3,
+        "col": 4481
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 6181,
+        "lineBreaks": 0,
+        "line": 3,
+        "col": 4490
+      },
+      {
+        "SupportEnd": true
+      },
+      {
+        "text": "Gracias. Se ha generado un ticket de ayuda, que se ha adjuntado a tu perfil. Recibirás una notificación cuando se haya enviado una respuesta.\\n\\n"
+      }
+    ]
+  ],
+  [
+    [
+      {
+        "type": "TERMINAL",
+        "value": "terminal",
+        "text": "terminal ",
+        "offset": 6417,
+        "lineBreaks": 0,
+        "line": 3,
+        "col": 4726
+      },
+      {
+        "type": "WHEN",
+        "value": "when",
+        "text": "when ",
+        "offset": 6426,
+        "lineBreaks": 0,
+        "line": 3,
+        "col": 4735
+      },
+      {
+        "$or": false
+      },
+      {
+        "operations": [
+          {
+            "notext": true
+          }
+        ],
+        "options": [
+          {
+            "operations": [
+              {
+                "next": "SupportTicket"
+              }
+            ],
+            "prompt": {
+              "text": "Registro del ticket de ayuda de ABM"
+            }
+          }
+        ]
+      }
+    ]
+  ]
+]

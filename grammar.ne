@@ -97,7 +97,8 @@ const termstmt = data => {
     if (data[0].type == 'KEYWORD') {
         switch (data[0].value) {
             case 'notext':
-                output['notext'] = true;
+                output.operations = [{notext: true}];
+                output = _.merge(output, data[1])
                 break;
             case 'setlocal':
             case 'set':
@@ -136,7 +137,7 @@ const termstmt = data => {
         }
         output = _.merge(output, data[3]);
     } else if (data[0].type == 'KEYWORD' && data[1] && !data[1].type) {
-        output.operations = _.concat(output.operations, data[1].operations);
+        output.operations = _.concat(output.operations || [], data[1].operations || []);
     }
 
     return output;
@@ -148,7 +149,8 @@ const options = data => {
     if (data[0].type == 'KEYWORD') {
         switch (data[0].value) {
             case 'notext':
-                output['notext'] = true;
+                output.operations = [{notext: true}];
+                output = _.merge(output, data[1])
                 break;
             case 'setlocal':
             case 'set':

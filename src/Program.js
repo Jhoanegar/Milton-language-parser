@@ -194,6 +194,8 @@ class Program {
                     case 'clear':
                         delete this.initialConditions[value]
                         break;
+                    case 'notext':
+                        break;
                     default:
                         throw new Error(`Key: ${key}:${value} not implemented yet`);
                 }
