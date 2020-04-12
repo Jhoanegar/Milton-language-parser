@@ -125,25 +125,20 @@ const programs = [
     {
         value: '1.QueryMLA',
     },
-    {
-        value: '2.MLA_CommPortal',
-    },
-    {
-        value: '3.Milton1_1',
-    },
-    {
-        value: '4.Milton1_2',
-    }
+    // {
+    //     value: '2.MLA_CommPortal',
+    // },
+    // {
+    //     value: '3.Milton1_1',
+    // },
+    // {
+    //     value: '4.Milton1_2',
+    // }
 ];
 let showMenu = true;
 let menu = new AutoComplete({choices: programs, name: 'program', message: 'Programa a ejecutar'});
 (async () => {
     //initServer() // To stop the terminal from closing
-    program = new Program({
-        program: programs[0].program,
-        mainLoop: mainLoop,
-        initialConditions
-    });
     mainLoop.on('operation', async data => {
         debug("Running operation...");
         await data;
