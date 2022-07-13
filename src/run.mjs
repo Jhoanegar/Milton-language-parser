@@ -9,10 +9,15 @@ const debug = createDebugger('milton');
 let initialConditions = {
   QueryMLA_START: true,
   QueryMLA_ON: true,
+  // phase 2
+  MLAIntro_PhaseCommPortal: true,
+  Booting: true,
+  CommPortal_Cert_COMPLETED: false,
+  MiltonAllowed: true,
 };
 let mainLoop = new EventEmitter();
 let program;
-let programs = [
+const menuOptions = [
   {
     value: '1.QueryMLA',
   },
@@ -22,11 +27,6 @@ let programs = [
 ];
 
 (async () => {
-  program = new Program({
-    program: programs[0].program,
-    mainLoop: mainLoop,
-    initialConditions: programs[0].initialConditions,
-  });
   mainLoop.on('operation', async (data) => {
     debug('Running operation...');
     await data;
@@ -37,13 +37,17 @@ let programs = [
   mainLoop.on('endProgram', async (endConditions) => {
     console.log('Endprogram: ', endConditions);
     initialConditions = endConditions;
-    await showMenu({ programs, mainLoop, initialConditions });
+    program = await showMenu({ menuOptions, mainLoop, initialConditions });
   });
   mainLoop.on('endtick', async () => {
     debug('endtick');
     await program.nextTick();
   });
 
-  program = await showMenu({ programs, mainLoop, initialConditions });
-  debug('New Program', program);
+  program = await showMenu({
+    menuOptions,
+    mainLoop,
+    initialConditions,
+  });
+  await program.nextTick();
 })();
