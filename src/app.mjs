@@ -40,8 +40,5 @@ app.use((err, req, res, next) => {
   next();
 });
 
-
-const getDirname =() => {
-
-}
+const getDirname = () => {};
 export default app;

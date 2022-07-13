@@ -4,11 +4,8 @@
  * Module dependencies.
  */
 
-
 import http from 'http';
 import app from '../src/app.mjs';
-
-
 
 /**
  * Get port from environment and store in Express.
