@@ -5,7 +5,6 @@
     return x[0];
   }
 
-  debugger;
   const fs = require('fs');
   const stringsArray = fs
     .readFileSync('./locales/es.txt')
