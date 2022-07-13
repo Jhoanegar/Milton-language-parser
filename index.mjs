@@ -1,8 +1,10 @@
-const nearley = require('nearley');
-const fs = require('fs');
-const path = require('path');
-const grammar = require('./grammar.js');
-const argv = require('yargs').argv;
+import { promises as fs } from 'node:fs';
+import path from 'node:path';
+import nearley from 'nearley';
+import grammar from './grammar';
+import yargs from 'yargs';
+
+const argv = yargs.argv;
 
 // Create a Parser object from our grammar.
 const parser = new nearley.Parser(nearley.Grammar.fromCompiled(grammar));
@@ -13,23 +15,24 @@ input = input.replace(/include "(.*)"/g, includeFile);
 input = input.replace(/^#.*\r?\n/g, '');
 input = input.replace(/\n[\t ]+/g, ' ');
 
-function includeFile(match, file) {
+const includeFile = async (match, file) => {
   if (!match) {
     throw new Error('Expected name of file');
   }
-  let basePath = path.resolve('./', 'bin');
-  let fileName = path.basename(file);
+  const basePath = path.resolve('./', 'bin');
+  const fileName = path.basename(file);
+  const filepath = path.resolve(basePath, fileName);
   try {
-    let include = fs
-      .readFileSync(path.resolve(basePath, fileName))
+    const include = (await fs.readFile(filepath))
       .toString()
       .replace(/\uFEFF/g, '');
 
     return include.trim();
   } catch (err) {
+    console.error(err);
     throw err;
   }
-}
+};
 
 function printSource(input) {
   let lines = input.split('\n');

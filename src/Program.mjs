@@ -1,6 +1,8 @@
+import { setTimeout } from 'node:timers/promises';
+import typewritter from 'node-typewriter';
+
 import createDebugger from 'debug';
 import Enquirer from 'enquirer';
-import type from 'node-typewriter';
 import _ from 'lodash';
 
 const debug = createDebugger('milton');
@@ -162,7 +164,7 @@ class Program {
         console.log('');
       } else {
         await this.msleep(this.sleepMs);
-        return type(currentMessage + '\n', this.typeSpeed);
+        return typewritter(currentMessage + '\n', this.typeSpeed);
       }
     }, Promise.resolve());
   }
@@ -231,11 +233,11 @@ class Program {
     return values;
   }
 
-  msleep(n) {
-    Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, n);
+  async msleep(n) {
+    await setTimeout(n);
   }
-  sleep(n) {
-    msleep(n * 1000);
+  async sleep(n) {
+    await this.msleep(n * 1000);
   }
 }
 
