@@ -1,9 +1,17 @@
-const debug = require('debug')('milton');
-const status = require('debug')('status');
-const _ = require('lodash')
-const { EventEmitter } = require('events')
-const {prompt, AutoComplete} = require('enquirer');
-const Program = require('./Program');
+import _ from 'lodash';
+import { EventEmitter } from 'node:events';
+import Enquirer from 'enquirer';
+import createDebugger from 'debug';
+import Program from './Program.mjs'
+import { promises as fs } from 'node:fs'
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+
+const { prompt, AutoComplete} = Enquirer;
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
+
+const debug = createDebugger('milton')
 let initialConditions = {
     QueryMLA_START: true,
     QueryMLA_ON: true
@@ -52,7 +60,7 @@ async function runMenu() {
     let menu = new AutoComplete({choices: programs, name: 'program', message: 'Programa a ejecutar'});
     let results = (await menu.run());
     program = new Program({
-        program: require(`../programs/${results}.json`),
+        program: await readFile(`../programs/${results}.json`),
         mainLoop,
         initialConditions
     });
@@ -69,4 +77,10 @@ function initServer() {
     });
 
     server.listen(1337, '127.0.0.1');
+}
+
+const readFile = async (file) => {
+    const text = await fs.readFile(`${__dirname}/${file}`, 'utf-8');
+    
+    return JSON.parse(text);
 }
