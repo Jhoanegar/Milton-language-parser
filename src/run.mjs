@@ -7,7 +7,7 @@ import { promises as fs } from "node:fs";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 
-const { prompt, AutoComplete } = Enquirer;
+const { AutoComplete } = Enquirer;
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const debug = createDebugger("milton");
@@ -25,12 +25,6 @@ const programs = [
     value: "2.MLA_CommPortal",
   },
 ];
-let showMenu = true;
-let menu = new AutoComplete({
-  choices: programs,
-  name: "program",
-  message: "Programa a ejecutar",
-});
 (async () => {
   //initServer() // To stop the terminal from closing
   program = new Program({
@@ -42,7 +36,7 @@ let menu = new AutoComplete({
     debug("Running operation...");
     await data;
   });
-  mainLoop.on("response", async (data) => {
+  mainLoop.on("response", async () => {
     await program.nextTick();
   });
   mainLoop.on("endProgram", async (endConditions) => {
@@ -71,17 +65,6 @@ async function runMenu() {
     initialConditions,
   });
   return program.nextTick();
-}
-
-function initServer() {
-  var net = require("net");
-
-  var server = net.createServer(function (socket) {
-    socket.write("Echo server\r\n");
-    socket.pipe(socket);
-  });
-
-  server.listen(1337, "127.0.0.1");
 }
 
 const readFile = async (file) => {
