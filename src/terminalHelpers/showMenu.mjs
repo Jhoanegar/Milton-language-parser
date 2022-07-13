@@ -9,9 +9,9 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const { AutoComplete } = Enquirer;
 
-const showMenu = async ({ programs, mainLoop, initialConditions }) => {
+const showMenu = async ({ menuOptions, mainLoop, initialConditions }) => {
   let menu = new AutoComplete({
-    choices: programs,
+    choices: menuOptions,
     name: 'program',
     message: 'Programa a ejecutar',
   });
@@ -21,8 +21,6 @@ const showMenu = async ({ programs, mainLoop, initialConditions }) => {
     mainLoop,
     initialConditions,
   });
-
-  program.nextTick();
 
   return program;
 };
