@@ -1,10 +1,11 @@
-const debug = require('debug')('milton');
-const status = require('debug')('status');
-const ask = require('enquirer').prompt
-const type = require('node-typewriter')
+import createDebugger from 'debug';
+import Enquirer from 'enquirer'
+import type from 'node-typewriter'
+import _ from 'lodash'
 
-const { AutoComplete } = require('enquirer');
-const _ = require('lodash');
+const debug = createDebugger('milton');
+const status = createDebugger('status');
+const { AutoComplete } = Enquirer
 
 class Program {
     constructor({
@@ -214,4 +215,4 @@ class Program {
     }
 }
 
-module.exports = Program;
+export default Program;

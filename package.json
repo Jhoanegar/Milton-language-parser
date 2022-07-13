@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "debug": "nearleyc grammar.ne -o grammar.js ;  node --nolazy --inspect-brk=9229 index.js"
@@ -10,8 +11,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cookie-parser": "^1.4.6",
     "debug": "^4.1.1",
     "enquirer": "^2.3.4",
+    "express": "^4.18.1",
     "inquirer": "^7.1.0",
     "lodash": "^4.17.21",
     "moo": "^0.5.1",
