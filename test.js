@@ -1,38 +1,38 @@
-const { prompt, AutoComplete } = require("enquirer");
+const { prompt, AutoComplete } = require('enquirer');
 
 const ask = new AutoComplete({
-  name: "LOLO",
-  message: ">>",
+  name: 'LOLO',
+  message: '>>',
   choices: [
     {
-      message: "asdfa",
+      message: 'asdfa',
       value: {
-        next: "Nonsense_QueryMLA",
+        next: 'Nonsense_QueryMLA',
       },
     },
     {
-      message: "listado",
+      message: 'listado',
       value: {
-        next: "MoreSpecific",
+        next: 'MoreSpecific',
       },
     },
     {
-      message: "ayuda",
+      message: 'ayuda',
       value: {
-        next: "MoreSpecific",
+        next: 'MoreSpecific',
       },
     },
     {
-      message: "¿Entiendes lo que estoy diciendo?",
+      message: '¿Entiendes lo que estoy diciendo?',
       value: {
-        next: "Understand_QueryMLA",
+        next: 'Understand_QueryMLA',
       },
     },
     {
-      message: "Salir",
+      message: 'Salir',
       value: {
-        clear: "QueryMLA_ON",
-        next: "CLI_Resume",
+        clear: 'QueryMLA_ON',
+        next: 'CLI_Resume',
       },
     },
   ],

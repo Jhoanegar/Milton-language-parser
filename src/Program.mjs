@@ -1,10 +1,10 @@
-import createDebugger from "debug";
-import Enquirer from "enquirer";
-import type from "node-typewriter";
-import _ from "lodash";
+import createDebugger from 'debug';
+import Enquirer from 'enquirer';
+import type from 'node-typewriter';
+import _ from 'lodash';
 
-const debug = createDebugger("milton");
-const status = createDebugger("status");
+const debug = createDebugger('milton');
+const status = createDebugger('status');
 const { AutoComplete } = Enquirer;
 
 class Program {
@@ -29,14 +29,14 @@ class Program {
 
   async nextTick() {
     this.PC++;
-    debug("Processing next Tick " + this.PC);
-    status("State: ", JSON.stringify(this.initialConditions, null, 3));
+    debug('Processing next Tick ' + this.PC);
+    status('State: ', JSON.stringify(this.initialConditions, null, 3));
     if (!this.program[this.PC]) {
-      debug("Reset this.PC");
+      debug('Reset this.PC');
       await this.player();
       this.PC = 0;
       if (this.instructionsNotMatched >= this.program.length) {
-        this.mainLoop.emit("endProgram", this.initialConditions);
+        this.mainLoop.emit('endProgram', this.initialConditions);
         this.stopped = true;
       }
     }
@@ -46,13 +46,13 @@ class Program {
     if (result.terminal) {
       await result.operation;
       instruction.consumed = true;
-      debug("Queueing operation");
-      this.mainLoop.emit("operation");
+      debug('Queueing operation');
+      this.mainLoop.emit('operation');
       this.PC = -1;
     } else {
       this.instructionsNotMatched++;
     }
-    if (!this.stopped) this.mainLoop.emit("endtick");
+    if (!this.stopped) this.mainLoop.emit('endtick');
   }
 
   processInstruction(instruction) {
@@ -81,9 +81,9 @@ class Program {
   terminalStatement(instruction) {
     return (
       instruction[0] &&
-      instruction[0].type == "TERMINAL" &&
+      instruction[0].type == 'TERMINAL' &&
       instruction[1] &&
-      instruction[1].type == "WHEN" &&
+      instruction[1].type == 'WHEN' &&
       instruction[2] &&
       instruction[3]
     );
@@ -92,34 +92,34 @@ class Program {
   playerStatement(instruction) {
     return (
       instruction[0] &&
-      instruction[0].type == "PLAYER" &&
+      instruction[0].type == 'PLAYER' &&
       instruction[1] &&
-      instruction[1].type == "WHEN" &&
+      instruction[1].type == 'WHEN' &&
       instruction[2] &&
       instruction[3]
     );
   }
 
-  conditionsMet(conditions, operator = "and") {
-    var met = operator === "and" ? true : false;
+  conditionsMet(conditions, operator = 'and') {
+    var met = operator === 'and' ? true : false;
     _.forOwn(conditions, (value, key) => {
-      if (key === "$or") {
-        met = met && this.conditionsMet(value, "or");
+      if (key === '$or') {
+        met = met && this.conditionsMet(value, 'or');
       } else if (
         value === true &&
         this.initialConditions[key] !== value &&
-        operator === "and"
+        operator === 'and'
       ) {
         met = false;
         return false;
       } else if (
         value === false &&
         this.initialConditions[key] === true &&
-        operator === "and"
+        operator === 'and'
       ) {
         met = false;
         return false;
-      } else if (this.initialConditions[key] === value && operator === "or") {
+      } else if (this.initialConditions[key] === value && operator === 'or') {
         met = true;
         return false;
       }
@@ -132,11 +132,11 @@ class Program {
     let result = Promise.resolve();
     let response;
     if (prompt) {
-      debug("Printing prompt");
+      debug('Printing prompt');
       result = await this.printToConsole(prompt);
     }
     if (options) {
-      debug("printint options");
+      debug('printint options');
       response = await this.printOptions(options);
     }
     this.updateInitialConditions(params);
@@ -144,9 +144,9 @@ class Program {
   }
 
   async player() {
-    let result = await this.printOptions(this.playerOptions, "player");
+    let result = await this.printOptions(this.playerOptions, 'player');
     if (result === false) {
-      this.mainLoop.emit("programExit");
+      this.mainLoop.emit('programExit');
       this.mainLoop;
     } else {
       this.instructionsNotMatched = 0;
@@ -155,21 +155,21 @@ class Program {
   }
 
   async printToConsole(message) {
-    message = message.replace(/%../g, "").split("\\n");
+    message = message.replace(/%../g, '').split('\\n');
     return message.reduce(async (previous, currentMessage) => {
       await previous;
       if (currentMessage.length == 0) {
-        console.log("");
+        console.log('');
       } else {
         await this.msleep(this.sleepMs);
-        return type(currentMessage + "\n", this.typeSpeed);
+        return type(currentMessage + '\n', this.typeSpeed);
       }
     }, Promise.resolve());
   }
 
-  async printOptions(options, source = "terminal") {
+  async printOptions(options, source = 'terminal') {
     let adapter;
-    if (source === "terminal") {
+    if (source === 'terminal') {
       adapter = (option) => option.prompt.text;
     } else {
       adapter = (option) => option.text;
@@ -179,11 +179,11 @@ class Program {
     if (choices.length == 0) {
       return false;
     }
-    let question = new AutoComplete({ message: ">>", choices });
+    let question = new AutoComplete({ message: '>>', choices });
     let response = this.getValuesForResponse(
       options,
       await question.run(),
-      source
+      source,
     );
     this.updateInitialConditions(response);
     // this.mainLoop('response', response);
@@ -196,16 +196,16 @@ class Program {
     response.operations.forEach((operation) => {
       _.forOwn(operation, (value, key) => {
         switch (key) {
-          case "next":
-          case "set":
-          case "setlocal":
-          case "goto":
+          case 'next':
+          case 'set':
+          case 'setlocal':
+          case 'goto':
             this.initialConditions[value] = true;
             break;
-          case "prompt":
-          case "options":
+          case 'prompt':
+          case 'options':
             break;
-          case "clear":
+          case 'clear':
             delete this.initialConditions[value];
             break;
           default:
@@ -217,14 +217,14 @@ class Program {
 
   getValuesForResponse(options, response, source) {
     let option;
-    if (source === "terminal") {
+    if (source === 'terminal') {
       option = _.find(options, (option) => option.prompt.text == response);
     } else {
       option = _.find(options, (option) => option.text == response);
     }
     let values = {};
     _.forOwn(option, (value, key) => {
-      if (key !== "prompt" && key !== "text") {
+      if (key !== 'prompt' && key !== 'text') {
         values[key] = value;
       }
     });

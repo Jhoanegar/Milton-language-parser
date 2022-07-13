@@ -1,16 +1,16 @@
-import _ from "lodash";
-import { EventEmitter } from "node:events";
-import Enquirer from "enquirer";
-import createDebugger from "debug";
-import Program from "./Program.mjs";
-import { promises as fs } from "node:fs";
-import { dirname } from "path";
-import { fileURLToPath } from "url";
+import _ from 'lodash';
+import { EventEmitter } from 'node:events';
+import Enquirer from 'enquirer';
+import createDebugger from 'debug';
+import Program from './Program.mjs';
+import { promises as fs } from 'node:fs';
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
 
 const { AutoComplete } = Enquirer;
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-const debug = createDebugger("milton");
+const debug = createDebugger('milton');
 let initialConditions = {
   QueryMLA_START: true,
   QueryMLA_ON: true,
@@ -19,10 +19,10 @@ let mainLoop = new EventEmitter();
 let program;
 const programs = [
   {
-    value: "1.QueryMLA",
+    value: '1.QueryMLA',
   },
   {
-    value: "2.MLA_CommPortal",
+    value: '2.MLA_CommPortal',
   },
 ];
 (async () => {
@@ -32,21 +32,21 @@ const programs = [
     mainLoop: mainLoop,
     initialConditions: programs[0].initialConditions,
   });
-  mainLoop.on("operation", async (data) => {
-    debug("Running operation...");
+  mainLoop.on('operation', async (data) => {
+    debug('Running operation...');
     await data;
   });
-  mainLoop.on("response", async () => {
+  mainLoop.on('response', async () => {
     await program.nextTick();
   });
-  mainLoop.on("endProgram", async (endConditions) => {
+  mainLoop.on('endProgram', async (endConditions) => {
     debugger;
-    console.log("Endprogram: ", endConditions);
+    console.log('Endprogram: ', endConditions);
     initialConditions = endConditions;
     await runMenu();
   });
-  mainLoop.on("endtick", async () => {
-    debug("endtick");
+  mainLoop.on('endtick', async () => {
+    debug('endtick');
     await program.nextTick();
   });
   await runMenu();
@@ -55,8 +55,8 @@ const programs = [
 async function runMenu() {
   let menu = new AutoComplete({
     choices: programs,
-    name: "program",
-    message: "Programa a ejecutar",
+    name: 'program',
+    message: 'Programa a ejecutar',
   });
   let results = await menu.run();
   program = new Program({
@@ -68,7 +68,7 @@ async function runMenu() {
 }
 
 const readFile = async (file) => {
-  const text = await fs.readFile(`${__dirname}/${file}`, "utf-8");
+  const text = await fs.readFile(`${__dirname}/${file}`, 'utf-8');
 
   return JSON.parse(text);
 };
